@@ -1,0 +1,11 @@
+{
+ "witness": "output-rank width non-identifiability",
+ "base_width": 768,
+ "twin_declared_width": 1024,
+ "n_prompts": 48,
+ "top_k": 20,
+ "max_abs_logprob_diff": 0.0,
+ "measured_rank_base": 764,
+ "measured_rank_twin": 764,
+ "conclusion": "logit outputs identical to numerical precision while declared residual widths differ by 256; the rank probe returns the same estimate for both, so width is identified only up to logit rank under a full-rank-unembedding assumption"
+}

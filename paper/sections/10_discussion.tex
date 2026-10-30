@@ -1,0 +1,50 @@
+\section{Limitations}
+\label{sec:limitations}
+\begin{itemize}
+\item \textbf{Serving realism.}  \benchname{} runs on CPU containers.  GPU kernels,
+  real vLLM batching, and quantization-aware serving all change the timing channels.
+  The decode-state discriminator is validated on our hardware.  Production spans
+  ($\le$12--56k tokens) are drowned in noise, so production family splits stay U.
+\item \textbf{MoE and depth are the weak channels.}  Domain timing reaches only
+  \MoeAcc{} on the benchmark.  Depth inversion needs a calibrated compute and queueing
+  model that we do not have for production hardware.
+\item \textbf{Score semantics.}  Support scores are heuristic rankings.  Their
+  calibration is measured (macro-averaged ECE \BenchECE{} \BenchECEMacroCI{}), but they
+  are not probabilities, and correlated evidence groups are averaged rather than modelled
+  jointly.  The largest prior-dependence (attention/state: \AttnRefAcc{} with the
+  reference prior against \AttnFlatAcc{} evidence-only) is reported as a result, not
+  hidden (Sec.~\ref{sec:howfar}).
+\item \textbf{Scale.}  The widest resolved geometry is 2{,}048 (as a bound) and 896 (as
+  a resolved point).  Frontier widths need a bigger budget.  The blind fixtures cover
+  large, designed changes; subtle drift and adversarial spoofing are untested.
+\item \textbf{Release.}  The repository accompanies this paper (title page).  The DOI is
+  pending, and provider notification and terms-of-service review remain the authors'
+  external obligations (Sec.~\ref{sec:ethics}).
+\end{itemize}
+
+\section{Ethics, dual use, and release status}
+\label{sec:ethics}
+All production measurements used configured user accounts with bounded budgets.  No
+private tenants, credentials, training data, or weights were accessed.  Architecture
+forensics supports auditing and procurement verification, but the same techniques can
+help with model theft or proprietary profiling.  The artifact therefore ships with rate
+limits and authentication requirements for any multi-tenant deployment.  Having public
+API access is not the same as having permission to publish.  Provider notification,
+terms review, and, where appropriate, operator consent are documented by the author
+before public release, and named-service results can be anonymized on request.  The
+\benchname{} journals, harness, and frozen protocol are released with this paper.  The
+JEV prior public study is archived with a content hash.
+
+\section{Conclusion}
+\label{sec:conclusion}
+A production API is a measurement surface, and its resolution is something you can
+measure and prove, not something you have to guess.  On ground truth, controlled
+requests reconstruct the contract, the tokenizer count-family, the
+autoregressive-compatible generation contract, the transformer/SSM split, the output
+bottleneck (within budget, with a coverage curve), and the wire numerics.  They expose
+MoE only weakly and depth not at all.  Every remaining hole is one of three things:
+witnessed non-identifiable, cost-characterized through $\hat\kappa$, or one named
+experiment away.  Architecture reconstruction from API access is neither impossible nor
+unbounded.  It is a bounded capability with a map.  \benchname{}, the blind fixtures,
+the evaluated evidence-ranking scores, and the witnesses are our attempt to draw that
+map clearly enough that others can extend it.

@@ -1,0 +1,14 @@
+\begin{tabularx}{\textwidth}{@{}l c c c c c c Y@{}}
+\toprule
+\textbf{Property} & $n$ & \textbf{Top-1} & \textbf{95\% CI$^\dagger$} & \textbf{Top-1 (evid.-only)} & \textbf{Brier} & \textbf{ECE} & \textbf{Note}\\
+\midrule
+Core family & 24 & 88\% & [70,100] & 92\% & 0.300 & 0.169 & P23 split inside; prior lag on SSM analysed in Sec.~\ref{sec:familysplit} \\
+FFN sparsity & 25 & 88\% & [71,100] & 88\% & 0.436 & 0.335 & weakest detector; production claims discounted \\
+Serving topology & 25 & 96\% & [86,100] & 96\% & 0.284 & 0.360 & router fixture included \\
+Wire precision & 25 & 80\% & [64,93] & 72\% & 0.221 & 0.169 & wire grid; int8 reads continuous by design \\
+Attention/state regime & 21 & 90\% & [76,100] & 38\% & 0.460 & 0.477 & recall + decode-state, short spans \\
+KV sharing & 6 & 67\% & [33,100] & 17\% & 0.507 & 0.067 & prior-only on production; bench measured where defined \\
+Objective signature & 25 & 80\% & [60,95] & 96\% & 0.230 & 0.164 & causal vs masked vs prefix \\
+\bottomrule
+\multicolumn{8}{@{}l@{}}{\footnotesize $^\dagger$cluster bootstrap at the base-checkpoint level (serving variants of one checkpoint are one cluster).}\\
+\end{tabularx}

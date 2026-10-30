@@ -1,0 +1,47 @@
+\appendix
+\section{Reproduction, protocol, and manifests}
+\label{app:repro}
+The frozen battery protocol is pinned by its hash (\texttt{\ProtocolHash}).  Every
+subject journal (raw requests, responses, and timings) is under
+\texttt{runs/forensics-bench/} and in the volume manifest.  Detector failures found
+during development, and their fixes, are logged in \texttt{paper/bench/out/}.  There
+were four: a curvature gate (P19) that fired on numerically-zero curvature because it
+had no effect-size check; a units error in the decode-growth slope conversion (P23); a
+per-round coupling that compounded on itself; and a grid-statistic error in the first
+blind-fixture detector.  The paper reports the repaired instrument, and the failure log
+is part of the scientific record.
+
+The toy depth witness works like this.  If the configuration space $\Omega$ allows both
+$f$ and $f\circ\mathrm{Id}$ (the same function with an identity layer inserted), with
+identical wrappers and identical output laws, then depth cannot be identified through
+behaviour alone.  Inserting an identity layer leaves $f(x)$ unchanged while increasing
+the declared depth.
+
+\begin{table}[h]\centering\footnotesize
+\caption{\benchname{} subject roster with ground truth as recorded from loaded configs.}
+\label{tab:subjects}
+\input{generated/v4_subjects.tex}
+\end{table}
+
+\section{Calibration detail}
+\label{app:calibration}
+Reliability bins (mean confidence against empirical accuracy) per property for the
+group-aware ranker are in \texttt{bench/out/bench\_metrics.json}; the legacy
+independent-factor ranker is the sensitivity column.  The evidence-only view re-runs
+the identical updates starting from uniform priors.
+
+\section{Blind fixture hash chain}
+\label{app:hashchain}
+\texttt{bench/out/blind\_fixtures.commits.json} holds the SHA-256 commitments written
+before each scan; \texttt{blind\_fixtures.json} holds the labels, salts, detections, and
+per-episode \texttt{commit\_ok} flags.  Recomputing \texttt{sha256(salt|label)} verifies
+the chain.
+
+\section{Production run provenance}
+\label{app:provenance}
+Production scans: \texttt{runs/20260926-221747-gpt-4o-mini},
+\texttt{runs/final/20260926-210641-deepseek}, \texttt{runs/20260926-221526-jev};
+follow-ups: \texttt{runs/production-followup/}, \texttt{runs/revision-controls/},
+\texttt{runs/jev-v4/}.  Costs are request and token counts per run; dollar equivalents
+are not verified bills.  All 43 cited arXiv IDs were checked against the arXiv API
+(\texttt{bibliography\_audit.json}).

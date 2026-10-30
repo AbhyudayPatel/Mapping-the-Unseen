@@ -1,0 +1,121 @@
+\pdfoutput=1
+\documentclass[preprint,11pt]{elsarticle}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,booktabs,tabularx,array,xcolor}
+\usepackage{enumitem,caption,placeins,float,pifont}
+
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\usepackage{orcidlink}
+\hypersetup{pdftitle={Mapping the Unseen: What an LLM API Can and Cannot Reveal About Its Architecture},pdfauthor={Abhyuday Patel, Ranjan Kumar Behera, Aditi Kumari, Pratik Chourasia}}
+\definecolor{accent}{HTML}{E8604C}
+\definecolor{ink}{HTML}{25231F}
+\definecolor{soft}{HTML}{777167}
+\definecolor{pale}{HTML}{F7F5F1}
+\definecolor{okgreen}{HTML}{527F65}
+\definecolor{missred}{HTML}{B66355}
+\captionsetup{font=small,labelfont=bf,labelsep=period}
+\setlist{nosep,leftmargin=1.4em}
+\setlength{\emergencystretch}{3em}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\renewcommand{\topfraction}{0.94}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.75}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newcommand{\lvl}[1]{\textsf{#1}}
+\newcommand{\yes}{{\color{okgreen}\ding{51}}}
+\newcommand{\no}{{\color{missred}\ding{55}}}
+\newcommand{\unknown}{\textsf{U}}
+\newcommand{\benchname}{ForensicsBench}
+\renewcommand{\paragraph}[1]{\par\smallskip\noindent\textit{#1}\quad}
+\makeatletter
+\let\ps@pprintTitle\ps@plain
+\makeatother
+\input{generated/v4_numbers.tex}
+
+\begin{document}
+\begin{frontmatter}
+\title{\textbf{Mapping the Unseen:\\[2pt] What an LLM API Can and Cannot Reveal About Its Architecture}}
+\author[1]{Abhyuday Patel\,\orcidlink{0009-0006-5898-2395}\corref{cor1}}
+\ead{abhyuday.2023ug4002@iiitranchi.ac.in}
+\cortext[cor1]{Corresponding author}
+\author[1]{Ranjan Kumar Behera}
+\ead{ranjan@iiitranchi.ac.in}
+\author[2]{Aditi Kumari}
+\ead{aditikumarikv4@gmail.com}
+\author[1]{Pratik Chourasia}
+\ead{pratik.2023ug2051@iiitranchi.ac.in}
+\affiliation[1]{organization={Indian Institute of Information Technology, Ranchi},country={India}}
+\affiliation[2]{organization={Jamshedpur Women's University},country={India}}
+\begin{abstract}
+What can an API tell you about the hidden system behind it?  Most answers to that
+question are guesses.  Ours is a measurement.  We treat the problem as
+\emph{functional architecture identification under partial observability}.  In plain
+words: we ask which parts of a model's design can be worked out from the outside,
+through the API alone, and which parts cannot.  Then we measure that boundary instead
+of reporting one best-guess architecture.  The answer splits into four kinds of
+property.  Some are \emph{identifiable}: the API contract, the tokenizer's count
+family, the autoregressive-compatible generation contract, the width of the output
+bottleneck over a measured range, and the numeric grid of the values sent over the
+wire.  Some are \emph{cost-limited}: they can be separated in principle, and we
+\emph{estimate} how much information each request buys on each channel (a per-channel
+discrimination density $\hat\kappa$) to say how many requests the job needs under the
+stated probe family.  Some are \emph{access-limited}: the API simply hides the channel
+we would need, as with top-5-only logprobs for width, buffered streaming for decode
+timing, and depth.  And some are \emph{provably non-identifiable}: we give two scoped
+equivalence witnesses, and we build one of them for real, a width-768 model and a
+width-1024 twin with zero observable difference.  The instrument is an active probe
+library with an evidence-ranking engine.  The measuring stick is \benchname{}, a blind
+ground-truth benchmark that serves \BenchN{} known models (dense transformers, Mamba
+SSMs, mixture-of-experts, MLA, encoders, and an encoder-decoder, with dtype, batching,
+and router variants) behind one anonymous contract with frozen thresholds.  On this
+ground truth the battery recovers the API contract (\ContractAcc), the tokenizer
+count-family (\TokenizerAcc), the autoregressive-compatible generation contract
+(\FamilyPathAcc), the transformer-vs-SSM split (\SsmSplitAcc{} of \SsmEligible{}
+eligible subjects, through a validated decode-state probe), the output-bottleneck width
+over a measured range (resolved through \GeomMaxWidth{}, with lower bounds at the
+acquisition limit and never over-resolved), and the wire grid (\DtypeAcc).  It is weak
+on MoE (\MoeAcc) and blind to depth, and the theory says why each hole exists.  The
+same battery then reconstructs GPT-4o-mini, DeepSeek-V3.2, and the JEV decision
+endpoint, with every component graded by the reliability its detector earned on ground
+truth.  Baselines in the style of NightVision and LLMmap run on the same subjects.  A
+live multi-seed planner study and a commit-reveal blind fixture suite complete the
+evaluation.  The contribution is the measured identification boundary
+$[\omega]_{\mathcal C,\mathcal X}$, not a claim of exact model reverse engineering.
+\end{abstract}
+\begin{keyword}
+functional architecture identification \sep black-box forensics \sep system
+identification \sep identifiability \sep language-model serving \sep active probing
+\end{keyword}
+\end{frontmatter}
+
+\noindent\small\textbf{Companion artifact.} Scanner, \benchname{} harness and journals,
+frozen protocol, and reproduction scripts:
+\url{https://github.com/AbhyudayPatel/mapping-the-unseen}
+\normalsize
+
+\input{sections/01_introduction.tex}
+\input{sections/02_setup.tex}
+\input{sections/05_instrument.tex}
+\input{sections/03_identifiability.tex}
+\input{sections/04_benchmark.tex}
+\input{sections/06_howfar.tex}
+\input{sections/06b_design.tex}
+\input{sections/07_production.tex}
+\input{sections/09_observability.tex}
+\input{sections/08_boundary.tex}
+\input{sections/09_related.tex}
+\input{sections/10_discussion.tex}
+\FloatBarrier
+\input{sections/11_appendix.tex}
+\FloatBarrier
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+\end{document}

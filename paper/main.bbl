@@ -1,0 +1,212 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{chen2026tokeninflation}
+L.~Chen, L.~Zhang, C.~Tang, P.~Sun, J.~Lai, Y.~Huang, Z.~Zhang, X.~Shen, The
+  more it says, the more you pay: A black-box audit of provider-side token
+  inflation in {LLM} services (2026).
+\newblock \href {http://arxiv.org/abs/2609.20370} {\path{arXiv:2609.20370}}.
+
+\bibitem{openaimini2024docs}
+{OpenAI}, {GPT-4o mini}: Model documentation,
+  \url{https://platform.openai.com/docs/models/gpt-4o-mini}, living
+  documentation; retrieved 29 September 2026. Listed year refers to model
+  release (2024).
+
+\bibitem{deepseekai2025v32}
+{DeepSeek-AI}, Deepseek-v3.2: Pushing the frontier of open large language
+  models, arXiv preprint, arXiv:2512.02556 (2025).
+
+\bibitem{euaiact2024}
+{European Parliament and Council}, Regulation (eu) 2024/1689 laying down
+  harmonised rules on artificial intelligence (artificial intelligence act),
+  Official Journal of the European Union (2024).
+
+\bibitem{bommasani2023fmti}
+R.~Bommasani, K.~Klyman, S.~Longpre, S.~Kapoor, N.~Maslej, B.~Xiong, D.~Zhang,
+  P.~Liang, The foundation model transparency index, arXiv preprint,
+  arXiv:2310.12941 (2023).
+
+\bibitem{ljung1999system}
+L.~Ljung, System Identification: Theory for the User, 2nd Edition, Prentice
+  Hall, 1999.
+
+\bibitem{mackay1992information}
+D.~J.~C. MacKay, Information-based objective functions for active data
+  selection, Neural Computation 4~(4) (1992) 590--604.
+
+\bibitem{chaloner1995bayesian}
+K.~Chaloner, I.~Verdinelli, Bayesian experimental design: A review, Statistical
+  Science 10~(3) (1995) 273--304.
+
+\bibitem{golovin2011adaptive}
+D.~Golovin, A.~Krause, Adaptive submodularity: Theory and applications in
+  active learning and stochastic optimization, JAIR, arXiv:1003.3967 (2011).
+
+\bibitem{tramer2016stealing}
+F.~Tramèr, F.~Zhang, A.~Juels, M.~K. Reiter, T.~Ristenpart, Stealing machine
+  learning models via prediction apis, USENIX Security Symposium,
+  arXiv:1609.02943 (2016).
+
+\bibitem{orekondy2019knockoff}
+T.~Orekondy, B.~Schiele, M.~Fritz, Knockoff nets: Stealing functionality of
+  black-box models, CVPR, arXiv:1812.02766 (2019).
+
+\bibitem{krishna2020thieves}
+K.~Krishna, G.~S. Tomar, A.~P. Parikh, N.~Papernot, Thieves on sesame street!
+  model extraction of bert-based apis, ICLR, arXiv:1910.12366 (2020).
+
+\bibitem{papernot2017practical}
+N.~Papernot, P.~McDaniel, I.~Goodfellow, S.~Jha, Z.~B. Celik, A.~Swami,
+  Practical black-box attacks against machine learning, ACM Asia CCS,
+  arXiv:1602.02697 (2017).
+
+\bibitem{carlini2020cryptanalytic}
+N.~Carlini, M.~Jagielski, I.~Mironov, Cryptanalytic extraction of neural
+  network models, CRYPTO, arXiv:2003.04884 (2020).
+
+\bibitem{rolnick2020reverse}
+D.~Rolnick, K.~P. Kording, Reverse-engineering deep relu networks, ICLR,
+  arXiv:1910.00744 (2020).
+
+\bibitem{carlini2024stealing}
+N.~Carlini, D.~Paleka, K.~D. Dvijotham, T.~Steinke, J.~Hayase, A.~F. Cooper,
+  K.~Lee, M.~Jagielski, M.~Nasr, A.~Conmy, I.~Yona, E.~Wallace, D.~Rolnick,
+  F.~Tramèr, Stealing part of a production language model, ICML,
+  arXiv:2403.06634 (2024).
+
+\bibitem{finlayson2024logits}
+M.~Finlayson, X.~Ren, S.~Swayamdipta, Logits of api-protected llms leak
+  proprietary information, ICML, arXiv:2403.09539 (2024).
+
+\bibitem{finlayson2024decoding}
+A.~Naseh, K.~Krishna, M.~Iyyer, A.~Houmansadr, Stealing the decoding algorithms
+  of language models, ACM CCS, arXiv:2303.04729 (2024).
+
+\bibitem{ellis2026nightvision}
+C.~Ellis, S.~Chaudhari, M.-Y. Wang, L.~Barnes, G.~Fanti, J.~M.~F. Moura,
+  Black-box inference of llm architectural properties with restrictive api
+  access, arXiv preprint, arXiv:2607.01313 (2026).
+
+\bibitem{chen2026tokencounts}
+B.~Chen, Token counts are not model lineage: A frozen-threshold holdout study
+  of black-box {LLM} {API} fingerprinting (2026).
+\newblock \href {http://arxiv.org/abs/2608.29930} {\path{arXiv:2608.29930}}.
+
+\bibitem{pasquini2025llmmap}
+D.~Pasquini, E.~M. Kornaropoulos, G.~Ateniese, Llmmap: Fingerprinting for large
+  language models, USENIX Security Symposium, arXiv:2407.15847 (2025).
+
+\bibitem{pei2025behavioral}
+Z.~Pei, H.-L. Zhen, Y.~Zhang, Z.~Yang, X.~Li, X.~Yu, M.~Yuan, B.~Yu, Behavioral
+  fingerprinting of large language models (2025).
+\newblock \href {http://arxiv.org/abs/2509.04504} {\path{arXiv:2509.04504}}.
+
+\bibitem{hsieh2024ruler}
+C.-P. Hsieh, S.~Sun, S.~Kriman, S.~Acharya, D.~Rekesh, F.~Jia, Y.~Zhang,
+  B.~Ginsburg, Ruler: What's the real context size of your long-context
+  language models?, COLM, arXiv:2404.06654 (2024).
+
+\bibitem{liu2024lost}
+N.~F. Liu, K.~Lin, J.~Hewitt, A.~Paranjape, M.~Bevilacqua, F.~Petroni,
+  P.~Liang, Lost in the middle: How language models use long contexts, TACL,
+  arXiv:2307.03172 (2024).
+
+\bibitem{casper2024blackbox}
+S.~Casper, C.~Ezell, C.~Siegmann, N.~Kolt, T.~L. Curtis, B.~Bucknall, A.~Haupt,
+  K.~Wei, J.~Scheurer, M.~Hobbhahn, L.~Sharkey, S.~Krishna, M.~V. Hagen,
+  S.~Alberti, A.~Chan, Q.~Sun, M.~Gerovitch, D.~Bau, M.~Tegmark, D.~Krueger,
+  D.~Hadfield-Menell, Black-box access is insufficient for rigorous ai audits,
+  ACM FAccT, arXiv:2401.14446 (2024).
+
+\bibitem{chang2024survey}
+Y.~Chang, X.~Wang, J.~Wang, Y.~Wu, L.~Yang, K.~Zhu, H.~Chen, X.~Yi, C.~Wang,
+  Y.~Wang, W.~Ye, Y.~Zhang, Y.~Chang, P.~S. Yu, Q.~Yang, X.~Xie, A survey on
+  evaluation of large language models, ACM Transactions on Intelligent Systems
+  and Technology, arXiv:2307.03109 (2024).
+
+\bibitem{shevlane2023model}
+T.~Shevlane, S.~Farquhar, B.~Garfinkel, M.~Phuong, J.~Whittlestone, J.~Leung,
+  D.~Kokotajlo, N.~Marchal, M.~Anderljung, N.~Kolt, L.~Ho, D.~Siddarth,
+  S.~Avin, W.~Hawkins, B.~Kim, I.~Gabriel, V.~Bolina, J.~Clark, Y.~Bengio,
+  P.~Christiano, A.~Dafoe, Model evaluation for extreme risks, arXiv preprint,
+  arXiv:2305.15324 (2023).
+
+\bibitem{vaswani2017attention}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez,
+  L.~Kaiser, I.~Polosukhin, Attention is all you need, NeurIPS,
+  arXiv:1706.03762 (2017).
+
+\bibitem{shazeer2019fast}
+N.~Shazeer, Fast transformer decoding: One write-head is all you need, arXiv
+  preprint, arXiv:1911.02150 (2019).
+
+\bibitem{ainslie2023gqa}
+J.~Ainslie, J.~Lee-Thorp, M.~de~Jong, Y.~Zemlyanskiy, Gqa: Training generalized
+  multi-query transformer models from multi-head checkpoints, EMNLP,
+  arXiv:2305.13245 (2023).
+
+\bibitem{su2024roformer}
+J.~Su, Y.~Lu, S.~Pan, A.~Murtadha, B.~Wen, Y.~Liu, Roformer: Enhanced
+  transformer with rotary position embedding, Neurocomputing, arXiv:2104.09864
+  (2024).
+
+\bibitem{press2022train}
+O.~Press, N.~A. Smith, M.~Lewis, Train short, test long: Attention with linear
+  biases enables input length extrapolation, ICLR, arXiv:2108.12409 (2022).
+
+\bibitem{shazeer2017outrageously}
+N.~Shazeer, A.~Mirhoseini, K.~Maziarz, A.~Davis, Q.~Le, G.~Hinton, J.~Dean,
+  Outrageously large neural networks: The sparsely-gated mixture-of-experts
+  layer, ICLR, arXiv:1701.06538 (2017).
+
+\bibitem{fedus2022switch}
+W.~Fedus, B.~Zoph, N.~Shazeer, Switch transformers: Scaling to trillion
+  parameter models with simple and efficient sparsity, JMLR, arXiv:2101.03961
+  (2022).
+
+\bibitem{jiang2024mixtral}
+A.~Q. Jiang, A.~Sablayrolles, A.~Roux, A.~Mensch, B.~Savary, C.~Bamford,
+  Mixtral of experts, arXiv preprint, arXiv:2401.04088 (2024).
+
+\bibitem{deepseekai2024v2}
+{DeepSeek-AI}, Deepseek-v2: A strong, economical, and efficient
+  mixture-of-experts language model, arXiv preprint arXiv:2405.04434 (2024).
+
+\bibitem{gu2022efficiently}
+A.~Gu, K.~Goel, C.~R{\'e}, Efficiently modeling long sequences with structured
+  state spaces, arXiv preprint arXiv:2111.00396 (2022).
+
+\bibitem{dao2024mamba}
+A.~Gu, T.~Dao, Mamba: Linear-time sequence modeling with selective state
+  spaces, arXiv preprint arXiv:2312.00752 (2024).
+
+\bibitem{dao2024transformers}
+T.~Dao, A.~Gu, Transformers are {SSM}s: Generalized models and efficient
+  algorithms through structured state space duality, arXiv preprint
+  arXiv:2405.21060 (2024).
+
+\bibitem{dao2022flashattention}
+T.~Dao, D.~Y. Fu, S.~Ermon, A.~Rudra, C.~Ré, Flashattention: Fast and
+  memory-efficient exact attention with io-awareness, NeurIPS, arXiv:2205.14135
+  (2022).
+
+\bibitem{kwon2023paged}
+W.~Kwon, Z.~Li, S.~Zhuang, Y.~Sheng, L.~Zheng, C.~H. Yu, J.~E. Gonzalez,
+  H.~Zhang, I.~Stoica, Efficient memory management for large language model
+  serving with pagedattention, SOSP, arXiv:2309.06180 (2023).
+
+\bibitem{leviathan2023fast}
+Y.~Leviathan, M.~Kalman, Y.~Matias, Fast inference from transformers via
+  speculative decoding, ICML, arXiv:2211.17192 (2023).
+
+\bibitem{chen2023accelerating}
+C.~Chen, S.~Borgeaud, G.~Irving, J.-B. Lespiau, L.~Sifre, J.~Jumper,
+  Accelerating large language model decoding with speculative sampling, arXiv
+  preprint, arXiv:2302.01318 (2023).
+
+\end{thebibliography}

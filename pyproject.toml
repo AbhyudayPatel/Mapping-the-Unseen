@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "model-forensics"
+version = "0.1.0"
+description = "Black-box AI model forensics: infer architecture, serving stack and training of any model API through designed experiments"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27",
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "rich>=13",
+    "typer>=0.12",
+    "tiktoken>=0.7",
+    "tokenizers>=0.19",
+    "matplotlib>=3.8",
+    "jinja2>=3",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+llm = ["openai>=1.40"]
+
+[project.scripts]
+forensics = "forensics.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["forensics*"]
+
+[tool.setuptools.package-data]
+"forensics.knowledge" = ["*.json"]
+"forensics.web" = ["*.html"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = ["live: hits real endpoints (opt-in: -m live)"]
+addopts = "-m 'not live' -p no:langsmith"
+testpaths = ["tests"]

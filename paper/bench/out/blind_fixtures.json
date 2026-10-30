@@ -1,0 +1,871 @@
+{
+ "episodes": [
+  {
+   "i": 0,
+   "commit": "548c386a464b6e7cc9c5ac38fc2f392542d29a2523a7f7d6c3e2d88f3393b658",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "d1ce20591ac6249f99cbb944771655a0",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 1,
+   "commit": "c1eebcc35f5b9242021e2ec942588fd3711fd0886ce46920fa6e57d8a2f28e6b",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "51b3ee4f9998912c47cdded313253e3a",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 2,
+   "commit": "af04eb423c3b3ba4fee428b8fc931d324675577019554416d90b924019b392b6",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "ec4b23002f1c17a9b17bc59c6f505ea2",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 3,
+   "commit": "c611c231a142749081447aa878fa1f4b53bfe4304b589b2c1308fd503836ea88",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "96fe011882cf27a252b6c42c88d4abe0",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 4,
+   "commit": "ce01de00165130de99fd3931fdb563478392ae6f45332dab811d0c44b4164e27",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "c457fedba47d5c835df38fc1174f72fd",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 5,
+   "commit": "a0af73581df8aa095c428bce95b0b95ee2fe3441dab521a4c31d2621f0907f87",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "70706b8f2933d731e69ca38ccfb7703e",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  },
+  {
+   "i": 6,
+   "commit": "c19b0f237133affdb72125026889ecd299e5682105550bc3d35237336ac385ed",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "17dcdfbcf2e643fd9b22f6fb63dfd19f",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 7,
+   "commit": "16896f745b8ac611345cd0255027ffa4b971dd7ce2d7b4dd85dd9998954139a2",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "8f4e1feb3306bde3d54629e371c143f1",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 8,
+   "commit": "0152a06c208bcac7090590226497f7c12c4a835811ee7c27b678180860242dca",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "2078a4094b9345a360afc7948523a812",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 9,
+   "commit": "7e8612071aa8eef06e506c8857d62614a57727dd9e83d80fd46591d6cbdabea4",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "52fadfd7f95da40649543cba6f82ab02",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 10,
+   "commit": "f05a69d8dc39f7a6164b8452a8ef14bfe6cf6a8c30efbdc31c74938d524cbe35",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "0b283d4660c8a1687a6a47a0b55c7105",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 11,
+   "commit": "42767b5bd80defec9590c6a8479ea3ab8709f41f42161133381da05d7e75eeb9",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "1b0269f3ac46b7d44ce840e5b623d835",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  },
+  {
+   "i": 12,
+   "commit": "ad4fb96683229bb7b4df0a24f7a3b277fd7715ba2b04d2db1c800ea8a5a1b2e9",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "855f5dd07d0c34cc887690438da8ed80",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 13,
+   "commit": "97b7ca9fb33f830b1409866913f4db21e5ab5eafee04f51ebc96aa686450b2ac",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "5414a60215638183a5b6fbaacd25b2e1",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 14,
+   "commit": "232174d2b51681821c9cd58bd1b3eb234b2dc0315a1ca2c3bc8fab02f5ebe432",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "1dbdc8d65b5a77558e0a9bf0d60de85a",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 15,
+   "commit": "abe2a3daeab7a59b2871df4970fe5b55ce4bdd778e5dc55105d92d6030dce3e1",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "eed98dbcf9fbef8fde0a72c88926ef08",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 16,
+   "commit": "f8c1f06280d2da83ebd4e1f6982c53aecf611f8800257eeb1c94d87e32870b4e",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "bb842f8b8e28788c59e2d6aa982549ce",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 17,
+   "commit": "987f7443cb81b76f54ca6490dd291942da305bf80b0516c236b4b81f69f9b299",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "131b9362fc452055e4f39e405442df3b",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  },
+  {
+   "i": 18,
+   "commit": "59dece35b85340f9416fa4737c3929a5fa8c3156906b2eb739d4814ded1b7a23",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "b2a0422ada1a28bd418cc774137aeddb",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 19,
+   "commit": "c3f318b9c3cf98ecf8b835d119b470b8afc4872a87495c5959409106c1c73e7d",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "c7938a950aef3f3f96816bc951360979",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 20,
+   "commit": "2bfd03d26e27411954904504f51ace605c310979f1a6aacaadd4f8f8098957d3",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "301167f8e0ad6530b0b14d4705d846e0",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 21,
+   "commit": "f864e49114a36b5920f712cb2979a65cfa909d1460a8a8c7d7f1ca82dd129af6",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "b1e67c2e9fd9ce7a547669d6be9d9c26",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 22,
+   "commit": "bace41d4eb74ce90440da0e963a9de880ecce8f9f16131be0799ad93f8e4355c",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "187769baf1846899d1068118fabc5de2",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 23,
+   "commit": "1a31fa109056d46b089ee3d751192d24b92c046b522232d49093e96742fca04e",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "726485db9c747cd5e526d6e8102da759",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  },
+  {
+   "i": 24,
+   "commit": "1a71ee7508ccd2074faf756e38f364ce4befd76a139f83f9278733bfc592663f",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "559450fe64d5c69b51a1e50a87eb7c37",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 25,
+   "commit": "f950fff1cea20dc91380074ad66fa2220a47819b64f65c3c5e10fddb5df8bba9",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "3995fd7eb1f89a0ca43846b52cf8fda5",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 26,
+   "commit": "f7db5aed0f42085b02b3aaee27ba0cdf57f5d6e8f2a1435eac9f98b9691ca238",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "7ddbf6e27ee24866f740265ae67811a6",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 27,
+   "commit": "740dd02d52902c607a5b77cf62a96d49dddf7a08a6d9e79795db6a1be1e5734f",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "fe4fc3b92dea8d508fa506affda074d8",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 28,
+   "commit": "f3814ec7a6a0085983314007a75d65ce3d7f185bab13237ac04fda7d2dc12e07",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "d583812c95176648449c15373f405068",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 29,
+   "commit": "e1bc20e88c9b118e15ecdf837f3aea2fef560fbf84c9f70158a7e5cbda59fd9b",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "f3b4d19722814c800739ad4c6deb430b",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  },
+  {
+   "i": 30,
+   "commit": "6c179b15d05ca4b87d4aac2834dcd7fdd5f98965e6029b342fcc4e56b6b6d30e",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "045fe3385d55e7d8f9c6fae91a744db1",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 31,
+   "commit": "725f026ffb471cafa7172315ca1955cea90994b888ec6881b1eda526c79e43ba",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "f849567995385736619d65c4d64ad297",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 32,
+   "commit": "c26621bc9b44bec2c8f0e819dab1eb9c581db9eaf32f3f3c3deb77d8c5b0e8b5",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "54057654b3759f71fbd7ce6bb9caa586",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 33,
+   "commit": "3e67b82c8d566922177d3ec9d3bd81c70dea89727b73d0a89780feaf86fc167d",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "0df4798c8f002904be1f4717635de93a",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 34,
+   "commit": "a186ff753a6226619f716ed683329bf995cdf9a7391161f29920e3abece0faf1",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "11318c8282f9d3d12d020a886793ceed",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 35,
+   "commit": "94918e53054aade1a7d9abdfca8d3d86cff5f130f1d1483da95e904969929304",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "44557abe34d4071bdec1a144d97f1c5c",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  },
+  {
+   "i": 36,
+   "commit": "347890a36b0fe356e959a7882db95196fcb50d04e43d064b686a49df6216c753",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "b57bdffa209f642f083ec4252c66af4a",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 37,
+   "commit": "05339360adbe40e3b3e1af1d37209075dcea36f12497715a46894c30fa1f45e4",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "f6b6b3df5f0adba2f57c89d9fa52071f",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 38,
+   "commit": "09eb1ced816a5a12761752070c7ab2417805e01b27de835520c43c411942d108",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "eddd19928702b0404b53f7795da84628",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 39,
+   "commit": "5cad53f02c5d209fa09ed978fbd5d5224702d3105d576b3ef9215376de3f5754",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "fdfa8fc951ddc3cd526580a9aa9c50a3",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 40,
+   "commit": "05570f3e8c288e6a517f14ae7ab8fcb45162bdb35613c23d5bc506b0e990eee6",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "081647fc4cbbc6f2ad45e0725674987a",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 41,
+   "commit": "6931834b5bb125375b088d7e994b308db47de6c17f712ceeb01f3f0a16b82359",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "3e5fff3197ffb28ec14b37c9d152e003",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  },
+  {
+   "i": 42,
+   "commit": "7f3f304ea8e18973d2b0d9e528cc6678e27e0baeb72adae0c45cd2c04966550f",
+   "commit_ok": true,
+   "label": "none",
+   "salt": "164fae7d254ecb9166dda0e6fb66c975",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": []
+  },
+  {
+   "i": 43,
+   "commit": "862cf41aa898308cb5dc331303942f1e078d6b4bd4db921a0210eb1a65dc1c34",
+   "commit_ok": true,
+   "label": "cap",
+   "salt": "23f99c56af00b1115041a504937c4cc4",
+   "detections": {
+    "cap": true,
+    "ledger": false,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "cap"
+   ]
+  },
+  {
+   "i": 44,
+   "commit": "a02c8e4188408a99f930a15f7d086bd8ba462c42e55cb410f5a0836361c8eb6a",
+   "commit_ok": true,
+   "label": "ledger",
+   "salt": "1a78056dfca77a91a4a378d798f59db3",
+   "detections": {
+    "cap": false,
+    "ledger": true,
+    "rounding": false,
+    "swap": false,
+    "router": false
+   },
+   "fired": [
+    "ledger"
+   ]
+  },
+  {
+   "i": 45,
+   "commit": "a03d8ac4c1a9b6a67f96e4839a20e753c65f9728d768eb4d6e981b2437fe465f",
+   "commit_ok": true,
+   "label": "rounding",
+   "salt": "65669f62dc3e4e7b886d39cc8fd83092",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": true,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "rounding",
+    "swap"
+   ]
+  },
+  {
+   "i": 46,
+   "commit": "6a79370a4def3481e3f6db2140c8b6420efea34170b9408cb215cbfd8084464e",
+   "commit_ok": true,
+   "label": "swap",
+   "salt": "b2a9209e4572440e8f51f84bff46f697",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": false
+   },
+   "fired": [
+    "swap"
+   ]
+  },
+  {
+   "i": 47,
+   "commit": "f9f09cdaaf3b14ea9542a15bd3cd2f6c87073c8e2a89056f3d15871908272749",
+   "commit_ok": true,
+   "label": "router",
+   "salt": "5c03d60ce60ca45a791036e37bbea772",
+   "detections": {
+    "cap": false,
+    "ledger": false,
+    "rounding": false,
+    "swap": true,
+    "router": true
+   },
+   "fired": [
+    "swap",
+    "router"
+   ]
+  }
+ ],
+ "scores": {
+  "none": {
+   "specificity": [
+    1.0,
+    0.676,
+    1
+   ],
+   "n": 8
+  },
+  "cap": {
+   "sensitivity": [
+    1.0,
+    0.676,
+    1
+   ],
+   "n": 8
+  },
+  "ledger": {
+   "sensitivity": [
+    1.0,
+    0.676,
+    1
+   ],
+   "n": 8
+  },
+  "rounding": {
+   "sensitivity": [
+    1.0,
+    0.676,
+    1
+   ],
+   "n": 8
+  },
+  "swap": {
+   "sensitivity": [
+    1.0,
+    0.676,
+    1
+   ],
+   "n": 8
+  },
+  "router": {
+   "sensitivity": [
+    1.0,
+    0.676,
+    1
+   ],
+   "n": 8
+  }
+ },
+ "protocol": "commit-reveal blind; detectors frozen in blind_fixtures.py"
+}

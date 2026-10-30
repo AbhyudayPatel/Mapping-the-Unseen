@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model Forensics</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F04B0D'/%3E%3Cpath d='M9 22V10h3.2l3.8 6.6L19.8 10H23v12h-3v-7.4l-3.2 5.6h-1.6L12 14.6V22H9z' fill='white'/%3E%3C/svg%3E">
+<style>
+/* ============================================================ design tokens */
+:root {
+  --bg: #FAF9F6; --surface: #FFFFFF; --surface2: #F4F2ED;
+  --ink: #14120E; --ink2: #55524A; --muted: #8C877C;
+  --line: #E8E5DD; --line2: #DDD9CF;
+  --accent: #F04B0D; --accent-soft: #FDEDE4; --accent-ink: #FFFFFF;
+  --ok: #1F8A4C; --warn: #B7791F; --bad: #CE3A2E;
+  --observed: #008300; --inferred: #2A78D6; --estimated: #C98A00;
+  --speculative: #E34948; --unknown: #9A968C;
+  --radius: 10px; --radius-s: 7px;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Roboto Mono", monospace;
+  --shadow: 0 1px 2px rgba(20,18,14,.04), 0 8px 28px rgba(20,18,14,.05);
+}
+[data-theme="dark"] {
+  --bg: #121110; --surface: #1B1916; --surface2: #23201B;
+  --ink: #F0EDE6; --ink2: #B8B3A7; --muted: #7E7A6F;
+  --line: #2C2924; --line2: #3A362E;
+  --accent: #FF5B1A; --accent-soft: #2E1C11; --accent-ink: #14120E;
+  --ok: #3FBF7A; --warn: #E0A84A; --bad: #FF6B63;
+  --observed: #2DB55A; --inferred: #5AA0FF; --estimated: #E0A84A;
+  --speculative: #FF6B63; --unknown: #8C877C;
+  --shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font: 15px/1.55 var(--sans); background: var(--bg); color: var(--ink);
+       -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+code { font-family: var(--mono); font-size: .92em; background: var(--surface2);
+       border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+
+/* ============================================================ micro-typography */
+.eyebrow, .mlabel { font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.mlabel { display: block; margin: 18px 0 6px; }
+.mlabel:first-child { margin-top: 0; }
+
+/* ============================================================ header */
+.topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center;
+  gap: 28px; padding: 0 28px; height: 64px; background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 11px; font-weight: 650; font-size: 16px;
+  letter-spacing: -.01em; white-space: nowrap; }
+.brand .logo { width: 30px; height: 30px; border-radius: 7px; background: var(--accent);
+  display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 13px;
+  letter-spacing: -.02em; }
+.brand .sub { font-weight: 400; color: var(--muted); font-size: 13px; }
+nav.tabs { display: flex; gap: 2px; height: 100%; }
+nav.tabs button { background: none; border: 0; font: 500 14px var(--sans); color: var(--ink2);
+  padding: 0 14px; cursor: pointer; position: relative; height: 100%; }
+nav.tabs button:hover { color: var(--ink); }
+nav.tabs button.on { color: var(--ink); font-weight: 600; }
+nav.tabs button.on::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px;
+  height: 2px; background: var(--accent); border-radius: 2px 2px 0 0; }
+.spacer { flex: 1; }
+
+/* ============================================================ buttons / pills / chips */
+.btn { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line2);
+  background: var(--surface); color: var(--ink); padding: 8px 16px; border-radius: 999px;
+  cursor: pointer; font: 500 13.5px var(--sans); text-decoration: none; transition: .15s;
+  white-space: nowrap; }
+.btn:hover { border-color: var(--ink); }
+.btn.dark { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 600; }
+.btn.dark:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.accent { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.btn.accent:hover { filter: brightness(1.08); }
+.btn.small { padding: 5px 12px; font-size: 12.5px; }
+.btn.danger:hover { border-color: var(--bad); color: var(--bad); }
+.btn:disabled { opacity: .5; cursor: default; }
+.pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 11px; border-radius: 999px;
+  border: 1px solid var(--line2); font: 500 11px var(--mono); letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink2); white-space: nowrap; }
+.pill.solid { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.pill.acc { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pill.dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pill.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
+.pill.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+.pill.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 45%, transparent); }
+.pill.run { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+.pill.run::before { content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); animation: pulse 1.1s infinite; }
+@keyframes pulse { 50% { opacity: .25; } }
+.lvl { display: inline-block; font: 600 10.5px var(--mono); letter-spacing: .06em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 999px; border: 1.5px solid currentColor; white-space: nowrap; }
+
+/* ============================================================ layout */
+main { max-width: 1280px; margin: 0 auto; padding: 0 28px 90px; }
+.hero { position: relative; text-align: center; padding: 76px 20px 60px; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 54px 54px; opacity: .5;
+  mask-image: radial-gradient(ellipse 70% 90% at 50% 40%, #000 30%, transparent 75%); }
+.hero > * { position: relative; }
+.hero .eyebrow { display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--line2);
+  border-radius: 999px; padding: 6px 14px; background: var(--surface); margin-bottom: 26px; }
+.hero .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.hero h1 { font-size: clamp(36px, 5.4vw, 60px); line-height: 1.04; letter-spacing: -.035em;
+  font-weight: 680; margin: 0 0 18px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p { color: var(--ink2); font-size: 16.5px; max-width: 640px; margin: 0 auto; }
+.scan-grid { display: grid; grid-template-columns: 452px 1fr; gap: 22px; align-items: start; }
+@media (max-width: 1020px) { .scan-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================ cards */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); }
+.card .card-h { display: flex; align-items: center; gap: 12px; padding: 16px 22px;
+  border-bottom: 1px solid var(--line); }
+.card .card-h h2 { margin: 0; font-size: 15px; font-weight: 650; letter-spacing: -.01em; flex: 1; }
+.card .card-h .eyebrow { margin: 0; }
+.card .card-b { padding: 20px 22px; }
+
+/* ============================================================ forms */
+label { display: block; font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); margin: 16px 0 6px; }
+input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line2);
+  border-radius: var(--radius-s); background: var(--surface); color: var(--ink);
+  font: 14px var(--sans); transition: border-color .15s, box-shadow .15s; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent); }
+textarea { font-family: var(--mono); font-size: 12px; min-height: 150px; line-height: 1.5; }
+.seg { display: flex; background: var(--surface2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 3px; gap: 3px; }
+.seg button { flex: 1; border: 0; background: none; padding: 8px 10px; border-radius: 999px;
+  cursor: pointer; color: var(--ink2); font: 500 13px var(--sans); transition: .15s; }
+.seg button.on { background: var(--ink); color: var(--bg); font-weight: 600; }
+.hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+.row { display: flex; gap: 12px; }
+.row > * { flex: 1; }
+.form-foot { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.wide-cta { width: 100%; justify-content: center; padding: 13px; font-size: 14.5px; border-radius: 999px; }
+
+/* ============================================================ jobs console */
+.job { border-top: 1px solid var(--line); padding: 16px 22px; }
+.job:first-child { border-top: 0; }
+.job-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.job-head b { font-size: 14.5px; letter-spacing: -.01em; }
+.job-head .flex { flex: 1; }
+.job .bar { height: 4px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin: 12px 0 10px; }
+.job .bar > div { height: 100%; background: var(--accent); border-radius: 4px; transition: width .6s ease; }
+.job .bar.done > div { background: var(--ok); }
+.job .bar.err > div { background: var(--bad); }
+.log { background: var(--surface2); border: 1px solid var(--line); border-radius: var(--radius-s);
+  padding: 10px 12px; max-height: 190px; overflow: auto; font: 11.5px/1.55 var(--mono);
+  white-space: pre-wrap; color: var(--ink2); }
+.empty { color: var(--muted); text-align: center; padding: 46px 20px; font-size: 13.5px; }
+.empty .big { font-size: 15px; color: var(--ink2); margin-bottom: 6px; }
+
+/* ============================================================ runs grid */
+.runs-head { display: flex; align-items: end; gap: 18px; margin: 44px 0 18px; flex-wrap: wrap; }
+.runs-head h2 { font-size: 26px; letter-spacing: -.025em; margin: 0; font-weight: 680; }
+.runs-head .count { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+.runs-head input { max-width: 260px; margin-left: auto; }
+.runs { display: grid; grid-template-columns: repeat(auto-fill, minmax(370px, 1fr)); gap: 18px; }
+.run { display: flex; flex-direction: column; transition: border-color .15s, transform .15s; cursor: pointer; }
+.run:hover { border-color: var(--line2); transform: translateY(-2px); }
+.run .card-b { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.run-top { display: flex; align-items: flex-start; gap: 10px; }
+.run-top h3 { margin: 0; font-size: 16px; font-weight: 650; letter-spacing: -.015em; flex: 1;
+  overflow-wrap: anywhere; }
+.run-meta { color: var(--muted); font: 11.5px var(--mono); letter-spacing: .02em; margin-top: 3px; }
+.statgrid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line);
+  border-radius: var(--radius-s); overflow: hidden; }
+.stat { padding: 10px 12px; border-top: 1px solid var(--line); }
+.stat:nth-child(-n+2) { border-top: 0; }
+.stat:nth-child(odd) { border-right: 1px solid var(--line); }
+.stat .k { font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.stat .v { font-size: 13.5px; font-weight: 600; margin-top: 2px; overflow-wrap: anywhere; }
+.stat .v small { color: var(--muted); font-weight: 400; }
+.minibar { height: 4px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin-top: 7px; }
+.minibar > div { height: 100%; background: var(--accent); border-radius: 4px; }
+.run-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 4px; }
+
+/* ============================================================ tables */
+table.grid { width: 100%; border-collapse: collapse; font-size: 13px; }
+.grid th { font: 500 10.5px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line2); }
+.grid td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.grid tr:last-child td { border-bottom: 0; }
+
+/* ============================================================ viewer / dashboard */
+.viewer { position: fixed; inset: 0; z-index: 60; background: var(--bg); display: none;
+  flex-direction: column; }
+.viewer.open { display: flex; }
+.v-head { display: flex; align-items: center; gap: 14px; padding: 10px 20px;
+  background: var(--surface); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.v-head .v-title { font-weight: 650; font-size: 15px; letter-spacing: -.01em; }
+.v-head .v-meta { color: var(--muted); font: 11.5px var(--mono); }
+.v-tabs { display: flex; gap: 2px; background: var(--surface2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 3px; }
+.v-tabs button { border: 0; background: none; padding: 6px 14px; border-radius: 999px;
+  font: 500 12.5px var(--sans); color: var(--ink2); cursor: pointer; }
+.v-tabs button.on { background: var(--ink); color: var(--bg); font-weight: 600; }
+.v-body { flex: 1; overflow: auto; padding: 26px 28px 70px; }
+.v-body .wrap { max-width: 1240px; margin: 0 auto; }
+.v-frame { flex: 1; border: 0; width: 100%; background: #fff; }
+.v-pane { flex: 1; overflow: auto; padding: 26px 30px; }
+.v-pane pre { background: var(--surface); border: 1px solid var(--line); padding: 18px;
+  border-radius: var(--radius); overflow: auto; font: 12px/1.6 var(--mono); white-space: pre-wrap; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0;
+  border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  background: var(--surface); margin-bottom: 20px; }
+.kpi { padding: 16px 18px; border-left: 1px solid var(--line); }
+.kpi:first-child { border-left: 0; }
+.kpi .k { font: 500 10px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.kpi .v { font-size: 24px; font-weight: 680; letter-spacing: -.02em; margin-top: 3px; }
+.kpi .v small { font-size: 12px; color: var(--muted); font-weight: 400; }
+.dash { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+.dash > .card { grid-column: span 12; }
+.dash > .card.s7 { grid-column: span 7; }
+.dash > .card.s6 { grid-column: span 6; }
+.dash > .card.s5 { grid-column: span 5; }
+@media (max-width: 1020px) { .dash > .card.s7, .dash > .card.s6, .dash > .card.s5 { grid-column: span 12; } }
+.chart-note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+svg text { font-family: var(--sans); }
+svg .mono { font-family: var(--mono); }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
+.legend .li { display: inline-flex; align-items: center; gap: 6px; font: 11px var(--mono);
+  letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+.legend .li i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.notes-list { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ink2); }
+.notes-list li { margin: 5px 0; }
+
+/* Candidate comparisons wrap naturally; bar length, not sketch styling, encodes score. */
+.candidate-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:18px; }
+.candidate-grid.pair { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.candidate-panel { min-width:0; border:1px solid var(--line); border-radius:10px; padding:14px; background:var(--surface); }
+.candidate-panel h3 { margin:0 0 10px; font-size:14px; }
+.candidate-panel h4 { margin:15px 0 8px; font:600 11px var(--mono); color:var(--ink2); }
+.candidate-row { display:grid; grid-template-columns:minmax(0,1fr) 48px; gap:8px; align-items:start; margin:8px 0; }
+.candidate-label { font-size:12px; overflow-wrap:anywhere; }
+.candidate-score { font:600 11px var(--mono); text-align:right; padding-top:1px; }
+.candidate-track { height:6px; background:var(--surface2); border-radius:4px; margin-top:5px; overflow:hidden; }
+.candidate-track > i { display:block; height:100%; background:var(--accent); border-radius:4px; }
+.candidate-panel.prior .candidate-track > i { background:var(--muted); }
+.candidate-note { font-size:11px; color:var(--muted); line-height:1.45; margin:8px 0 0; }
+@media (max-width:900px) { .candidate-grid, .candidate-grid.pair { grid-template-columns:1fr; } }
+
+/* ============================================================ compare */
+.cmp-grid { display: grid; grid-template-columns: 1fr 46px 1fr; gap: 14px; align-items: end; }
+.cmp-vs { align-self: center; justify-self: center; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--line2); display: grid; place-items: center; font: 600 11px var(--mono);
+  color: var(--muted); letter-spacing: .08em; background: var(--surface); }
+.verdict { font-size: 26px; font-weight: 680; letter-spacing: -.025em; margin: 4px 0 2px; }
+.gauge { position: relative; height: 10px; border-radius: 6px; margin: 26px 0 8px;
+  background: linear-gradient(90deg, var(--ok) 0%, var(--ok) 16%, var(--warn) 16%, var(--warn) 36%,
+    var(--bad) 36%, var(--bad) 100%); opacity: .9; }
+.gauge .needle { position: absolute; top: -5px; width: 3px; height: 20px; background: var(--ink);
+  border-radius: 2px; transform: translateX(-50%); }
+.gauge-marks { display: flex; justify-content: space-between; font: 10px var(--mono);
+  color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+
+/* ============================================================ misc */
+.section-head { margin: 46px 0 18px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.section-head h2 { font-size: 26px; letter-spacing: -.025em; margin: 0; font-weight: 680; }
+.hidden { display: none !important; }
+.diag { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px; margin-bottom: 18px; }
+.diag h3 { margin: 0 0 12px; font-size: 14px; font-weight: 650; }
+.diag svg { max-width: 100%; height: auto; }
+.subtabs { display: flex; gap: 6px; margin-bottom: 14px; }
+.foot { text-align: center; color: var(--muted); font: 11px var(--mono); letter-spacing: .1em;
+  text-transform: uppercase; padding: 40px 0 0; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="logo">M</span>Model Forensics
+    <span class="sub">black-box architecture inference</span></div>
+  <nav class="tabs">
+    <button data-tab="scan" class="on">Scan</button>
+    <button data-tab="runs">Runs</button>
+    <button data-tab="compare">Compare</button>
+    <button data-tab="probes">Probes</button>
+  </nav>
+  <div class="spacer"></div>
+  <button class="btn small" id="theme">◐&nbsp;Theme</button>
+</header>
+
+<main>
+  <!-- ============================================================ SCAN -->
+  <section id="tab-scan">
+    <div class="hero">
+      <div class="eyebrow">Black-box architecture inference</div>
+      <h1>X-ray any model API.<br><em>Know what you're really calling.</em></h1>
+      <p>Model Forensics designs and runs experiments against any endpoint and infers the
+         architecture behind it — network family, hidden size, tokenizer, context window,
+         serving stack — each conclusion labelled with its evidence and confidence.</p>
+    </div>
+
+    <div class="scan-grid">
+      <div class="card">
+        <div class="card-h"><span class="eyebrow">New scan</span><span style="flex:1"></span>
+          <span class="pill">▸ ~5 min</span></div>
+        <div class="card-b">
+          <div class="seg" id="target-mode">
+            <button data-m="preset" class="on">Saved target</button>
+            <button data-m="custom">Any endpoint</button>
+          </div>
+
+          <div id="f-preset">
+            <label>Target</label>
+            <select id="preset"></select>
+            <div class="hint">Credentials come from your <code>.env</code>. ✓ = key found.</div>
+          </div>
+
+          <div id="f-custom" class="hidden">
+            <label>API type</label>
+            <select id="provider">
+              <option value="openai">OpenAI-compatible (OpenAI, vLLM, SGLang, Together, Groq, LM Studio…)</option>
+              <option value="azure">Azure OpenAI / Azure AI Foundry</option>
+              <option value="jev">Decision model (TypeSafe Jev)</option>
+              <option value="http">Custom HTTP API (JSON template)</option>
+            </select>
+            <label>Base URL</label>
+            <input id="base_url" placeholder="https://api.example.com/v1">
+            <div id="f-model">
+              <label>Model name</label>
+              <input id="model" placeholder="e.g. new-model-x">
+            </div>
+            <label>API key</label>
+            <input id="api_key" type="password" placeholder="paste key (kept in memory only)">
+            <div class="hint">…or the name of an env var from <code>.env</code>:</div>
+            <input id="api_key_env" placeholder="MY_API_KEY" style="margin-top:6px">
+            <label>Auth header</label>
+            <select id="auth_style">
+              <option value="bearer">Authorization: Bearer …</option>
+              <option value="api-key">api-key: …</option>
+            </select>
+            <div id="f-template" class="hidden">
+              <label>Request / response template (JSON)</label>
+              <textarea id="template"></textarea>
+              <div class="hint">Placeholders: {prompt} {messages_json} {max_tokens} {temperature} {api_key}.
+                Paths like <code>choices[0].message.content</code>.</div>
+            </div>
+          </div>
+
+          <label>Depth</label>
+          <div class="seg" id="depth">
+            <button data-d="quick" class="on">Quick · ~5 min</button>
+            <button data-d="thorough">Thorough</button>
+          </div>
+          <div class="row">
+            <div><label>Max requests</label><input id="max_requests" type="number" placeholder="400"></div>
+            <div><label>Run name</label><input id="name" placeholder="auto"></div>
+          </div>
+          <div class="form-foot">
+            <button class="btn dark wide-cta" id="start">Start scan&nbsp;&nbsp;▸</button>
+            <div class="hint" id="start-msg"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="eyebrow">Activity</span><span style="flex:1"></span>
+          <span class="eyebrow" id="jobs-count"></span></div>
+        <div id="jobs"><div class="empty"><div class="big">No scans this session</div>
+          Start one on the left, or open past results under <b>Runs</b>.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ RUNS -->
+  <section id="tab-runs" class="hidden">
+    <div class="runs-head">
+      <h2>All runs</h2><span class="count" id="runs-count"></span>
+      <input id="run-filter" placeholder="Filter runs…">
+    </div>
+    <div class="runs" id="runs"></div>
+  </section>
+
+  <!-- ============================================================ COMPARE -->
+  <section id="tab-compare" class="hidden">
+    <div class="section-head"><h2>Compare architectural candidates</h2>
+      <span class="eyebrow">Same framework · different endpoint evidence</span></div>
+    <div class="card"><div class="card-b">
+      <div class="cmp-grid">
+        <div><label>Run A</label><select id="cmp-a"></select></div>
+        <div class="cmp-vs">VS</div>
+        <div><label>Run B</label><select id="cmp-b"></select></div>
+      </div>
+      <div class="form-foot" style="display:flex;align-items:center;gap:14px">
+        <button class="btn dark" id="cmp-go">Compare candidates&nbsp;&nbsp;▸</button>
+        <span class="hint" style="margin:0">Scores rank hypotheses; they are not calibrated probabilities.
+          Fingerprint similarity does not prove model identity.</span>
+      </div>
+      <div id="cmp-out"></div>
+    </div></div>
+  </section>
+
+  <!-- ============================================================ PROBES -->
+  <section id="tab-probes" class="hidden">
+    <div class="section-head"><h2>Probe catalogue</h2>
+      <span class="eyebrow">The experiments the scanner can run</span></div>
+    <div class="card"><div class="card-b" style="padding:8px 14px">
+      <table class="grid"><thead><tr><th>Probe</th><th>What it measures</th><th>For</th>
+        <th>Needs</th><th>Produces</th></tr></thead>
+        <tbody id="probes"></tbody></table>
+    </div></div>
+  </section>
+
+  <div class="foot">Model Forensics · evidence first, guesses labelled</div>
+</main>
+
+<!-- ============================================================ VIEWER -->
+<div class="viewer" id="viewer">
+  <div class="v-head">
+    <button class="btn small" id="v-close">←&nbsp;Runs</button>
+    <div><div class="v-title" id="v-title"></div><div class="v-meta" id="v-meta"></div></div>
+    <div class="spacer"></div>
+    <nav class="v-tabs">
+      <button data-v="dash" class="on">Dashboard</button>
+      <button data-v="report">Report</button>
+      <button data-v="diagrams">Diagrams</button>
+      <button data-v="data">Raw data</button>
+    </nav>
+    <a class="btn small" id="v-newtab" target="_blank">Open in new tab&nbsp;↗</a>
+    <button class="btn small danger" id="v-delete">Delete</button>
+  </div>
+  <div class="v-body" id="v-body"><div class="wrap" id="v-dash"></div></div>
+  <iframe class="v-frame hidden" id="v-frame"></iframe>
+  <div class="v-pane hidden" id="v-pane"></div>
+</div>
+
+<script type="module">
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const api = async (u, o) => { const r = await fetch(u, o); if (!r.ok) throw new Error((await r.json().catch(()=>({}))).detail || r.statusText); return r.json(); };
+const pct = p => p == null ? "" : `${Math.round(p * 100)}%`;
+const supportNumber = p => p > 0 && p < .0005 ? "<0.001" : Number(p).toFixed(3);
+const fmtN = n => n == null ? "—" : Number(n).toLocaleString();
+
+/* ------------------------------------------------- value vocabulary */
+const LABEL = {
+  decoder_only:"Decoder-only candidate", encoder_only:"Encoder-only", encoder_decoder:"Encoder–decoder",
+  ssm_or_linear:"State-space / linear", hybrid_attn_ssm:"Hybrid attention+SSM", diffusion:"Diffusion LM",
+  non_neural:"Non-neural", dense:"Dense", moe:"Mixture-of-experts",
+  text_only:"Text only", text_image:"Text + image", text_image_audio:"Text + image + audio", text_audio:"Text + audio",
+  unknown_custom:"unmatched reference tokenizer", rope:"RoPE", learned_absolute:"Learned absolute", sinusoidal:"Sinusoidal",
+  alibi:"ALiBi", nope:"No positional encoding", relative_bias:"Relative bias",
+  full_quadratic:"Full-attention candidate", hybrid:"Hybrid", sliding_or_local:"Sliding / local", linear_recurrent:"Linear recurrent",
+  gqa_or_mqa:"GQA / MQA", mha:"Multi-head (MHA)", mla:"MLA",
+  interpolation_or_yarn:"Interpolation / YaRN", none:"None",
+  single_model:"Single model", router_or_cascade:"Router / cascade", ensemble:"Ensemble",
+  generative_lm_head:"Generative LM head", classification_heads:"Classification heads",
+  causal_lm:"Causal LM", masked_lm:"Masked LM", prefix_lm_or_span:"Prefix LM / span", contrastive_or_classifier:"Contrastive / classifier",
+  per_option_scoring:"Per-option scoring", generative_then_parse:"Generative → parse", single_pass_heads:"Single-pass heads",
+  coupled:"Coupled", independent:"Independent", positional:"Positional", semantic:"Semantic",
+  pre_filter:"Pre-filter", post_filter:"Post-filter", both:"Pre + post filter",
+  retrieval_augmented:"Retrieval-augmented", cross_attn_adapter:"Cross-attn adapter",
+  native_resolution_vit:"Native-res ViT", vit_patch_tokens:"ViT patch tokens",
+  bf16:"bfloat16", fp16:"float16", fp32:"float32", fp8_or_lower:"fp8 or lower",
+  token:"Per token", multi_token_chunks:"Multi-token chunks",
+  base:"Base model", instruct:"Instruction-tuned", rlhf_or_dpo:"RLHF / DPO",
+  distilled_from_other:"Distilled from other", yes:"Yes", no:"No",
+};
+const lab = v => LABEL[v] || String(v ?? "").replaceAll("_", " ");
+const LEVEL_COLOR = { observed:"var(--observed)", inferred:"var(--inferred)", estimated:"var(--estimated)",
+  speculative:"var(--speculative)", unknown:"var(--unknown)" };
+const lvlChip = l => `<span class="lvl" style="color:${LEVEL_COLOR[l] || LEVEL_COLOR.unknown}">${esc(l || "unknown")}</span>`;
+
+/* ------------------------------------------------- theme & tabs */
+const theme = localStorage.getItem("mf-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+document.documentElement.dataset.theme = theme;
+$("#theme").onclick = () => { const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = t; localStorage.setItem("mf-theme", t); };
+function showTab(t) {
+  $$("nav.tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+  $$("main > section").forEach(s => s.classList.toggle("hidden", s.id !== "tab-" + t));
+  if (t === "runs" || t === "compare") loadRuns();
+  if (t === "probes") loadProbes();
+}
+$$("nav.tabs button").forEach(b => b.onclick = () => showTab(b.dataset.tab));
+
+/* ------------------------------------------------- scan form */
+let targetMode = "preset", depth = "quick";
+$$("#target-mode button").forEach(b => b.onclick = () => {
+  targetMode = b.dataset.m; $$("#target-mode button").forEach(x => x.classList.toggle("on", x === b));
+  $("#f-preset").classList.toggle("hidden", targetMode !== "preset");
+  $("#f-custom").classList.toggle("hidden", targetMode !== "custom"); });
+$$("#depth button").forEach(b => b.onclick = () => {
+  depth = b.dataset.d; $$("#depth button").forEach(x => x.classList.toggle("on", x === b));
+  $("#max_requests").placeholder = depth === "quick" ? "400" : "no limit"; });
+const TEMPLATE = {
+  name: "my_api", method: "POST", url: "https://api.example.com/generate",
+  headers: { "Authorization": "Bearer {api_key}", "content-type": "application/json" },
+  body_template: { prompt: "{prompt}", max_new_tokens: "{max_tokens}", temperature: "{temperature}" },
+  extraction: { text_path: "output.text", finish_path: "output.finish_reason",
+    usage: { prompt_path: "usage.input_tokens", completion_path: "usage.output_tokens" } } };
+$("#template").value = JSON.stringify(TEMPLATE, null, 2);
+$("#provider").onchange = () => {
+  const p = $("#provider").value;
+  $("#f-template").classList.toggle("hidden", p !== "http");
+  $("#f-model").classList.toggle("hidden", p === "jev" || p === "http");
+  $("#auth_style").value = p === "azure" ? "api-key" : "bearer";
+  if (p === "jev" && !$("#base_url").value) $("#base_url").value = "https://api.typesafe.ai/v1/systemone";
+};
+
+async function loadPresets() {
+  const ps = await api("/api/presets");
+  const groups = { azure: "Azure deployments", jev: "Decision models", sim: "Offline simulators (no network)" };
+  const byP = {};
+  ps.forEach(p => (byP[p.provider] ||= []).push(p));
+  $("#preset").innerHTML = Object.entries(byP).map(([prov, list]) =>
+    `<optgroup label="${esc(groups[prov] || prov)}">` +
+    list.map(p => `<option value="${esc(p.name)}">${p.ready ? "✓" : "✗"} ${esc(p.name)}</option>`).join("") +
+    `</optgroup>`).join("");
+}
+
+$("#start").onclick = async () => {
+  const body = { mode: depth, name: $("#name").value || null,
+                 max_requests: parseInt($("#max_requests").value) || null };
+  if (targetMode === "preset") body.preset = $("#preset").value;
+  else Object.assign(body, { provider: $("#provider").value, base_url: $("#base_url").value || null,
+      model: $("#model").value || null, api_key: $("#api_key").value || null,
+      api_key_env: $("#api_key_env").value || null, auth_style: $("#auth_style").value,
+      template: $("#provider").value === "http" ? $("#template").value : null });
+  $("#start-msg").textContent = "";
+  $("#start").disabled = true;
+  try { await api("/api/scan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+        $("#api_key").value = ""; pollJobs(); }
+  catch (e) { $("#start-msg").innerHTML = `<span style="color:var(--bad)">${esc(e.message)}</span>`; }
+  finally { $("#start").disabled = false; }
+};
+
+/* ------------------------------------------------- live jobs */
+let pollTimer = null;
+const STATUS = { starting: ["run", "starting"], running: ["run", "running"], rendering: ["run", "writing report"],
+                 done: ["ok dot", "done"], error: ["bad dot", "error"] };
+async function pollJobs() {
+  clearTimeout(pollTimer);
+  const jobs = await api("/api/jobs").catch(() => []);
+  $("#jobs-count").textContent = jobs.length ? `${jobs.length} job${jobs.length > 1 ? "s" : ""}` : "";
+  if (jobs.length) $("#jobs").innerHTML = jobs.map(j => {
+    const [cls, txt] = STATUS[j.status] || ["", j.status];
+    const frac = j.status === "done" ? 1 : j.status === "error" ? 1
+      : j.max_requests && j.requests != null ? Math.max(0.04, Math.min(1, j.requests / j.max_requests)) : 0.04;
+    const barCls = j.status === "done" ? "done" : j.status === "error" ? "err" : "";
+    return `<div class="job">
+      <div class="job-head"><b>${esc(j.label)}</b><span class="flex"></span>
+        <span class="pill ${cls}">${txt}</span><span class="pill">${j.mode}</span>
+        <span class="pill">${j.requests ?? 0}${j.max_requests ? " / " + j.max_requests : ""} req</span>
+        <span class="pill">${Math.round(j.elapsed_s)}s</span></div>
+      <div class="bar ${barCls}"><div style="width:${Math.round(frac * 100)}%"></div></div>
+      ${j.error ? `<div style="color:var(--bad);font-size:12.5px;margin-bottom:8px">${esc(j.error)}</div>` : ""}
+      ${j.status === "done" && j.run_id ? `<div style="margin-bottom:10px">
+          <button class="btn small accent" onclick="openRun('${esc(j.run_id)}','${esc(j.label)}')">Open dashboard&nbsp;▸</button></div>` : ""}
+      <div class="log" id="log-${j.id}">${esc(j.log.join("\n"))}</div></div>`; }).join("");
+  jobs.forEach(j => { const el = $("#log-" + j.id); if (el) el.scrollTop = el.scrollHeight; });
+  if (jobs.some(j => !["done", "error"].includes(j.status))) pollTimer = setTimeout(pollJobs, 1500);
+}
+
+/* ------------------------------------------------- runs */
+let RUNS = [];
+async function loadRuns() {
+  RUNS = await api("/api/runs");
+  renderRuns();
+  const opts = RUNS.map(r => `<option value="${esc(r.id)}">${esc(r.label)} · ${esc((r.created || "").slice(0, 16).replace("T", " "))}</option>`).join("");
+  $("#cmp-a").innerHTML = opts; $("#cmp-b").innerHTML = opts;
+  if (RUNS.length > 1) $("#cmp-b").selectedIndex = 1;
+}
+const stat = (k, v, bar) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div>
+  ${bar != null ? `<div class="minibar"><div style="width:${Math.round(bar * 100)}%"></div></div>` : ""}</div>`;
+function renderRuns() {
+  const q = $("#run-filter").value.toLowerCase();
+  const list = RUNS.filter(r => !q || JSON.stringify(r).toLowerCase().includes(q));
+  $("#runs-count").textContent = `${list.length} run${list.length === 1 ? "" : "s"}`;
+  $("#runs").innerHTML = list.length ? list.map(r => {
+    const fam = r.families?.[0];
+    return `<div class="card run" onclick="openRun('${esc(r.id)}','${esc(r.label)}')">
+      <div class="card-b">
+        <div class="run-top"><div style="flex:1;min-width:0"><h3>${esc(r.label)}</h3>
+          <div class="run-meta">${esc((r.created || "").slice(0, 19).replace("T", " "))} · ${esc(r.kind || "")} · ${fmtN(r.requests)} requests</div></div>
+          ${r.aborted ? '<span class="pill bad dot">incomplete</span>' : '<span class="pill ok dot">complete</span>'}</div>
+        <div class="statgrid">
+          ${stat("Core candidate · support", r.arch ? esc(lab(r.arch[0])) + ` <small>${pct(r.arch[1])}</small>` : "—", r.arch?.[1])}
+          ${stat("FFN", r.sparsity ? esc(lab(r.sparsity[0])) + ` <small>${pct(r.sparsity[1])}</small>` : "—", r.sparsity?.[1])}
+          ${stat("Tokenizer", esc(lab(r.tokenizer) || "—"))}
+          ${stat("Context", r.context ? fmtN(r.context) + " <small>tokens</small>" : "—")}
+        </div>
+        ${fam ? `<div style="display:flex;align-items:center;gap:8px">
+           <span class="eyebrow" style="margin:0">Closest family</span>
+           <span class="pill">${esc(fam.name)}</span><span class="eyebrow" style="margin:0">${fam.score}</span></div>` : ""}
+        <div class="run-actions">
+          <button class="btn small dark" onclick="event.stopPropagation();openRun('${esc(r.id)}','${esc(r.label)}')">Dashboard&nbsp;▸</button>
+          <button class="btn small" onclick="event.stopPropagation();openRun('${esc(r.id)}','${esc(r.label)}','report')">Report</button>
+          <button class="btn small" onclick="event.stopPropagation();openRun('${esc(r.id)}','${esc(r.label)}','diagrams')">Diagrams</button>
+          <span style="flex:1"></span>
+          <button class="btn small danger" onclick="event.stopPropagation();delRun('${esc(r.id)}')">Delete</button>
+        </div>
+      </div></div>`; }).join("") : `<div class="empty"><div class="big">No runs yet</div>Start a scan and results will land here.</div>`;
+}
+$("#run-filter").oninput = renderRuns;
+window.delRun = async id => { if (!confirm("Delete this run and all its files?")) return;
+  await api("/api/runs/" + id, { method: "DELETE" }); loadRuns(); };
+
+/* ------------------------------------------------- svg chart helpers */
+const NS = "http://www.w3.org/2000/svg";
+const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function svgEl(tag, attrs, parent) { const el = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  if (parent) parent.appendChild(el); return el; }
+function svgText(parent, x, y, str, attrs = {}) { const t = svgEl("text", { x, y, ...attrs }, parent);
+  t.textContent = str; return t; }
+
+/* dumbbell: prior (hollow) → posterior (filled) per property */
+function dumbbell(host, rows) {
+  const W = Math.max(host.clientWidth - 4, 320), rh = 34, padT = 8, padB = 6;
+  const labW = 208, valW = 74, plotW = W - labW - valW;
+  const H = padT + padB + rows.length * rh;
+  host.innerHTML = ""; const svg = svgEl("svg", { width: "100%", height: H, viewBox: `0 0 ${W} ${H}` }, host);
+  const ink = cssVar("--ink"), ink2 = cssVar("--ink2"), muted = cssVar("--muted"),
+        line = cssVar("--line2"), acc = cssVar("--accent"), surf = cssVar("--surface");
+  [0, .25, .5, .75, 1].forEach(g => { const x = labW + g * plotW;
+    svgEl("line", { x1: x, y1: padT, x2: x, y2: H - padB, stroke: line, "stroke-width": 1,
+      "stroke-dasharray": g === 0 ? "" : "2 4" }, svg); });
+  rows.forEach((r, i) => {
+    const y = padT + i * rh + rh / 2;
+    const x0 = labW + r.prior * plotW, x1 = labW + r.post * plotW;
+    svgText(svg, 0, y - 3, r.label, { "font-size": 12, fill: ink, "font-weight": 600 });
+    svgText(svg, 0, y + 10, r.value, { "font-size": 10.5, fill: muted, "class": "mono" });
+    svgEl("line", { x1: x0, y1: y, x2: x1, y2: y, stroke: line, "stroke-width": 2.5, "stroke-linecap": "round" }, svg);
+    svgEl("circle", { cx: x0, cy: y, r: 4.5, fill: surf, stroke: muted, "stroke-width": 1.8 }, svg);
+    svgEl("circle", { cx: x1, cy: y, r: 5, fill: acc }, svg);
+    svgText(svg, W - valW + 14, y + 4, pct(r.post), { "font-size": 12, fill: ink, "font-weight": 650 });
+    if (r.prior > 0.005) svgText(svg, x0, y - 10, pct(r.prior), { "font-size": 9, fill: muted,
+      "text-anchor": "middle", "class": "mono" });
+  });
+  return svg;
+}
+
+/* entropy decline over experiment steps */
+function entropyLine(host, steps) {
+  const pts = [];
+  steps.forEach(s => { if (s.h0 != null && s.h1 != null) pts.push({ step: s.step, h0: s.h0, h1: s.h1, probe: s.probe }); });
+  if (pts.length < 2) { host.innerHTML = `<div class="empty">Not enough experiment data.</div>`; return; }
+  const W = Math.max(host.clientWidth - 4, 300), H = 240, padL = 42, padR = 14, padT = 18, padB = 34;
+  const xs = pts.map(p => p.step), ys = pts.flatMap(p => [p.h0, p.h1]);
+  const x0 = Math.min(...xs) - 1, x1 = Math.max(...xs);
+  let y0 = Math.min(...ys), y1 = Math.max(...ys); const ypad = Math.max((y1 - y0) * 0.12, 0.05);
+  y0 -= ypad; y1 += ypad;
+  const X = s => padL + (x1 === x0 ? 0.5 : (s - x0) / (x1 - x0)) * (W - padL - padR);
+  const Y = v => padT + (1 - (v - y0) / (y1 - y0)) * (H - padT - padB);
+  host.innerHTML = ""; const svg = svgEl("svg", { width: "100%", height: H, viewBox: `0 0 ${W} ${H}` }, host);
+  const ink = cssVar("--ink"), muted = cssVar("--muted"), line = cssVar("--line2"),
+        acc = cssVar("--accent"), surf = cssVar("--surface");
+  for (let i = 0; i <= 3; i++) { const v = y0 + (y1 - y0) * i / 3, y = Y(v);
+    svgEl("line", { x1: padL, y1: y, x2: W - padR, y2: y, stroke: line, "stroke-width": 1, "stroke-dasharray": "2 4" }, svg);
+    svgText(svg, padL - 8, y + 4, v.toFixed(1), { "font-size": 9.5, fill: muted, "text-anchor": "end", "class": "mono" }); }
+  const series = [pts[0].h0, ...pts.map(p => p.h1)];
+  const seriesX = [x0, ...pts.map(p => p.step)];
+  const path = series.map((v, i) => `${i ? "L" : "M"}${X(seriesX[i]).toFixed(1)},${Y(v).toFixed(1)}`).join(" ");
+  svgEl("path", { d: `${path} L${X(x1)},${Y(y0)} L${X(x0)},${Y(y0)} Z`,
+    fill: acc, opacity: .08 }, svg);
+  svgEl("path", { d: path, fill: "none", stroke: acc, "stroke-width": 2.2, "stroke-linejoin": "round" }, svg);
+  series.forEach((v, i) => svgEl("circle", { cx: X(seriesX[i]), cy: Y(v), r: 3.4, fill: surf,
+    stroke: acc, "stroke-width": 2 }, svg));
+  svgText(svg, X(x0), H - 12, "start", { "font-size": 9.5, fill: muted, "text-anchor": "start", "class": "mono" });
+  svgText(svg, X(x0), Y(series[0]) - 10, series[0].toFixed(1) + " b", { "font-size": 10, fill: ink,
+    "font-weight": 650, "text-anchor": "start" });
+  svgText(svg, X(x1), Y(series.at(-1)) - 10, series.at(-1).toFixed(1) + " b",
+    { "font-size": 10, fill: ink, "font-weight": 650, "text-anchor": "end" });
+  svgText(svg, X(x1), H - 12, `step ${x1}`, { "font-size": 9.5, fill: muted,
+    "text-anchor": "end", "class": "mono" });
+}
+
+/* horizontal bars (family match scores) */
+function hbars(host, items) {
+  const W = Math.max(host.clientWidth - 4, 300), rh = 36, padT = 6;
+  const labW = 168, valW = 54, plotW = W - labW - valW;
+  const H = padT + items.length * rh + 4;
+  host.innerHTML = ""; const svg = svgEl("svg", { width: "100%", height: H, viewBox: `0 0 ${W} ${H}` }, host);
+  const ink = cssVar("--ink"), muted = cssVar("--muted"), acc = cssVar("--accent"),
+        s2 = cssVar("--surface2");
+  items.forEach((it, i) => {
+    const y = padT + i * rh + 8, bh = 13;
+    svgText(svg, 0, y + bh - 2, it.label.length > 26 ? it.label.slice(0, 25) + "…" : it.label,
+      { "font-size": 11.5, fill: ink, "font-weight": 600 });
+    svgEl("rect", { x: labW, y, width: plotW, height: bh, rx: 6, fill: s2 }, svg);
+    svgEl("rect", { x: labW, y, width: Math.max(it.value * plotW, 4), height: bh, rx: 6, fill: i === 0 ? acc : cssVar("--muted"), opacity: i === 0 ? 1 : .55 }, svg);
+    svgText(svg, W - 4, y + bh - 2, pct(it.value), { "font-size": 11, fill: i === 0 ? ink : muted,
+      "font-weight": 650, "text-anchor": "end", "class": "mono" });
+  });
+}
+
+/* identifiability level counts: vertical bars */
+function identBars(host, levels) {
+  const names = { 1: "Observable", 2: "Identifiable", 3: "Weak", 4: "Assumed", 5: "Unresolved" };
+  const colors = { 1: cssVar("--observed"), 2: cssVar("--inferred"), 3: cssVar("--estimated"),
+                   4: cssVar("--speculative"), 5: cssVar("--unknown") };
+  const W = Math.max(host.clientWidth - 4, 300), H = 168, padB = 40, padT = 16;
+  const bw = (W - 60) / 5;
+  const max = Math.max(1, ...Object.values(levels));
+  host.innerHTML = ""; const svg = svgEl("svg", { width: "100%", height: H, viewBox: `0 0 ${W} ${H}` }, host);
+  const muted = cssVar("--muted"), ink = cssVar("--ink");
+  for (let l = 1; l <= 5; l++) {
+    const n = levels[l] || 0, x = 24 + (l - 1) * bw;
+    const h = (H - padT - padB) * (n / max);
+    svgEl("rect", { x: x + 10, y: H - padB - h, width: bw - 20, height: Math.max(h, n ? 4 : 2),
+      rx: 5, fill: colors[l], opacity: n ? .92 : .25 }, svg);
+    svgText(svg, x + bw / 2, H - padB - h - 7, n || "", { "font-size": 12, fill: ink,
+      "font-weight": 650, "text-anchor": "middle", "class": "mono" });
+    svgText(svg, x + bw / 2, H - padB + 16, `L${l}`, { "font-size": 10.5, fill: muted,
+      "text-anchor": "middle", "class": "mono" });
+    svgText(svg, x + bw / 2, H - padB + 30, names[l], { "font-size": 9.5, fill: muted, "text-anchor": "middle" });
+  }
+}
+
+/* ------------------------------------------------- viewer / dashboard */
+let current = null;
+window.openRun = (id, title, view = "dash") => {
+  current = { id, title }; $("#v-title").textContent = title; $("#v-meta").textContent = id;
+  $("#viewer").classList.add("open"); document.body.style.overflow = "hidden"; show(view); };
+$("#v-close").onclick = () => { $("#viewer").classList.remove("open");
+  document.body.style.overflow = ""; $("#v-frame").src = "about:blank"; loadRuns(); };
+$("#v-delete").onclick = async () => { if (!current) return; await delRun(current.id); $("#v-close").click(); };
+$$("[data-v]").forEach(b => b.onclick = () => show(b.dataset.v));
+const file = n => `/files/${current.id}/${n}`;
+
+function show(v) {
+  $$("[data-v]").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+  const body = $("#v-body"), frame = $("#v-frame"), pane = $("#v-pane");
+  body.classList.toggle("hidden", v !== "dash");
+  frame.classList.toggle("hidden", v !== "report");
+  pane.classList.toggle("hidden", !(v === "diagrams" || v === "data"));
+  if (v === "dash") renderDashboard();
+  if (v === "report") { frame.src = file("report.html"); $("#v-newtab").href = file("report.html"); }
+  if (v === "diagrams") renderDiagrams();
+  if (v === "data") renderData();
+}
+
+async function renderDashboard() {
+  const host = $("#v-dash");
+  host.innerHTML = `<div class="empty">Loading dashboard…</div>`;
+  let d;
+  try { d = await api(`/api/runs/${current.id}/detail`); }
+  catch (e) { host.innerHTML = `<div class="empty">Could not load: ${esc(e.message)}</div>`; return; }
+  $("#v-newtab").href = file("report.html");
+  const b = d.budget || {}, c = d.counts || {};
+  const kpi = (k, v, small = "") => `<div class="kpi"><div class="k">${k}</div><div class="v">${v} <small>${small}</small></div></div>`;
+  const beliefRows = (d.properties || []).filter(p => p.values?.length).map(p => {
+    const top = p.values[0];
+    const pretty = p.key.split(".").slice(-1)[0].replaceAll("_", " ");
+    return { key: p.key, label: `${p.key.split(".")[0]} · ${pretty}`, value: lab(top.value),
+             prior: top.prior, post: top.post, alts: p.values.slice(1, 3) };
+  });
+  host.innerHTML = `
+    <div class="kpis">
+      ${kpi("Requests", fmtN(b.requests), b.aborted_unreachable ? "aborted" : "")}
+      ${kpi("Tokens in", fmtN(b.input_tokens))}
+      ${kpi("Tokens out", fmtN(b.output_tokens))}
+      ${kpi("Probes", fmtN(c.probes))}
+      ${kpi("Evidence", fmtN(c.evidence))}
+      ${kpi("Experiments", fmtN(c.experiments))}
+    </div>
+    <div class="dash">
+      <div class="card s7"><div class="card-h"><span class="eyebrow">Architectural candidates</span>
+        <span style="flex:1"></span><span class="eyebrow">prior → support</span></div>
+        <div class="card-b"><div id="ch-beliefs"></div>
+          <div class="chart-note">Normalized relative support, not calibrated architecture probabilities.</div>
+          <div class="legend"><span class="li"><i style="background:var(--accent)"></i>support score</span>
+            <span class="li"><i style="border:2px solid var(--muted);background:transparent;border-radius:50%"></i>prior</span></div>
+        </div></div>
+      <div class="card s5"><div class="card-h"><span class="eyebrow">Surrogate uncertainty</span></div>
+        <div class="card-b"><div id="ch-entropy"></div>
+          <div class="chart-note">Entropy of the heuristic ranking state, not calibrated information recovered.</div></div></div>
+      <div class="card" id="dashboard-candidates"><div class="card-h"><span class="eyebrow">${esc(d.label)} · Competing architecture hypotheses</span>
+        <span class="hint" style="margin:0">All candidate scores; prior-only fields marked</span></div>
+        <div class="card-b" id="candidate-detail"></div></div>
+      <div class="card"><div class="card-h"><span class="eyebrow">Measured quantities</span>
+        <span style="flex:1"></span><span class="eyebrow">${(d.quantities || []).length} estimates</span></div>
+        <div class="card-b" style="padding:8px 14px"><table class="grid"><thead><tr>
+          <th>Quantity</th><th>Value</th><th>90% CI</th><th>Level</th><th>Probe</th></tr></thead>
+          <tbody>${(d.quantities || []).map(q => `<tr>
+            <td><code>${esc(q.key)}</code></td>
+            <td><b>${esc(fmtVal(q.value, q.unit))}</b></td>
+            <td class="mono" style="font-size:11.5px;color:var(--muted)">${esc(fmtCI(q))}</td>
+            <td>${lvlChip(q.level)}</td><td><code>${esc(q.probe || "—")}</code></td></tr>`).join("")
+            || `<tr><td colspan="5" style="color:var(--muted)">No quantities were estimated in this run.</td></tr>`}
+        </tbody></table></div></div>
+      <div class="card s6"><div class="card-h"><span class="eyebrow">Closest known families</span></div>
+        <div class="card-b">${d.families?.length ? `<div id="ch-fams"></div>
+          <div class="chart-note">Consistency with public model signatures. High score is necessary, not sufficient.</div>`
+          : `<div class="empty">No family matches — insufficient measured constraints.</div>`}</div></div>
+      <div class="card s6"><div class="card-h"><span class="eyebrow">Knowability</span></div>
+        <div class="card-b"><div id="ch-ident"></div>
+          <div class="chart-note">Legacy capability assessments. Missing measurements are unresolved;
+            formal non-identifiability requires a scoped witness.</div>
+          <div id="ev-chips" style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap"></div></div></div>
+      <div class="card"><div class="card-h"><span class="eyebrow">Experiment log</span>
+        <span style="flex:1"></span><span class="eyebrow">adaptive probe selection</span></div>
+        <div class="card-b" style="padding:8px 14px"><table class="grid"><thead><tr>
+          <th>#</th><th>Probe</th><th>Entropy</th><th>EIG</th><th>Requests</th><th>Status</th></tr></thead>
+          <tbody>${(d.experiments || []).map(s => `<tr>
+            <td class="mono">${s.step}</td><td><code>${esc(s.probe)}</code></td>
+            <td class="mono" style="font-size:11.5px">${s.h0 != null ? s.h0.toFixed(1) + " → " + s.h1.toFixed(1) + " b" : "—"}</td>
+            <td class="mono" style="font-size:11.5px">${s.eig != null ? s.eig.toFixed(2) : "—"}</td>
+            <td class="mono" style="font-size:11.5px">${s.req ?? "—"}</td>
+            <td>${statusPill(s.status)}</td></tr>`).join("")}</tbody></table></div></div>
+      ${d.notes?.length ? `<div class="card"><div class="card-h"><span class="eyebrow">Run notes</span></div>
+        <div class="card-b"><ul class="notes-list">${d.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul></div></div>` : ""}
+    </div>`;
+  const nodes = d.architecture?.nodes || [];
+  const getNode = key => nodes.find(n => n.id === key);
+  $("#candidate-detail").innerHTML = '<div class="candidate-grid">' +
+    ["arch.family", "arch.sparsity", d.kind === "decision" ? "decision.scoring_mechanism" : "out.logit_precision"]
+      .map(key => candidatePanel(getNode(key), key)).join("") + '</div>';
+  dumbbell($("#ch-beliefs"), beliefRows);
+  entropyLine($("#ch-entropy"), d.experiments || []);
+  if (d.families?.length) hbars($("#ch-fams"), d.families.map(f => ({ label: f.name, value: f.score })));
+  identBars($("#ch-ident"), d.ident_levels || {});
+  const ev = d.evidence_levels || {};
+  $("#ev-chips").innerHTML = Object.entries(ev).sort().map(([l, n]) =>
+    `<span class="lvl" style="color:${LEVEL_COLOR[l] || LEVEL_COLOR.unknown}">${esc(l)} × ${n}</span>`).join("");
+}
+const statusPill = s => `<span class="pill ${{ ok: "ok dot", partial: "warn dot",
+  failed: "bad dot", skipped: "dot" }[s] || "dot"}">${esc(s)}</span>`;
+function fmtVal(v, unit) { if (v == null) return "—";
+  if (typeof v === "number") {
+    const s = !isFinite(v) ? "∞" : Math.abs(v) >= 10000 ? fmtN(Math.round(v))
+      : Number.isInteger(v) ? fmtN(v) : +v.toPrecision(4);
+    return s + (unit ? " " + unit : "");
+  }
+  return lab(v); }
+function fmtCI(q) { if (!Array.isArray(q.ci) || q.ci.length !== 2) return "—";
+  const f = x => typeof x !== "number" ? x : !isFinite(x) ? "∞"
+    : Math.abs(x) >= 10000 ? fmtN(Math.round(x)) : +x.toPrecision(3);
+  return `${f(q.ci[0])} – ${f(q.ci[1])}`; }
+
+async function renderDiagrams() {
+  const pane = $("#v-pane");
+  const names = [["architecture", "Measured architecture — the figure"],
+                 ["topology", "Serving topology"], ["evidence", "Evidence → conclusions"]];
+  pane.innerHTML = `<div class="wrap">` + names.map(([n, t]) => `<div class="diag"><h3>${t}</h3>
+    <div class="mermaid" id="dg-${n}">loading…</div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn small" href="${file(n + ".svg")}" target="_blank">.svg</a>
+      <a class="btn small" href="${file(n + ".mmd")}" target="_blank">.mmd</a>
+      <a class="btn small" href="${file(n + ".dot")}" target="_blank">.dot</a></div></div>`).join("") + `</div>`;
+  $("#v-newtab").href = file("architecture.svg");
+  /* the hand-rendered SVG figure is primary — dependency-free and annotated with
+     the experiment behind every component; mermaid is the fallback for old runs */
+  const needMermaid = [];
+  for (const [n] of names) {
+    const el = $("#dg-" + n);
+    let txt = null;
+    try { const r = await fetch(file(n + ".svg")); if (r.ok) txt = await r.text(); } catch {}
+    if (txt && txt.includes("<svg")) { el.innerHTML = txt; continue; }
+    needMermaid.push(n);
+  }
+  if (!needMermaid.length) return;
+  const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))]);
+  let mermaid = null;
+  try { mermaid = (await withTimeout(import("https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"), 9000)).default;
+    mermaid.initialize({ startOnLoad: false, theme: document.documentElement.dataset.theme === "dark" ? "dark" : "neutral",
+                         flowchart: { htmlLabels: true }, securityLevel: "loose" }); }
+  catch { /* fall through to source view */ }
+  for (const n of needMermaid) {
+    const src = await fetch(file(n + ".mmd")).then(r => r.ok ? r.text() : "");
+    const el = $("#dg-" + n);
+    if (!el) return;
+    if (!src) { el.textContent = "not available for this run"; continue; }
+    if (!mermaid) { el.innerHTML = `<pre>${esc(src)}</pre>`; continue; }
+    try { const { svg } = await withTimeout(mermaid.render("svg-" + n + "-" + Date.now(), src), 15000);
+      el.innerHTML = svg; }
+    catch { el.innerHTML = `<pre>${esc(src)}</pre>`; }
+  }
+}
+
+async function renderData() {
+  const pane = $("#v-pane");
+  pane.innerHTML = `<div class="subtabs" id="data-tabs">
+      <button class="btn small dark" data-f="report.md">Markdown</button>
+      <button class="btn small" data-f="report.json">JSON</button>
+      <button class="btn small" data-f="run_result.json">Full result</button>
+      <button class="btn small" data-f="observations.jsonl">Requests log</button></div>
+    <div id="data-body"><div class="empty">loading…</div></div>`;
+  const loadf = async name => {
+    $("#v-newtab").href = file(name);
+    const body = $("#data-body"); body.innerHTML = `<div class="empty">loading…</div>`;
+    try {
+      let txt = await fetch(file(name)).then(r => { if (!r.ok) throw new Error(r.statusText); return r.text(); });
+      if (name.endsWith(".json")) { try { txt = JSON.stringify(JSON.parse(txt), null, 2); } catch {} }
+      if (txt.length > 1_500_000) txt = txt.slice(0, 1_500_000) + "\n… (truncated — open in new tab for the full file)";
+      body.innerHTML = `<pre>${esc(txt)}</pre>`;
+    } catch (e) { body.innerHTML = `<div class="empty">Not available: ${esc(e.message)}</div>`; }
+  };
+  $$("#data-tabs button").forEach(b => b.onclick = () => {
+    $$("#data-tabs button").forEach(x => x.classList.toggle("dark", x === b)); loadf(b.dataset.f); });
+  loadf("report.md");
+}
+
+/* Reusable candidate bars: data-derived labels/scores, no percentages of model identity. */
+function candidatePanel(node, fallback = "") {
+  if (!node || !node.ranked_candidates?.length) return `<div class="candidate-panel"><h3>${esc(fallback)}</h3><div class="candidate-note">No candidate distribution measured.</div></div>`;
+  const prior = node.prior_only, probes = [...new Set((node.evidence || []).map(e => e.probe_id?.split(".")[0]).filter(Boolean))];
+  return `<div class="candidate-panel ${prior ? "prior" : ""}"><h3>${esc(node.title || fallback)}</h3>
+    <div class="candidate-note">${prior ? "Unchanged prior · no updating evidence" : esc(node.evidence_grade || "L4") + " · " + esc(probes.join(" / ") || "recorded evidence")}</div>
+    ${node.ranked_candidates.map(c => `<div class="candidate-row"><div class="candidate-label">${esc(lab(c.value))}
+      <div class="candidate-track"><i style="width:${Math.max(0,Math.min(1,c.support_score))*100}%"></i></div></div>
+      <div class="candidate-score">${supportNumber(c.support_score)}</div></div>`).join("")}
+    <div class="candidate-note">Relative support; alternatives remain in the candidate set.</div></div>`;
+}
+function comparisonPanel(rows, side, label) {
+  const keys = ["arch.family", "arch.sparsity", "decision.scoring_mechanism", "out.logit_precision"];
+  return `<div class="candidate-panel"><h3>${esc(label)}</h3>` + keys.map(key => {
+    const row = rows.find(r => r.key === key), data = row?.[side]; if (!data) return "";
+    return `<h4>${esc(row.label)} · ${data.prior_only ? "prior only" : esc(data.grade)}</h4>` +
+      data.candidates.map(c => `<div class="candidate-row"><div class="candidate-label">${esc(lab(c.value))}
+        <div class="candidate-track"><i style="width:${Math.max(0,Math.min(1,c.support_score))*100}%;${data.prior_only ? "background:var(--muted)" : ""}"></i></div></div>
+        <div class="candidate-score">${supportNumber(c.support_score)}</div></div>`).join("");
+  }).join("") + '</div>';
+}
+/* ------------------------------------------------- compare */
+$("#cmp-go").onclick = async () => {
+  const a = $("#cmp-a").value, b = $("#cmp-b").value;
+  if (!a || !b || a === b) { $("#cmp-out").innerHTML = `<div class="hint" style="margin-top:14px">Pick two different runs.</div>`; return; }
+  $("#cmp-out").innerHTML = `<div class="hint" style="margin-top:14px">comparing…</div>`;
+  try {
+    const r = await api(`/api/compare?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}`);
+    const fmt = v => Array.isArray(v) ? `${esc(lab(v[0]))} (${pct(v[1])})` : esc(lab(v) ?? "—");
+    const pos = Math.min(r.distance / 0.5, 1) * 100;
+    $("#cmp-out").innerHTML = `
+      <div style="margin-top:22px;border-top:1px solid var(--line);padding-top:20px">
+      <div class="eyebrow">Verdict</div>
+      <div class="verdict">${esc(r.verdict)}</div>
+      <div class="hint">Measured fingerprint distance <b>${r.distance}</b>. ${esc(r.identity_caveat || "This does not prove model identity.")}</div>
+      <div class="candidate-grid pair">
+        ${comparisonPanel(r.candidate_comparison || [], "a", r.a)}
+        ${comparisonPanel(r.candidate_comparison || [], "b", r.b)}</div>
+      <table class="grid" style="margin-top:18px"><thead><tr><th>Property</th><th>${esc(r.a)}</th><th>${esc(r.b)}</th><th></th></tr></thead><tbody>
+      ${r.rows.map(x => `<tr><td style="text-transform:capitalize">${esc(x.key)}</td><td>${fmt(x.a)}</td><td>${fmt(x.b)}</td>
+        <td>${x.same ? '<span class="pill ok dot">same value</span>' : '<span class="pill warn dot">different value</span>'}
+          ${x.same && !x.scores_equal ? '<span class="candidate-note"> · support differs</span>' : ''}</td></tr>`).join("")}
+      </tbody></table></div>`;
+  } catch (e) { $("#cmp-out").innerHTML = `<div style="color:var(--bad);margin-top:14px">${esc(e.message)}</div>`; }
+};
+
+/* ------------------------------------------------- probes */
+let probesLoaded = false;
+async function loadProbes() {
+  if (probesLoaded) return; probesLoaded = true;
+  const ps = await api("/api/probes");
+  $("#probes").innerHTML = ps.map(p => `<tr><td><code>${esc(p.id)}</code></td>
+    <td style="min-width:280px">${esc(p.title)}</td>
+    <td>${p.kinds.map(k => `<span class="pill" style="margin:1px 3px 1px 0">${esc(k)}</span>`).join("")}</td>
+    <td style="color:var(--muted)">${esc(p.requires.join(", ") || "—")}</td>
+    <td style="color:var(--muted)">${esc(p.estimates.join(", ") || "—")}</td></tr>`).join("");
+}
+
+loadPresets(); pollJobs();
+</script>
+</body>
+</html>

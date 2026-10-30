@@ -1,0 +1,1756 @@
+[
+ {
+  "family": "arcade100k",
+  "repo_or_tiktoken_name": "stabilityai/stablelm-2-1_6b",
+  "alt_repos": [],
+  "vocab_size": 100289,
+  "vocab_size_base": 100289,
+  "model_embedding_rows": [
+   100352
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "stabilityai/stablelm-2-1_6b": {
+    "ok": true,
+    "vocab": 100289
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "stablelm-2-1_6b"
+  ],
+  "notes": null
+ },
+ {
+  "family": "baichuan2-sp125k",
+  "repo_or_tiktoken_name": null,
+  "alt_repos": [],
+  "vocab_size": null,
+  "vocab_size_base": null,
+  "model_embedding_rows": [
+   125696
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": null,
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": false,
+  "verification": {},
+  "test_string_token_count": null,
+  "used_by": [
+   "Baichuan2-13B-Base"
+  ],
+  "notes": "only tokenizer.model (sentencepiece)"
+ },
+ {
+  "family": "bert-wordpiece-uncased",
+  "repo_or_tiktoken_name": "google-bert/bert-base-uncased",
+  "alt_repos": [],
+  "vocab_size": 30522,
+  "vocab_size_base": 30522,
+  "model_embedding_rows": [
+   30522
+  ],
+  "type": "wordpiece",
+  "hf_model_class": "WordPiece",
+  "pre_tokenizer": "BertPreTokenizer",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "google-bert/bert-base-uncased": {
+    "ok": true,
+    "vocab": 30522
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "bert-base-uncased",
+   "bert-large-uncased",
+   "distilbert-base-uncased"
+  ],
+  "notes": null
+ },
+ {
+  "family": "bloom",
+  "repo_or_tiktoken_name": "bigscience/bloom",
+  "alt_repos": [],
+  "vocab_size": 250680,
+  "vocab_size_base": 250680,
+  "model_embedding_rows": [
+   250880
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "bigscience/bloom": {
+    "ok": true,
+    "vocab": 250680
+   }
+  },
+  "test_string_token_count": 9,
+  "used_by": [
+   "bloom",
+   "bloom-560m",
+   "bloom-7b1"
+  ],
+  "notes": null
+ },
+ {
+  "family": "cl100k",
+  "repo_or_tiktoken_name": "Xenova/gpt-4",
+  "alt_repos": [],
+  "vocab_size": 100263,
+  "vocab_size_base": 100263,
+  "model_embedding_rows": [
+   100352
+  ],
+  "type": "tiktoken(mirror)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "Xenova/gpt-4": {
+    "ok": true,
+    "vocab": 100263
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "DBRX"
+  ],
+  "notes": "Xenova/gpt-4 is an HF-format mirror of tiktoken cl100k_base"
+ },
+ {
+  "family": "cl100k-derived",
+  "repo_or_tiktoken_name": "microsoft/phi-4",
+  "alt_repos": [],
+  "vocab_size": 100352,
+  "vocab_size_base": 100352,
+  "model_embedding_rows": [
+   100352
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "microsoft/phi-4": {
+    "ok": true,
+    "vocab": 100352
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "phi-4"
+  ],
+  "notes": null
+ },
+ {
+  "family": "codegen-gpt2",
+  "repo_or_tiktoken_name": "microsoft/phi-1_5",
+  "alt_repos": [
+   "microsoft/phi-2"
+  ],
+  "vocab_size": 50295,
+  "vocab_size_base": 50257,
+  "model_embedding_rows": [
+   51200
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "ByteLevel",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "microsoft/phi-1_5": {
+    "ok": true,
+    "vocab": 50295
+   },
+   "microsoft/phi-2": {
+    "ok": true,
+    "vocab": 50295
+   }
+  },
+  "test_string_token_count": 18,
+  "used_by": [
+   "phi-1_5",
+   "phi-2"
+  ],
+  "notes": null
+ },
+ {
+  "family": "cohere",
+  "repo_or_tiktoken_name": null,
+  "alt_repos": [],
+  "vocab_size": null,
+  "vocab_size_base": null,
+  "model_embedding_rows": [
+   256000
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": null,
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": false,
+  "verification": {},
+  "test_string_token_count": null,
+  "used_by": [
+   "Command-R v01 (35B)"
+  ],
+  "notes": "gated repo (CohereForAI); not verified"
+ },
+ {
+  "family": "deberta-v3-sp128k",
+  "repo_or_tiktoken_name": null,
+  "alt_repos": [],
+  "vocab_size": null,
+  "vocab_size_base": null,
+  "model_embedding_rows": [
+   128100
+  ],
+  "type": "unigram(sentencepiece)",
+  "hf_model_class": null,
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": false,
+  "verification": {},
+  "test_string_token_count": null,
+  "used_by": [
+   "deberta-v3-base",
+   "deberta-v3-large"
+  ],
+  "notes": "only spm.model (sentencepiece) in repo; use sentencepiece lib"
+ },
+ {
+  "family": "deepseek-v2-bbpe100k",
+  "repo_or_tiktoken_name": "deepseek-ai/DeepSeek-V2-Lite",
+  "alt_repos": [
+   "deepseek-ai/deepseek-llm-7b-base"
+  ],
+  "vocab_size": 100002,
+  "vocab_size_base": 100000,
+  "model_embedding_rows": [
+   102400
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "deepseek-ai/DeepSeek-V2-Lite": {
+    "ok": true,
+    "vocab": 100002
+   },
+   "deepseek-ai/deepseek-llm-7b-base": {
+    "ok": true,
+    "vocab": 100015
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "DeepSeek-Coder-V2-Lite-Base",
+   "DeepSeek-V2",
+   "DeepSeek-V2-Lite",
+   "deepseek-llm-67b-base",
+   "deepseek-llm-7b-base",
+   "deepseek-moe-16b-base"
+  ],
+  "notes": null
+ },
+ {
+  "family": "deepseek-v3-bbpe128k",
+  "repo_or_tiktoken_name": "deepseek-ai/DeepSeek-V3",
+  "alt_repos": [],
+  "vocab_size": 128815,
+  "vocab_size_base": 128000,
+  "model_embedding_rows": [
+   129280
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "deepseek-ai/DeepSeek-V3": {
+    "ok": true,
+    "vocab": 128815
+   }
+  },
+  "test_string_token_count": 11,
+  "used_by": [
+   "DeepSeek-R1",
+   "DeepSeek-V3",
+   "DeepSeek-V3.1",
+   "DeepSeek-V3.2",
+   "DeepSeek-V3.2-Exp"
+  ],
+  "notes": null
+ },
+ {
+  "family": "ernie4.5-sp103k",
+  "repo_or_tiktoken_name": "baidu/ERNIE-4.5-21B-A3B-PT",
+  "alt_repos": [],
+  "vocab_size": 101304,
+  "vocab_size_base": 100295,
+  "model_embedding_rows": [
+   103424
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "baidu/ERNIE-4.5-21B-A3B-PT": {
+    "ok": true,
+    "vocab": 101304
+   }
+  },
+  "test_string_token_count": 13,
+  "used_by": [
+   "ERNIE-4.5-21B-A3B-PT",
+   "ERNIE-4.5-300B-A47B-PT"
+  ],
+  "notes": null
+ },
+ {
+  "family": "falcon",
+  "repo_or_tiktoken_name": "tiiuae/falcon-7b",
+  "alt_repos": [],
+  "vocab_size": 65024,
+  "vocab_size_base": 65024,
+  "model_embedding_rows": [
+   65024
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "tiiuae/falcon-7b": {
+    "ok": true,
+    "vocab": 65024
+   }
+  },
+  "test_string_token_count": 17,
+  "used_by": [
+   "Falcon-180B",
+   "falcon-40b",
+   "falcon-7b",
+   "falcon-mamba-7b"
+  ],
+  "notes": null
+ },
+ {
+  "family": "falcon-h1",
+  "repo_or_tiktoken_name": "tiiuae/Falcon-H1-7B-Base",
+  "alt_repos": [],
+  "vocab_size": 130048,
+  "vocab_size_base": 130048,
+  "model_embedding_rows": [
+   130048
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "tiiuae/Falcon-H1-7B-Base": {
+    "ok": true,
+    "vocab": 130048
+   }
+  },
+  "test_string_token_count": 13,
+  "used_by": [
+   "Falcon-H1-7B-Base"
+  ],
+  "notes": null
+ },
+ {
+  "family": "falcon3",
+  "repo_or_tiktoken_name": "tiiuae/Falcon3-7B-Base",
+  "alt_repos": [],
+  "vocab_size": 131072,
+  "vocab_size_base": 131072,
+  "model_embedding_rows": [
+   131072
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "tiiuae/Falcon3-7B-Base": {
+    "ok": true,
+    "vocab": 131072
+   }
+  },
+  "test_string_token_count": 17,
+  "used_by": [
+   "Falcon3-7B-Base"
+  ],
+  "notes": null
+ },
+ {
+  "family": "gemma-sp256k",
+  "repo_or_tiktoken_name": "unsloth/gemma-2-9b",
+  "alt_repos": [
+   "unsloth/gemma-2b"
+  ],
+  "vocab_size": 256000,
+  "vocab_size_base": 256000,
+  "model_embedding_rows": [
+   256000
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Split",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "unsloth/gemma-2-9b": {
+    "ok": true,
+    "vocab": 256000
+   },
+   "unsloth/gemma-2b": {
+    "ok": true,
+    "vocab": 256000
+   }
+  },
+  "test_string_token_count": 13,
+  "used_by": [
+   "gemma-2-27b",
+   "gemma-2-2b",
+   "gemma-2-9b",
+   "gemma-2b",
+   "gemma-7b"
+  ],
+  "notes": null
+ },
+ {
+  "family": "gemma3-sp262k",
+  "repo_or_tiktoken_name": "unsloth/gemma-3-1b-pt",
+  "alt_repos": [
+   "unsloth/gemma-3n-E4B-it"
+  ],
+  "vocab_size": 262145,
+  "vocab_size_base": 262144,
+  "model_embedding_rows": [
+   262144,
+   262208,
+   262400
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Split",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "unsloth/gemma-3-1b-pt": {
+    "ok": true,
+    "vocab": 262145
+   },
+   "unsloth/gemma-3n-E4B-it": {
+    "ok": true,
+    "vocab": 262400
+   }
+  },
+  "test_string_token_count": 12,
+  "used_by": [
+   "gemma-3-12b-pt",
+   "gemma-3-1b-pt",
+   "gemma-3-270m",
+   "gemma-3-27b-pt",
+   "gemma-3-4b-pt",
+   "gemma-3n-E4B-it"
+  ],
+  "notes": null
+ },
+ {
+  "family": "glm4-bbpe151k",
+  "repo_or_tiktoken_name": "zai-org/GLM-4.5",
+  "alt_repos": [
+   "zai-org/glm-4-9b-hf"
+  ],
+  "vocab_size": 151365,
+  "vocab_size_base": 151329,
+  "model_embedding_rows": [
+   151552
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "zai-org/GLM-4.5": {
+    "ok": true,
+    "vocab": 151365
+   },
+   "zai-org/glm-4-9b-hf": {
+    "ok": true,
+    "vocab": 151343
+   }
+  },
+  "test_string_token_count": 11,
+  "used_by": [
+   "GLM-4.5",
+   "GLM-4.5-Air",
+   "GLM-4.6",
+   "GLM-4.7",
+   "glm-4-9b-hf"
+  ],
+  "notes": null
+ },
+ {
+  "family": "glm5-bbpe154k",
+  "repo_or_tiktoken_name": "zai-org/GLM-5",
+  "alt_repos": [],
+  "vocab_size": 154856,
+  "vocab_size_base": 154820,
+  "model_embedding_rows": [
+   154880
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "zai-org/GLM-5": {
+    "ok": true,
+    "vocab": 154856
+   }
+  },
+  "test_string_token_count": 11,
+  "used_by": [
+   "GLM-5"
+  ],
+  "notes": null
+ },
+ {
+  "family": "gpt-neox",
+  "repo_or_tiktoken_name": "EleutherAI/gpt-neox-20b",
+  "alt_repos": [],
+  "vocab_size": 50277,
+  "vocab_size_base": 50254,
+  "model_embedding_rows": [
+   50277,
+   50280,
+   50288,
+   50304,
+   50432,
+   50688
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "ByteLevel",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "EleutherAI/gpt-neox-20b": {
+    "ok": true,
+    "vocab": 50277
+   }
+  },
+  "test_string_token_count": 13,
+  "used_by": [
+   "MPT-7B",
+   "OLMo-7B-hf",
+   "OLMoE-1B-7B-0924",
+   "gpt-neox-20b",
+   "mamba-130m-hf",
+   "mamba-2.8b-hf",
+   "mamba2-2.7b",
+   "pythia-1.4b",
+   "pythia-12b",
+   "pythia-160m",
+   "pythia-1b",
+   "pythia-2.8b",
+   "pythia-410m",
+   "pythia-6.9b",
+   "pythia-70m",
+   "rwkv-4-169m-pile",
+   "rwkv-4-7b-pile"
+  ],
+  "notes": null
+ },
+ {
+  "family": "gpt2",
+  "repo_or_tiktoken_name": "FacebookAI/roberta-base",
+  "alt_repos": [
+   "facebook/bart-base",
+   "openai-community/gpt2"
+  ],
+  "vocab_size": 50265,
+  "vocab_size_base": 50265,
+  "model_embedding_rows": [
+   50257,
+   50265,
+   50272,
+   50400
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "ByteLevel",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "FacebookAI/roberta-base": {
+    "ok": true,
+    "vocab": 50265
+   },
+   "facebook/bart-base": {
+    "ok": true,
+    "vocab": 50265
+   },
+   "openai-community/gpt2": {
+    "ok": true,
+    "vocab": 50257
+   }
+  },
+  "test_string_token_count": 20,
+  "used_by": [
+   "GPT-3 175B",
+   "bart-base",
+   "bart-large",
+   "gpt-j-6b",
+   "gpt2",
+   "gpt2-large",
+   "gpt2-medium",
+   "gpt2-xl",
+   "opt-1.3b",
+   "opt-125m",
+   "opt-13b",
+   "opt-30b",
+   "opt-6.7b",
+   "opt-66b",
+   "roberta-base",
+   "roberta-large"
+  ],
+  "notes": null
+ },
+ {
+  "family": "granite-bbpe49k",
+  "repo_or_tiktoken_name": "ibm-granite/granite-3.1-8b-base",
+  "alt_repos": [],
+  "vocab_size": 49152,
+  "vocab_size_base": 49152,
+  "model_embedding_rows": [
+   49152
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "ibm-granite/granite-3.1-8b-base": {
+    "ok": true,
+    "vocab": 49152
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "granite-3.1-8b-base"
+  ],
+  "notes": null
+ },
+ {
+  "family": "granite4-bbpe100k",
+  "repo_or_tiktoken_name": "ibm-granite/granite-4.0-h-small",
+  "alt_repos": [],
+  "vocab_size": 100352,
+  "vocab_size_base": 100352,
+  "model_embedding_rows": [
+   100352
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "ibm-granite/granite-4.0-h-small": {
+    "ok": true,
+    "vocab": 100352
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "granite-4.0-h-small"
+  ],
+  "notes": null
+ },
+ {
+  "family": "grok1-sp131k",
+  "repo_or_tiktoken_name": "hpcai-tech/grok-1",
+  "alt_repos": [],
+  "vocab_size": 131072,
+  "vocab_size_base": 131072,
+  "model_embedding_rows": [
+   131072
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "hpcai-tech/grok-1": {
+    "ok": true,
+    "vocab": 131072
+   }
+  },
+  "test_string_token_count": 13,
+  "used_by": [
+   "grok-1-hf"
+  ],
+  "notes": null
+ },
+ {
+  "family": "hunyuan-128k",
+  "repo_or_tiktoken_name": "tencent/Hunyuan-A13B-Instruct",
+  "alt_repos": [],
+  "vocab_size": 128166,
+  "vocab_size_base": 127957,
+  "model_embedding_rows": [
+   128167
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "tencent/Hunyuan-A13B-Instruct": {
+    "ok": true,
+    "vocab": 128166
+   }
+  },
+  "test_string_token_count": 15,
+  "used_by": [
+   "Hunyuan-A13B-Instruct"
+  ],
+  "notes": null
+ },
+ {
+  "family": "internlm2-sp92k",
+  "repo_or_tiktoken_name": null,
+  "alt_repos": [],
+  "vocab_size": null,
+  "vocab_size_base": null,
+  "model_embedding_rows": [
+   92544
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": null,
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": false,
+  "verification": {},
+  "test_string_token_count": null,
+  "used_by": [
+   "internlm2_5-7b-chat"
+  ],
+  "notes": "only tokenizer.model (sentencepiece)"
+ },
+ {
+  "family": "jamba-sp65k",
+  "repo_or_tiktoken_name": "ai21labs/Jamba-v0.1",
+  "alt_repos": [],
+  "vocab_size": 65536,
+  "vocab_size_base": 65536,
+  "model_embedding_rows": [
+   65536
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "ai21labs/Jamba-v0.1": {
+    "ok": true,
+    "vocab": 65536
+   }
+  },
+  "test_string_token_count": 17,
+  "used_by": [
+   "AI21-Jamba-Reasoning-3B",
+   "Jamba-1.5-Large",
+   "Jamba-v0.1"
+  ],
+  "notes": null
+ },
+ {
+  "family": "kimi-tiktoken160k",
+  "repo_or_tiktoken_name": "moonshotai/Kimi-K2-Instruct:tiktoken.model",
+  "alt_repos": [],
+  "vocab_size": 163584,
+  "vocab_size_base": null,
+  "model_embedding_rows": [
+   163840
+  ],
+  "type": "tiktoken",
+  "hf_model_class": null,
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": false,
+  "verification": {},
+  "test_string_token_count": 11,
+  "used_by": [
+   "Kimi-K2-Instruct",
+   "Kimi-K2-Instruct-0905",
+   "Kimi-K2-Thinking",
+   "Kimi-K2.5",
+   "Kimi-Linear-48B-A3B-Instruct",
+   "Moonlight-16B-A3B"
+  ],
+  "notes": "tiktoken.model + custom pat_str (Han-split); verified loadable via tiktoken.Encoding (163584 ranks), not via tokenizers",
+  "loads_with_tiktoken_custom": true
+ },
+ {
+  "family": "ling-bbpe157k",
+  "repo_or_tiktoken_name": "inclusionAI/LLaDA-MoE-7B-A1B-Base",
+  "alt_repos": [
+   "inclusionAI/Ling-1T"
+  ],
+  "vocab_size": 157153,
+  "vocab_size_base": 156891,
+  "model_embedding_rows": [
+   157184
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "inclusionAI/LLaDA-MoE-7B-A1B-Base": {
+    "ok": true,
+    "vocab": 157153
+   },
+   "inclusionAI/Ling-1T": {
+    "ok": true,
+    "vocab": 157153
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "LLaDA-MoE-7B-A1B-Base",
+   "Ling-1T"
+  ],
+  "notes": null
+ },
+ {
+  "family": "ling-lite-bbpe126k",
+  "repo_or_tiktoken_name": "inclusionAI/Ling-lite-1.5",
+  "alt_repos": [],
+  "vocab_size": 126346,
+  "vocab_size_base": 126080,
+  "model_embedding_rows": [
+   126464
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "inclusionAI/Ling-lite-1.5": {
+    "ok": true,
+    "vocab": 126346
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "Ling-lite-1.5"
+  ],
+  "notes": null
+ },
+ {
+  "family": "llada-126k",
+  "repo_or_tiktoken_name": "GSAI-ML/LLaDA-8B-Base",
+  "alt_repos": [],
+  "vocab_size": 126346,
+  "vocab_size_base": 126080,
+  "model_embedding_rows": [
+   126464
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "GSAI-ML/LLaDA-8B-Base": {
+    "ok": true,
+    "vocab": 126346
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "LLaDA-8B-Base",
+   "LLaDA-8B-Instruct"
+  ],
+  "notes": "same tokenizer as Ling-lite (inclusionAI/Ant group lineage)"
+ },
+ {
+  "family": "llama-sp32k",
+  "repo_or_tiktoken_name": "NousResearch/Llama-2-7b-hf",
+  "alt_repos": [
+   "microsoft/Phi-3-mini-4k-instruct",
+   "microsoft/Phi-3.5-MoE-instruct"
+  ],
+  "vocab_size": 32000,
+  "vocab_size_base": 32000,
+  "model_embedding_rows": [
+   32000,
+   32064
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "NousResearch/Llama-2-7b-hf": {
+    "ok": true,
+    "vocab": 32000
+   },
+   "microsoft/Phi-3-mini-4k-instruct": {
+    "ok": true,
+    "vocab": 32011
+   },
+   "microsoft/Phi-3.5-MoE-instruct": {
+    "ok": true,
+    "vocab": 32011
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "Llama-2-13b-hf",
+   "Llama-2-70b-hf",
+   "Llama-2-7b-hf",
+   "Phi-3-medium-4k-instruct",
+   "Phi-3-mini-4k-instruct",
+   "Phi-3.5-MoE-instruct",
+   "snowflake-arctic-base"
+  ],
+  "notes": null
+ },
+ {
+  "family": "llama3-tiktoken128k",
+  "repo_or_tiktoken_name": "HuggingFaceTB/SmolLM3-3B",
+  "alt_repos": [
+   "unsloth/Llama-3.2-1B",
+   "unsloth/Meta-Llama-3.1-8B"
+  ],
+  "vocab_size": 128256,
+  "vocab_size_base": 128000,
+  "model_embedding_rows": [
+   128256
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "HuggingFaceTB/SmolLM3-3B": {
+    "ok": true,
+    "vocab": 128256
+   },
+   "unsloth/Llama-3.2-1B": {
+    "ok": true,
+    "vocab": 128256
+   },
+   "unsloth/Meta-Llama-3.1-8B": {
+    "ok": true,
+    "vocab": 128256
+   }
+  },
+  "test_string_token_count": 12,
+  "used_by": [
+   "Llama-3.1-405B (config via Hermes-3 fine-tune mirror)",
+   "Llama-3.2-1B",
+   "Llama-3.2-3B",
+   "Llama-3.3-70B-Instruct",
+   "Meta-Llama-3-70B",
+   "Meta-Llama-3-8B",
+   "Meta-Llama-3.1-70B",
+   "Meta-Llama-3.1-8B",
+   "SmolLM3-3B"
+  ],
+  "notes": null
+ },
+ {
+  "family": "llama4-202k",
+  "repo_or_tiktoken_name": "unsloth/Llama-4-Scout-17B-16E-Instruct",
+  "alt_repos": [],
+  "vocab_size": 201135,
+  "vocab_size_base": 200000,
+  "model_embedding_rows": [
+   202048
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "unsloth/Llama-4-Scout-17B-16E-Instruct": {
+    "ok": true,
+    "vocab": 201135
+   }
+  },
+  "test_string_token_count": 11,
+  "used_by": [
+   "Llama-4-Maverick-17B-128E-Instruct",
+   "Llama-4-Scout-17B-16E-Instruct"
+  ],
+  "notes": null
+ },
+ {
+  "family": "longcat-131k",
+  "repo_or_tiktoken_name": "meituan-longcat/LongCat-Flash-Chat",
+  "alt_repos": [],
+  "vocab_size": 131072,
+  "vocab_size_base": 131072,
+  "model_embedding_rows": [
+   131072
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "meituan-longcat/LongCat-Flash-Chat": {
+    "ok": true,
+    "vocab": 131072
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "LongCat-Flash-Chat"
+  ],
+  "notes": null
+ },
+ {
+  "family": "minimax-bbpe200k",
+  "repo_or_tiktoken_name": "MiniMaxAI/MiniMax-Text-01",
+  "alt_repos": [],
+  "vocab_size": 200026,
+  "vocab_size_base": 200000,
+  "model_embedding_rows": [
+   200064
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "MiniMaxAI/MiniMax-Text-01": {
+    "ok": true,
+    "vocab": 200026
+   }
+  },
+  "test_string_token_count": 10,
+  "used_by": [
+   "MiniMax-M1-80k",
+   "MiniMax-Text-01"
+  ],
+  "notes": null
+ },
+ {
+  "family": "minimax-m2-bbpe200k",
+  "repo_or_tiktoken_name": "MiniMaxAI/MiniMax-M2",
+  "alt_repos": [],
+  "vocab_size": 200054,
+  "vocab_size_base": 200000,
+  "model_embedding_rows": [
+   200064
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "MiniMaxAI/MiniMax-M2": {
+    "ok": true,
+    "vocab": 200054
+   }
+  },
+  "test_string_token_count": 10,
+  "used_by": [
+   "MiniMax-M2",
+   "MiniMax-M2.1"
+  ],
+  "notes": null
+ },
+ {
+  "family": "mistral-sp32k",
+  "repo_or_tiktoken_name": "mistralai/Mistral-7B-v0.1",
+  "alt_repos": [
+   "mistralai/Mixtral-8x22B-v0.1",
+   "mistralai/Mixtral-8x7B-v0.1"
+  ],
+  "vocab_size": 32000,
+  "vocab_size_base": 32000,
+  "model_embedding_rows": [
+   32000
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Metaspace",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "mistralai/Mistral-7B-v0.1": {
+    "ok": true,
+    "vocab": 32000
+   },
+   "mistralai/Mixtral-8x22B-v0.1": {
+    "ok": true,
+    "vocab": 32000
+   },
+   "mistralai/Mixtral-8x7B-v0.1": {
+    "ok": true,
+    "vocab": 32000
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "Mistral-7B-v0.1",
+   "Mixtral-8x22B-v0.1",
+   "Mixtral-8x7B-v0.1"
+  ],
+  "notes": null
+ },
+ {
+  "family": "mistral-tekken131k",
+  "repo_or_tiktoken_name": "mistralai/Ministral-8B-Instruct-2410",
+  "alt_repos": [
+   "mistralai/Mistral-Nemo-Base-2407"
+  ],
+  "vocab_size": 131072,
+  "vocab_size_base": 131072,
+  "model_embedding_rows": [
+   131072
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived, 'tekken')",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "mistralai/Ministral-8B-Instruct-2410": {
+    "ok": true,
+    "vocab": 131072
+   },
+   "mistralai/Mistral-Nemo-Base-2407": {
+    "ok": true,
+    "vocab": 131072
+   }
+  },
+  "test_string_token_count": 15,
+  "used_by": [
+   "Devstral-Small-2505",
+   "Magistral-Small-2506",
+   "Ministral-8B-Instruct-2410",
+   "Mistral-Nemo-Base-2407",
+   "Mistral-Small-24B-Base-2501",
+   "Mistral-Small-3.1-24B-Base-2503",
+   "Mistral-Small-3.2-24B-Instruct-2506"
+  ],
+  "notes": null
+ },
+ {
+  "family": "mistral-v3-sp32768",
+  "repo_or_tiktoken_name": "mistralai/Mamba-Codestral-7B-v0.1",
+  "alt_repos": [
+   "mistralai/Mistral-Large-Instruct-2411",
+   "unsloth/Mistral-Large-Instruct-2407-bnb-4bit"
+  ],
+  "vocab_size": 32768,
+  "vocab_size_base": 32768,
+  "model_embedding_rows": [
+   32768
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Metaspace",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "mistralai/Mamba-Codestral-7B-v0.1": {
+    "ok": true,
+    "vocab": 32768
+   },
+   "mistralai/Mistral-Large-Instruct-2411": {
+    "ok": true,
+    "vocab": 32768
+   },
+   "unsloth/Mistral-Large-Instruct-2407-bnb-4bit": {
+    "ok": true,
+    "vocab": 32768
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "Mamba-Codestral-7B-v0.1",
+   "Mistral-Large-Instruct-2407",
+   "Mistral-Large-Instruct-2411"
+  ],
+  "notes": null
+ },
+ {
+  "family": "modernbert(gpt-neox-derived)",
+  "repo_or_tiktoken_name": "answerdotai/ModernBERT-base",
+  "alt_repos": [],
+  "vocab_size": 50368,
+  "vocab_size_base": 50280,
+  "model_embedding_rows": [
+   50368
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "ByteLevel",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "answerdotai/ModernBERT-base": {
+    "ok": true,
+    "vocab": 50368
+   }
+  },
+  "test_string_token_count": 15,
+  "used_by": [
+   "ModernBERT-base",
+   "ModernBERT-large"
+  ],
+  "notes": null
+ },
+ {
+  "family": "nemotron-h-131k",
+  "repo_or_tiktoken_name": "nvidia/Nemotron-H-8B-Base-8K",
+  "alt_repos": [],
+  "vocab_size": 131072,
+  "vocab_size_base": 131072,
+  "model_embedding_rows": [
+   131072
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "nvidia/Nemotron-H-8B-Base-8K": {
+    "ok": true,
+    "vocab": 131072
+   }
+  },
+  "test_string_token_count": 15,
+  "used_by": [
+   "NVIDIA-Nemotron-Nano-9B-v2",
+   "Nemotron-H-8B-Base-8K"
+  ],
+  "notes": null
+ },
+ {
+  "family": "o200k-derived",
+  "repo_or_tiktoken_name": "microsoft/Phi-4-mini-instruct",
+  "alt_repos": [],
+  "vocab_size": 200029,
+  "vocab_size_base": 200019,
+  "model_embedding_rows": [
+   200064
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "microsoft/Phi-4-mini-instruct": {
+    "ok": true,
+    "vocab": 200029
+   }
+  },
+  "test_string_token_count": 10,
+  "used_by": [
+   "Phi-4-mini-instruct"
+  ],
+  "notes": null
+ },
+ {
+  "family": "o200k_harmony",
+  "repo_or_tiktoken_name": "openai/gpt-oss-20b",
+  "alt_repos": [],
+  "vocab_size": 200019,
+  "vocab_size_base": 199998,
+  "model_embedding_rows": [
+   201088
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "openai/gpt-oss-20b": {
+    "ok": true,
+    "vocab": 200019
+   }
+  },
+  "test_string_token_count": 10,
+  "used_by": [
+   "gpt-oss-120b",
+   "gpt-oss-20b"
+  ],
+  "notes": null
+ },
+ {
+  "family": "olmo2-cl100k",
+  "repo_or_tiktoken_name": "allenai/OLMo-2-1124-7B",
+  "alt_repos": [
+   "allenai/Olmo-3-1025-7B"
+  ],
+  "vocab_size": 100278,
+  "vocab_size_base": 100278,
+  "model_embedding_rows": [
+   100278,
+   100352
+  ],
+  "type": "bpe-bytelevel(tiktoken-derived)",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "allenai/OLMo-2-1124-7B": {
+    "ok": true,
+    "vocab": 100278
+   },
+   "allenai/Olmo-3-1025-7B": {
+    "ok": true,
+    "vocab": 100278
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "OLMo-2-0325-32B",
+   "OLMo-2-1124-13B",
+   "OLMo-2-1124-7B",
+   "Olmo-3-1025-7B"
+  ],
+  "notes": null
+ },
+ {
+  "family": "qwen2-bbpe151k",
+  "repo_or_tiktoken_name": "Qwen/Qwen2.5-7B",
+  "alt_repos": [
+   "XiaomiMiMo/MiMo-7B-Base",
+   "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+  ],
+  "vocab_size": 151665,
+  "vocab_size_base": 151643,
+  "model_embedding_rows": [
+   151680,
+   151936,
+   152064
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "Qwen/Qwen2.5-7B": {
+    "ok": true,
+    "vocab": 151665
+   },
+   "XiaomiMiMo/MiMo-7B-Base": {
+    "ok": true,
+    "vocab": 151665
+   },
+   "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B": {
+    "ok": true,
+    "vocab": 151665
+   }
+  },
+  "test_string_token_count": 15,
+  "used_by": [
+   "DeepSeek-R1-Distill-Qwen-7B",
+   "DiffuCoder-7B-Base",
+   "Dream-v0-Base-7B",
+   "MiMo-7B-Base",
+   "Qwen1.5-7B",
+   "Qwen1.5-MoE-A2.7B",
+   "Qwen2-57B-A14B",
+   "Qwen2-7B",
+   "Qwen2.5-0.5B",
+   "Qwen2.5-1.5B",
+   "Qwen2.5-14B",
+   "Qwen2.5-32B",
+   "Qwen2.5-3B",
+   "Qwen2.5-72B",
+   "Qwen2.5-7B",
+   "Qwen3-0.6B",
+   "Qwen3-1.7B",
+   "Qwen3-14B",
+   "Qwen3-235B-A22B",
+   "Qwen3-235B-A22B-Instruct-2507",
+   "Qwen3-30B-A3B",
+   "Qwen3-32B",
+   "Qwen3-4B",
+   "Qwen3-8B",
+   "Qwen3-Coder-480B-A35B-Instruct",
+   "Qwen3-Next-80B-A3B-Instruct",
+   "Qwen3-VL-8B-Instruct"
+  ],
+  "notes": null
+ },
+ {
+  "family": "qwen3.5-bbpe248k",
+  "repo_or_tiktoken_name": "Qwen/Qwen3.5-397B-A17B",
+  "alt_repos": [],
+  "vocab_size": 248070,
+  "vocab_size_base": 248044,
+  "model_embedding_rows": [
+   248320
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "Qwen/Qwen3.5-397B-A17B": {
+    "ok": true,
+    "vocab": 248070
+   }
+  },
+  "test_string_token_count": 13,
+  "used_by": [
+   "Qwen3.5-397B-A17B"
+  ],
+  "notes": null
+ },
+ {
+  "family": "rwkv-world",
+  "repo_or_tiktoken_name": null,
+  "alt_repos": [],
+  "vocab_size": null,
+  "vocab_size_base": null,
+  "model_embedding_rows": [
+   65536
+  ],
+  "type": "trie(greedy, custom)",
+  "hf_model_class": null,
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": false,
+  "verification": {},
+  "test_string_token_count": null,
+  "used_by": [
+   "rwkv7-1.5B-world",
+   "v5-Eagle-7B-HF",
+   "v6-Finch-7B-HF"
+  ],
+  "notes": "rwkv_vocab_v20230424.txt, greedy trie tokenizer; not loadable by tokenizers lib"
+ },
+ {
+  "family": "smollm-bbpe49k",
+  "repo_or_tiktoken_name": "HuggingFaceTB/SmolLM2-1.7B",
+  "alt_repos": [],
+  "vocab_size": 49152,
+  "vocab_size_base": 49152,
+  "model_embedding_rows": [
+   49152
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "HuggingFaceTB/SmolLM2-1.7B": {
+    "ok": true,
+    "vocab": 49152
+   }
+  },
+  "test_string_token_count": 17,
+  "used_by": [
+   "SmolLM2-1.7B"
+  ],
+  "notes": null
+ },
+ {
+  "family": "starcoder-bbpe49k",
+  "repo_or_tiktoken_name": "bigcode/starcoder2-15b",
+  "alt_repos": [],
+  "vocab_size": 49152,
+  "vocab_size_base": 49152,
+  "model_embedding_rows": [
+   49152
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "bigcode/starcoder2-15b": {
+    "ok": true,
+    "vocab": 49152
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "starcoder2-15b"
+  ],
+  "notes": null
+ },
+ {
+  "family": "step3-128k",
+  "repo_or_tiktoken_name": "stepfun-ai/step3",
+  "alt_repos": [],
+  "vocab_size": 128815,
+  "vocab_size_base": 128000,
+  "model_embedding_rows": [
+   128815
+  ],
+  "type": "bpe-bytelevel",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "stepfun-ai/step3": {
+    "ok": true,
+    "vocab": 128815
+   }
+  },
+  "test_string_token_count": 11,
+  "used_by": [
+   "step3"
+  ],
+  "notes": "reported vocab identical in size to DeepSeek-V3's 128815 added-token vocab; compare merges before assuming identity"
+ },
+ {
+  "family": "t5-sp-unigram32k",
+  "repo_or_tiktoken_name": "google-t5/t5-base",
+  "alt_repos": [
+   "google/flan-t5-base",
+   "google/ul2"
+  ],
+  "vocab_size": 32100,
+  "vocab_size_base": 32100,
+  "model_embedding_rows": [
+   32128
+  ],
+  "type": "unigram(sentencepiece)",
+  "hf_model_class": "Unigram",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "google-t5/t5-base": {
+    "ok": true,
+    "vocab": 32100
+   },
+   "google/flan-t5-base": {
+    "ok": true,
+    "vocab": 32100
+   },
+   "google/ul2": {
+    "ok": true,
+    "vocab": 32128
+   }
+  },
+  "test_string_token_count": 16,
+  "used_by": [
+   "flan-t5-base",
+   "flan-t5-large",
+   "flan-t5-small",
+   "flan-t5-xl",
+   "flan-t5-xxl",
+   "t5-11b",
+   "t5-3b",
+   "t5-base",
+   "t5-large",
+   "t5-small",
+   "t5-v1_1-xxl",
+   "ul2"
+  ],
+  "notes": null
+ },
+ {
+  "family": "xlmr-sp-unigram250k",
+  "repo_or_tiktoken_name": "FacebookAI/xlm-roberta-large",
+  "alt_repos": [],
+  "vocab_size": 250002,
+  "vocab_size_base": 250002,
+  "model_embedding_rows": [
+   250002
+  ],
+  "type": "unigram(sentencepiece)",
+  "hf_model_class": "Unigram",
+  "pre_tokenizer": "Sequence",
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "FacebookAI/xlm-roberta-large": {
+    "ok": true,
+    "vocab": 250002
+   }
+  },
+  "test_string_token_count": 12,
+  "used_by": [
+   "xlm-roberta-large"
+  ],
+  "notes": null
+ },
+ {
+  "family": "yi-sp64k",
+  "repo_or_tiktoken_name": "01-ai/Yi-34B",
+  "alt_repos": [],
+  "vocab_size": 64000,
+  "vocab_size_base": 64000,
+  "model_embedding_rows": [
+   64000
+  ],
+  "type": "sentencepiece-bpe",
+  "hf_model_class": "BPE",
+  "pre_tokenizer": null,
+  "loads_with_tokenizers_from_pretrained": true,
+  "verification": {
+   "01-ai/Yi-34B": {
+    "ok": true,
+    "vocab": 64000
+   }
+  },
+  "test_string_token_count": 14,
+  "used_by": [
+   "Yi-34B"
+  ],
+  "notes": null
+ },
+ {
+  "family": "tiktoken:r50k_base",
+  "repo_or_tiktoken_name": "r50k_base",
+  "vocab_size": 50257,
+  "type": "tiktoken",
+  "loads_with_tokenizers_from_pretrained": null,
+  "loads_with_tiktoken_get_encoding": true,
+  "test_string_token_count": 18,
+  "used_by": [
+   "GPT-2",
+   "GPT-3 (davinci)"
+  ],
+  "notes": "tiktoken.get_encoding(name); closed-API OpenAI models"
+ },
+ {
+  "family": "tiktoken:p50k_base",
+  "repo_or_tiktoken_name": "p50k_base",
+  "vocab_size": 50281,
+  "type": "tiktoken",
+  "loads_with_tokenizers_from_pretrained": null,
+  "loads_with_tiktoken_get_encoding": true,
+  "test_string_token_count": 18,
+  "used_by": [
+   "Codex",
+   "text-davinci-002/003"
+  ],
+  "notes": "tiktoken.get_encoding(name); closed-API OpenAI models"
+ },
+ {
+  "family": "tiktoken:cl100k_base",
+  "repo_or_tiktoken_name": "cl100k_base",
+  "vocab_size": 100277,
+  "type": "tiktoken",
+  "loads_with_tokenizers_from_pretrained": null,
+  "loads_with_tiktoken_get_encoding": true,
+  "test_string_token_count": 14,
+  "used_by": [
+   "GPT-3.5-turbo",
+   "GPT-4",
+   "GPT-4-turbo",
+   "text-embedding-3-*"
+  ],
+  "notes": "tiktoken.get_encoding(name); closed-API OpenAI models"
+ },
+ {
+  "family": "tiktoken:o200k_base",
+  "repo_or_tiktoken_name": "o200k_base",
+  "vocab_size": 200019,
+  "type": "tiktoken",
+  "loads_with_tokenizers_from_pretrained": null,
+  "loads_with_tiktoken_get_encoding": true,
+  "test_string_token_count": 10,
+  "used_by": [
+   "GPT-4o",
+   "GPT-4o-mini",
+   "o1",
+   "o3",
+   "o4-mini",
+   "GPT-4.1",
+   "GPT-5 (reported)"
+  ],
+  "notes": "tiktoken.get_encoding(name); closed-API OpenAI models"
+ },
+ {
+  "family": "tiktoken:o200k_harmony",
+  "repo_or_tiktoken_name": "o200k_harmony",
+  "vocab_size": 201088,
+  "type": "tiktoken",
+  "loads_with_tokenizers_from_pretrained": null,
+  "loads_with_tiktoken_get_encoding": true,
+  "test_string_token_count": 10,
+  "used_by": [
+   "gpt-oss-20b",
+   "gpt-oss-120b"
+  ],
+  "notes": "tiktoken.get_encoding(name); closed-API OpenAI models"
+ },
+ {
+  "family": "o200k(mirror)",
+  "repo_or_tiktoken_name": "Xenova/gpt-4o",
+  "vocab_size": 200000,
+  "vocab_size_base": 200000,
+  "type": "bpe-bytelevel(tiktoken mirror)",
+  "loads_with_tokenizers_from_pretrained": true,
+  "test_string_token_count": 10,
+  "used_by": [
+   "GPT-4o family"
+  ],
+  "notes": "HF-format mirror of o200k_base"
+ },
+ {
+  "family": "claude-legacy-65k",
+  "repo_or_tiktoken_name": "Xenova/claude-tokenizer",
+  "vocab_size": 65000,
+  "vocab_size_base": 65000,
+  "type": "bpe-bytelevel",
+  "loads_with_tokenizers_from_pretrained": true,
+  "test_string_token_count": 13,
+  "used_by": [
+   "Claude 1.x/2.x (legacy, per Anthropic's old SDK)"
+  ],
+  "notes": "Legacy Anthropic tokenizer; NOT valid for Claude 3+ (use API usage counts instead)"
+ },
+ {
+  "family": "llama-sp32k(mirror)",
+  "repo_or_tiktoken_name": "hf-internal-testing/llama-tokenizer",
+  "vocab_size": 32000,
+  "vocab_size_base": 32000,
+  "type": "sentencepiece-bpe",
+  "loads_with_tokenizers_from_pretrained": true,
+  "test_string_token_count": 16,
+  "used_by": [
+   "Llama 1/2"
+  ],
+  "notes": "ungated mirror"
+ },
+ {
+  "family": "mistral-v3-sp32768(alt)",
+  "repo_or_tiktoken_name": "mistralai/Mistral-7B-Instruct-v0.3",
+  "vocab_size": 32768,
+  "vocab_size_base": 32768,
+  "type": "sentencepiece-bpe",
+  "loads_with_tokenizers_from_pretrained": true,
+  "test_string_token_count": 16,
+  "used_by": [
+   "Mistral 7B v0.3",
+   "Mixtral-8x22B-Instruct"
+  ],
+  "notes": null
+ },
+ {
+  "family": "gpt-neox(rwkv4 copy)",
+  "repo_or_tiktoken_name": "RWKV/rwkv-4-169m-pile",
+  "vocab_size": 50277,
+  "vocab_size_base": 50254,
+  "type": "bpe-bytelevel",
+  "loads_with_tokenizers_from_pretrained": true,
+  "test_string_token_count": 13,
+  "used_by": [
+   "RWKV-4 Pile"
+  ],
+  "notes": null
+ },
+ {
+  "family": "_unloadable_via_tokenizers_lib",
+  "repo_or_tiktoken_name": null,
+  "type": null,
+  "used_by": [],
+  "notes": "Verified failures of Tokenizer.from_pretrained: microsoft/deberta-v3-base (404 tokenizer.json), facebook/opt-125m (404), moonshotai/Kimi-K2-Instruct (404; tiktoken.model works via tiktoken), internlm/internlm3-8b-instruct (404), Xenova/deberta-v3-base (401 gated/nonexistent)"
+ }
+]

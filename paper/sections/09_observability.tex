@@ -1,0 +1,46 @@
+\section{API observability: how the surface bounds the boundary}
+\label{sec:observability}
+The boundary is not fixed by nature.  It is set by what the provider chooses to expose.
+This section measures that directly: how the identified set changes as channels are
+closed one by one.
+
+\subsection{Channel-closure ablation}
+We take one synthetic stack and keep the model fixed while closing surfaces in
+sequence: full access $\to$ a top-5 cap $\to$ logits closed $\to$ billing also closed
+$\to$ added timing noise.  Table~\ref{tab:closure} shows how the detectors respond.
+Closing the logits weakens the wire-grid and repeat evidence (the dtype score drops from
+0.76 to 0.40).  Closing billing removes tokenizer acquisition entirely, because the
+count channel is gone.  Closing both leaves the behavioural core intact (generation
+family, contract) but stops every numeric reconstruction.  Adding timing noise at the
+tested level changed nothing further.  This is a detector-response ablation on a single
+stack.  It maps the \emph{direction} of each dependency.  It is not a universal proof
+that closing a channel hides a property from every possible estimator.
+
+\begin{table}[t]\centering\small
+\caption{Same-model channel closure: settled-property count and key detector scores as
+surfaces close.  ``--'' = channel absent, property unmeasurable.}
+\label{tab:closure}
+\input{generated/closure.tex}
+\end{table}
+
+\subsection{Access regimes, restated as provider choices}
+The three regimes of Sec.~\ref{sec:regimes} are decisions a provider makes: how deep
+the logprobs go, whether \texttt{logit\_bias} is allowed, how finely streaming is
+chunked, how detailed the usage report is, whether errors are standardised, and how
+smooth the timing is.  Each lever moves the boundary (Table~\ref{tab:closure}).  A
+provider that limits top-$k$ to top-5 moves width from identified to access-limited.
+One that buffers its streaming removes the decode-state channel.  One that standardises
+its error messages removes contract reads.  The same levers also shape legitimate audit
+surfaces, so this cuts both ways: \emph{API surface design is observability policy}.
+Transparency obligations are a reason to document what each choice hides and what it
+legitimately protects \cite{euaiact2024,bommasani2023fmti}.  Our boundary ledger
+(Table~\ref{tab:cannot}) states the current position for each property.
+
+\subsection{What the endpoint does not tell you}
+The layer model plus the closure data justify the paper's negative-inference
+discipline.  We repeat it here because it is doing real work in every result:
+\emph{recall is not attention; latency is not kernel complexity; behaviour is not a
+training recipe; a prior-only candidate is not recovered structure; an unchanged API is
+not evidence of an unchanged model}.  The counterpoint to that last worry is the swap
+fixture in Sec.~\ref{sec:blindfixtures}, whose detection rates bound it empirically for
+large designed changes.

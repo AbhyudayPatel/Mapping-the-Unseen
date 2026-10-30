@@ -1,0 +1,96 @@
+\section{The formal problem: what an API can and cannot see}
+\label{sec:setup}
+\subsection{Configuration, channels, and the identified set}
+Think of an endpoint as a bundle of four things, written $\omega=(M,S,I,P)$: the
+\emph{model} itself, the \emph{serving stack} that runs it, the \emph{interface} that
+exposes it, and the \emph{preprocessing} that prepares the input.  When we send a
+request $X_t$, the API returns $Y_t=(y_t,\ell_t,u_t,t_t,h_t)$.  Those five parts are
+the sampled text, the numeric values (logprobs or probabilities), the usage accounting,
+the timing, and the envelope (headers and error schemas).  These are our only windows
+into the system.
+
+Our target is not $\omega$ itself.  It is the \emph{equivalence class}
+$[\omega]_{\mathcal C,\mathcal X}$: the set of every configuration that would be
+impossible to tell apart from $\omega$ when viewed through the channels $\mathcal C$ we
+have, using only the requests $\mathcal X$ we are allowed to send.  For each property
+$g$ we also track the \emph{identified set} $\mathcal I_g(\omega;\mathcal C,\mathcal
+X)$: the values of $g$ that remain possible (Def.~\ref{def:identified} in
+Sec.~\ref{sec:ident}).  What we recover is \emph{functional} architecture: how the
+input is tokenized, how text is generated, whether the model uses attention or a
+constant-size state, whether the feed-forward layers are dense or sparse, the geometry of
+the output, the numeric regime, and the serving structure.  In other words, the
+organisation of the computation, as far as the equivalence class pins it down.  Never
+weights, and never source code.  Throughout the paper we call this \emph{functional
+architecture identification under API observability constraints}.  When we say
+``reconstruction'', that is the shorthand.
+
+\begin{table}[!htb]\centering\footnotesize
+\caption{Plain-word glossary.  The terms and grades used throughout the paper, in the
+order a reader meets them.  Grades L1 to L5 and U are attached to every reconstructed
+component; the four boundary classes I, C, A, N are attached to every open question.}
+\label{tab:glossary}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Term} & \textbf{Meaning in plain words}\\
+\midrule
+$\omega=(M,S,I,P)$ & The hidden system: model, serving stack, interface, preprocessing.\\
+channel & One kind of thing the API returns that we can measure: usage counts, logprobs, timing, behaviour, error text.\\
+$[\omega]_{\mathcal C,\mathcal X}$ & All systems that would look identical to $\omega$ through our channels and allowed requests.  This is what we can actually recover.\\
+identified set $\mathcal I_g$ & For one property $g$, the values that are still possible after everything we observed.\\
+witness & A concrete pair of different systems that give identical observations.  A witness proves a property cannot be identified.\\
+$\kappa$, $\hat\kappa$ & Information per request: how much evidence one API call gives for telling two candidates apart.  High (around 2) means a few requests settle it.  Low (around 0.02) means hundreds.  Zero means never.\\
+probe (P01 to P23) & A controlled request pattern designed to measure one thing, with a stated failure mode.\\
+support score & The engine's ranking score for a candidate.  It is a ranking, not a probability; we measure how far from a probability it is.\\
+prefill / decode & Prefill is the work done on the prompt before the first output token.  Decode is the per-token work after that.\\
+KV cache / constant state & A transformer stores a growing key-value cache, so each new token costs a little more.  An SSM keeps a fixed-size state, so it does not.\\
+\midrule
+L1 observed & A value the API returned directly or that we measured directly (an error message, a token count).\\
+L2 identified & A controlled experiment distinguished the stated alternatives.\\
+L3 estimated & A numeric estimate with a model and an uncertainty or resolution statement.\\
+L4 mechanism-consistent & The evidence favours one candidate, but alternatives remain.\\
+U unresolved & The procedure, sample, channel, or budget was not enough to decide.\\
+L5 non-identifiable & A scoped witness proves no admissible request can decide.\\
+\midrule
+I / C / A / N & Boundary classes: Identified; Cost-limited (separable, priced by $\hat\kappa$); Access-limited (the API hides the channel); Non-identifiable (witness).\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{The Forensic Layer Model}
+\label{sec:layers}
+The single most common mistake in informal probing is \emph{layer confusion}: reading an
+interface fact as if it were a model fact.  To guard against this we treat the four
+layers as separate causal zones, and every observation is tagged with the layer it is
+allowed to speak about:
+\begin{center}
+\emph{model} $\neq$ \emph{serving} $\neq$ \emph{interface} $\neq$ \emph{preprocessing}.
+\end{center}
+\begin{itemize}
+\item A changed \textbf{output cap} is an interface change, not a model change.  We
+  demonstrate this with the cap fixture (Sec.~\ref{sec:blindfixtures}).
+\item A change in \textbf{latency} says something about serving, and nothing about the
+  model, until queueing, batching, and caching are controlled.  The warm-versus-cold
+  contrast in Fig.~\ref{fig:attncontrol} is a factor of 5 to 10 on its own.
+\item \textbf{Token accounting} is a statement about the provider's ledger, not the
+  tokenizer, until it is checked against a tokenizer we count locally.  The
+  ledger-inflation fixture shows why.
+\item \textbf{Logprob grids} are a statement about the wire format.  The dtype used for
+  the actual computation sits behind the rounding applied in transport.  The dtype axis
+  of \benchname{} measures this gap.
+\end{itemize}
+A provider controls its own ledger \cite{chen2026tokeninflation}.  A client's clock
+includes network noise.  A deployment cap (16{,}393 tokens on GPT-4o-mini) is not the
+model's capability \cite{openaimini2024docs}.  This layer discipline is what lets partial
+recovery stay honest.  Each node of the hypothesis graph carries its provenance
+(provider-reported, payload-observed, client-measured, or independently verified) next
+to its evidence grade.
+
+\subsection{Access regimes are first-class}
+\label{sec:regimes}
+Every result is reported together with the access regime it used.  \emph{Standard}
+access means text, usage counts, top-$k$ logprobs, and timing, which is what a typical
+production API exposes.  \emph{Restricted} access means top-5 logprobs only and no logit
+bias.  \emph{Rich} access adds a diagnostic selected-column channel that we built into
+our own serving wrapper, purely to measure what wider access would buy.  The regimes are
+never mixed.  Production claims use only standard access.  \benchname{} reports coverage
+for each regime separately (Sec.~\ref{sec:geometry}).

@@ -1,0 +1,58 @@
+\section{Related work}
+\label{sec:related}
+Classical system identification separates four jobs: designing experiments, selecting a
+model structure, estimating its parameters, and validating the result
+\cite{ljung1999system}.  Information-based active learning and Bayesian experimental
+design give a principled reason to prefer discriminating requests
+\cite{mackay1992information,chaloner1995bayesian}.  Adaptive guarantees need assumptions
+we do not claim \cite{golovin2011adaptive}.
+
+\paragraph{Model extraction and geometry.}  Extraction attacks clone a model's function
+\cite{tramer2016stealing,orekondy2019knockoff,krishna2020thieves,papernot2017practical}.
+Cryptanalytic and numeric methods recover weights or output structure when a specific
+kind of access is available
+\cite{carlini2020cryptanalytic,rolnick2020reverse,carlini2024stealing,
+finlayson2024logits,finlayson2024decoding}.  NightVision estimates width, depth, and
+parameter count under restrictive APIs on 32 models \cite{ellis2026nightvision};
+\cite{chen2026tokencounts} show the limits of token-count lineage; token inflation
+motivates auditing the ledger \cite{chen2026tokeninflation}.  The conceptual difference
+matters.  NightVision asks \emph{can restrictive API measurements recover hidden
+dimensions, depth, and parameter counts}.  It is an estimator.  This paper asks
+\emph{what functional properties are identifiable under a given API observation
+channel}, and its output is the identified set $[\omega]_{\mathcal C,\mathcal X}$, the
+per-property identified sets, and a measured boundary, not a point estimate.
+Concurrent 2026 work develops identified-set geometry for top-$k$-censored logprob
+access, which is the mathematical cousin of our Prop.~\ref{prop:rank}.  Our geometry
+module is a budgeted-coverage variant of that family.  Sec.~\ref{sec:baselines} runs a
+NightVision-style estimator on our subjects for a same-data comparison, and
+Prop.~\ref{prop:rank} pins down the formal limit that both approaches share.
+
+\paragraph{Fingerprinting and behavioural probes.}  LLMmap identifies known models from
+fixed query sets \cite{pasquini2025llmmap}.  Behavioural fingerprints compare endpoints
+\cite{pei2025behavioral}.  Concurrent 2026 work derives single-token behavioural
+distributions for fingerprinting and verification, and agentic-surface identification
+(LIDAR-style) extends the same observability question beyond text.  These methods
+answer ``which known model is this'' (or ``which agent stack''), not ``what architecture
+does an unknown model have.''  The two tasks compose naturally: fingerprint first, then
+reconstruct whatever is unfamiliar.  Long-context and behavioural evaluation
+\cite{hsieh2024ruler,liu2024lost,casper2024blackbox,chang2024survey,shevlane2023model}
+motivate our controlled measurements.
+
+\paragraph{Candidate mechanisms.}  The hypothesis space is spanned by transformer
+variants \cite{vaswani2017attention,shazeer2019fast,ainslie2023gqa,su2024roformer,press2022train},
+MoE \cite{shazeer2017outrageously,fedus2022switch,jiang2024mixtral}, MLA
+\cite{deepseekai2024v2}, sparse attention \cite{deepseekai2025v32}, SSMs
+\cite{gu2022efficiently,dao2024mamba,dao2024transformers}, and serving systems
+\cite{dao2022flashattention,kwon2023paged,leviathan2023fast,chen2023accelerating}.
+
+\paragraph{Position.}  The closest works are NightVision (dimension estimation under a
+restricted API), LLMmap (identification of known models), and the concurrent
+identified-set and fingerprinting analyses above.  None of these neighbours closes the
+gap, because the contribution here is the \emph{combination}: active probing across
+heterogeneous API channels (usage, logprob geometry, timing, behaviour); functional
+rather than weight-level architecture; identified sets with proved non-identifiability
+witnesses; a blind commit-reveal detector benchmark that prices the reliability of every
+claim; and a channel-closure ablation showing that the boundary moves with the
+provider's surface (Sec.~\ref{sec:observability}).  What that combination buys is a
+unified, evidence-graded partial reconstruction with a measured reliability per claim
+and a proved boundary.  That is the gap this paper fills.

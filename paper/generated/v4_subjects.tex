@@ -1,0 +1,31 @@
+\begin{tabularx}{\textwidth}{@{}l l l l l Y@{}}
+\toprule
+\textbf{Key} & \textbf{Family} & \textbf{Width} & \textbf{Layers} & \textbf{Params} & \textbf{Axis / notes}\\
+\midrule
+\texttt{bert-mini} & encoder\_only & 256 & 4 & 11.2M & core \\
+\texttt{bert-small} & encoder\_only & 512 & 4 & 28.8M & core \\
+\texttt{bert-tiny} & encoder\_only & 128 & 2 & 4.42M & core \\
+\texttt{distilbert} & encoder\_only & 768 & 6 & 66.99M & core \\
+\texttt{distilgpt2} & decoder\_only & 768 & 6 & 81.91M & core \\
+\texttt{gpt2} & decoder\_only & 768 & 12 & 124.44M & core \\
+\texttt{gpt2-batch8} & decoder\_only & 768 & 12 & 124.44M & batched \\
+\texttt{gpt2-bf16} & decoder\_only & 768 & 12 & 124.44M & bf16 \\
+\texttt{gpt2-int8} & decoder\_only & 768 & 12 & 124.44M & int8\_dynamic \\
+\texttt{gpt2-wirebf16} & decoder\_only & 768 & 12 & 124.44M & wire-bf16 \\
+\texttt{mamba-130m} & ssm\_or\_linear & 768 & 24 & 129.14M & core \\
+\texttt{mamba-370m} & ssm\_or\_linear & 1024 & 48 & 371.52M & core \\
+\texttt{olmoe-1b7b} & decoder\_only & 2048 & 16 & 6919.16M & core \\
+\texttt{opt-125m} & decoder\_only & 768 & 12 & 125.24M & core \\
+\texttt{pythia-14m} & decoder\_only & 128 & 6 & 14.07M & core \\
+\texttt{pythia-160m} & decoder\_only & 768 & 12 & 162.32M & core \\
+\texttt{pythia-31m} & decoder\_only & 256 & 6 & 30.49M & core \\
+\texttt{pythia-70m} & decoder\_only & 512 & 6 & 70.43M & core \\
+\texttt{qwen25-05b} & decoder\_only & 896 & 24 & 494.03M & core \\
+\texttt{router-gpt2-pythia} & router\_or\_cascade & 768 & 12 & 124.44M & router (two checkpoints, one name) \\
+\texttt{smollm-135m} & decoder\_only & 576 & 30 & 134.52M & core \\
+\texttt{t5-small} & encoder\_decoder & 512 & 6 & 60.51M & core \\
+\texttt{tiny-dsv3-mla} & decoder\_only & 256 & 4 & 32.15M & mechanics (random init) \\
+\texttt{tiny-mixtral-moe} & decoder\_only & 256 & 4 & 38.98M & mechanics (random init) \\
+\texttt{tinyllama-1b} & decoder\_only & 2048 & 22 & 1100.05M & core \\
+\bottomrule
+\end{tabularx}

@@ -1,0 +1,1924 @@
+{
+ "n_subjects": 25,
+ "properties": {
+  "arch.family": {
+   "n": 24,
+   "top1_accuracy": 0.875,
+   "top1_ci_cluster": [
+    0.7,
+    1.0
+   ],
+   "brier": 0.3004,
+   "ece": 0.1687,
+   "reliability": [
+    {
+     "bin": 1,
+     "n": 4,
+     "mean_conf": 0.37735142059292365,
+     "empirical": 1.0
+    },
+    {
+     "bin": 3,
+     "n": 12,
+     "mean_conf": 0.7212303743865373,
+     "empirical": 0.75
+    },
+    {
+     "bin": 4,
+     "n": 8,
+     "mean_conf": 0.8483851107519088,
+     "empirical": 1.0
+    }
+   ],
+   "confusion": {
+    "encoder_only<-encoder_only": 4,
+    "decoder_only<-decoder_only": 17,
+    "decoder_only<-ssm_or_linear": 2,
+    "decoder_only<-encoder_decoder": 1
+   }
+  },
+  "arch.sparsity": {
+   "n": 25,
+   "top1_accuracy": 0.88,
+   "top1_ci_cluster": [
+    0.714,
+    1.0
+   ],
+   "brier": 0.4361,
+   "ece": 0.3345,
+   "reliability": [
+    {
+     "bin": 2,
+     "n": 25,
+     "mean_conf": 0.5454559205817909,
+     "empirical": 0.88
+    }
+   ],
+   "confusion": {
+    "dense<-dense": 22,
+    "dense<-moe": 2,
+    "moe<-dense": 1
+   }
+  },
+  "system.topology": {
+   "n": 25,
+   "top1_accuracy": 0.96,
+   "top1_ci_cluster": [
+    0.857,
+    1.0
+   ],
+   "brier": 0.284,
+   "ece": 0.36,
+   "reliability": [
+    {
+     "bin": 3,
+     "n": 25,
+     "mean_conf": 0.6,
+     "empirical": 0.96
+    }
+   ],
+   "confusion": {
+    "single_model<-single_model": 24,
+    "single_model<-router_or_cascade": 1
+   }
+  },
+  "out.logit_precision": {
+   "n": 25,
+   "top1_accuracy": 0.8,
+   "top1_ci_cluster": [
+    0.64,
+    0.931
+   ],
+   "brier": 0.2205,
+   "ece": 0.1686,
+   "reliability": [
+    {
+     "bin": 2,
+     "n": 4,
+     "mean_conf": 0.4130803577949098,
+     "empirical": 0.0
+    },
+    {
+     "bin": 3,
+     "n": 3,
+     "mean_conf": 0.6941717894404714,
+     "empirical": 0.6666666666666666
+    },
+    {
+     "bin": 4,
+     "n": 18,
+     "mean_conf": 0.8621837588458298,
+     "empirical": 1.0
+    }
+   ],
+   "confusion": {
+    "bf16<-fp32": 5,
+    "fp32<-fp32": 18,
+    "bf16<-bf16": 2
+   }
+  },
+  "attn.long_range": {
+   "n": 21,
+   "top1_accuracy": 0.905,
+   "top1_ci_cluster": [
+    0.762,
+    1.0
+   ],
+   "brier": 0.46,
+   "ece": 0.4774,
+   "reliability": [
+    {
+     "bin": 1,
+     "n": 11,
+     "mean_conf": 0.3624004769501995,
+     "empirical": 1.0
+    },
+    {
+     "bin": 2,
+     "n": 2,
+     "mean_conf": 0.5506272651177571,
+     "empirical": 0.0
+    },
+    {
+     "bin": 3,
+     "n": 7,
+     "mean_conf": 0.7448155141108012,
+     "empirical": 1.0
+    },
+    {
+     "bin": 4,
+     "n": 1,
+     "mean_conf": 0.8748058003810397,
+     "empirical": 1.0
+    }
+   ],
+   "confusion": {
+    "full_quadratic<-full_quadratic": 19,
+    "full_quadratic<-linear_recurrent": 2
+   }
+  },
+  "attn.kv_sharing": {
+   "n": 6,
+   "top1_accuracy": 0.667,
+   "top1_ci_cluster": [
+    0.333,
+    1.0
+   ],
+   "brier": 0.5067,
+   "ece": 0.0667,
+   "reliability": [
+    {
+     "bin": 3,
+     "n": 6,
+     "mean_conf": 0.6,
+     "empirical": 0.6666666666666666
+    }
+   ],
+   "confusion": {
+    "gqa_or_mqa<-mha": 1,
+    "gqa_or_mqa<-gqa_or_mqa": 4,
+    "gqa_or_mqa<-mla": 1
+   }
+  },
+  "train.objective": {
+   "n": 25,
+   "top1_accuracy": 0.8,
+   "top1_ci_cluster": [
+    0.6,
+    0.951
+   ],
+   "brier": 0.2295,
+   "ece": 0.1639,
+   "reliability": [
+    {
+     "bin": 2,
+     "n": 4,
+     "mean_conf": 0.43273869457159236,
+     "empirical": 0.0
+    },
+    {
+     "bin": 4,
+     "n": 21,
+     "mean_conf": 0.8397332176442712,
+     "empirical": 0.9523809523809523
+    }
+   ],
+   "confusion": {
+    "causal_lm<-masked_lm": 4,
+    "causal_lm<-causal_lm": 20,
+    "causal_lm<-prefix_lm_or_span": 1
+   }
+  }
+ },
+ "properties_legacy": {
+  "arch.family": {
+   "n": 24,
+   "top1_accuracy": 0.875,
+   "brier": 0.3004,
+   "ece": 0.1687,
+   "reliability": [
+    {
+     "bin": 1,
+     "n": 4,
+     "mean_conf": 0.37735142059292365,
+     "empirical": 1.0
+    },
+    {
+     "bin": 3,
+     "n": 12,
+     "mean_conf": 0.7212303743865373,
+     "empirical": 0.75
+    },
+    {
+     "bin": 4,
+     "n": 8,
+     "mean_conf": 0.8483851107519088,
+     "empirical": 1.0
+    }
+   ]
+  },
+  "arch.sparsity": {
+   "n": 25,
+   "top1_accuracy": 0.88,
+   "brier": 0.4041,
+   "ece": 0.3015,
+   "reliability": [
+    {
+     "bin": 2,
+     "n": 12,
+     "mean_conf": 0.5425926616829663,
+     "empirical": 0.9166666666666666
+    },
+    {
+     "bin": 3,
+     "n": 13,
+     "mean_conf": 0.6115560987585865,
+     "empirical": 0.8461538461538461
+    }
+   ]
+  },
+  "system.topology": {
+   "n": 25,
+   "top1_accuracy": 0.96,
+   "brier": 0.284,
+   "ece": 0.36,
+   "reliability": [
+    {
+     "bin": 3,
+     "n": 25,
+     "mean_conf": 0.6,
+     "empirical": 0.96
+    }
+   ]
+  },
+  "out.logit_precision": {
+   "n": 25,
+   "top1_accuracy": 0.8,
+   "brier": 0.2205,
+   "ece": 0.1686,
+   "reliability": [
+    {
+     "bin": 2,
+     "n": 4,
+     "mean_conf": 0.4130803577949098,
+     "empirical": 0.0
+    },
+    {
+     "bin": 3,
+     "n": 3,
+     "mean_conf": 0.6941717894404714,
+     "empirical": 0.6666666666666666
+    },
+    {
+     "bin": 4,
+     "n": 18,
+     "mean_conf": 0.8621837588458298,
+     "empirical": 1.0
+    }
+   ]
+  },
+  "attn.long_range": {
+   "n": 21,
+   "top1_accuracy": 0.905,
+   "brier": 0.46,
+   "ece": 0.4774,
+   "reliability": [
+    {
+     "bin": 1,
+     "n": 11,
+     "mean_conf": 0.3624004769501995,
+     "empirical": 1.0
+    },
+    {
+     "bin": 2,
+     "n": 2,
+     "mean_conf": 0.5506272651177571,
+     "empirical": 0.0
+    },
+    {
+     "bin": 3,
+     "n": 7,
+     "mean_conf": 0.7448155141108012,
+     "empirical": 1.0
+    },
+    {
+     "bin": 4,
+     "n": 1,
+     "mean_conf": 0.8748058003810397,
+     "empirical": 1.0
+    }
+   ]
+  },
+  "attn.kv_sharing": {
+   "n": 6,
+   "top1_accuracy": 0.667,
+   "brier": 0.5067,
+   "ece": 0.0667,
+   "reliability": [
+    {
+     "bin": 3,
+     "n": 6,
+     "mean_conf": 0.6,
+     "empirical": 0.6666666666666666
+    }
+   ]
+  },
+  "train.objective": {
+   "n": 25,
+   "top1_accuracy": 0.8,
+   "brier": 0.2295,
+   "ece": 0.1639,
+   "reliability": [
+    {
+     "bin": 2,
+     "n": 4,
+     "mean_conf": 0.43273869457159236,
+     "empirical": 0.0
+    },
+    {
+     "bin": 4,
+     "n": 21,
+     "mean_conf": 0.8397332176442712,
+     "empirical": 0.9523809523809523
+    }
+   ]
+  }
+ },
+ "clusters": {
+  "bert-mini": null,
+  "bert-small": null,
+  "bert-tiny": null,
+  "distilbert": null,
+  "distilgpt2": null,
+  "gpt2": null,
+  "mamba-130m": null,
+  "mamba-370m": null,
+  "olmoe-1b7b": null,
+  "opt-125m": null,
+  "pythia-14m": null,
+  "pythia-160m": null,
+  "pythia-31m": null,
+  "pythia-70m": null,
+  "qwen25-05b": null,
+  "router-gpt2-pythia": null,
+  "smollm-135m": null,
+  "t5-small": null,
+  "tiny-dsv3-mla": null,
+  "tiny-mixtral-moe": null,
+  "tinyllama-1b": null
+ },
+ "n_clusters": 21,
+ "macro": {
+  "primary": {
+   "ece": 0.249,
+   "ece_ci": [
+    0.153,
+    0.351
+   ],
+   "brier": 0.348,
+   "brier_ci": [
+    0.272,
+    0.429
+   ]
+  },
+  "legacy": {
+   "ece": 0.244,
+   "ece_ci": [
+    0.153,
+    0.346
+   ],
+   "brier": 0.344,
+   "brier_ci": [
+    0.269,
+    0.423
+   ]
+  },
+  "flat": {
+   "ece": 0.435,
+   "ece_ci": [
+    0.301,
+    0.565
+   ],
+   "brier": 0.597,
+   "brier_ci": [
+    0.47,
+    0.714
+   ]
+  }
+ },
+ "properties_flatprior": {
+  "arch.family": {
+   "n": 24,
+   "top1_accuracy": 0.917,
+   "brier": 0.6498,
+   "ece": 0.6322
+  },
+  "arch.sparsity": {
+   "n": 25,
+   "top1_accuracy": 0.88,
+   "brier": 0.4361,
+   "ece": 0.3345
+  },
+  "system.topology": {
+   "n": 25,
+   "top1_accuracy": 0.96,
+   "brier": 0.6667,
+   "ece": 0.6267
+  },
+  "out.logit_precision": {
+   "n": 25,
+   "top1_accuracy": 0.72,
+   "brier": 0.2967,
+   "ece": 0.2672
+  },
+  "attn.long_range": {
+   "n": 21,
+   "top1_accuracy": 0.381,
+   "brier": 0.8583,
+   "ece": 0.3836
+  },
+  "attn.kv_sharing": {
+   "n": 6,
+   "top1_accuracy": 0.167,
+   "brier": 0.6667,
+   "ece": 0.1667
+  },
+  "train.objective": {
+   "n": 25,
+   "top1_accuracy": 0.96,
+   "brier": 0.6035,
+   "ece": 0.6353
+  }
+ },
+ "geometry_coverage": {
+  "128": {
+   "n": 1,
+   "resolved": 1,
+   "errors": [
+    0.0
+   ]
+  },
+  "256": {
+   "n": 3,
+   "resolved": 3,
+   "errors": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "512": {
+   "n": 1,
+   "resolved": 1,
+   "errors": [
+    0.001953125
+   ]
+  },
+  "576": {
+   "n": 1,
+   "resolved": 1,
+   "errors": [
+    0.0
+   ]
+  },
+  "768": {
+   "n": 10,
+   "resolved": 9,
+   "errors": [
+    0.0078125,
+    0.006510416666666667,
+    0.92578125,
+    2.3229166666666665,
+    0.006510416666666667,
+    0.0,
+    0.0,
+    0.026041666666666668,
+    0.9192708333333334
+   ]
+  },
+  "896": {
+   "n": 1,
+   "resolved": 1,
+   "errors": [
+    0.0
+   ]
+  },
+  "1024": {
+   "n": 1,
+   "resolved": 1,
+   "errors": [
+    0.0
+   ]
+  },
+  "2048": {
+   "n": 2,
+   "resolved": 2,
+   "errors": [
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "subjects": [
+  {
+   "key": "bert-mini",
+   "family": "encoder_only",
+   "arch": "masked",
+   "width": 256,
+   "arch.family": {
+    "top": "encoder_only",
+    "conf": 0.377,
+    "true": "encoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.5,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "bf16",
+    "conf": 0.413,
+    "true": "fp32",
+    "hit": false
+   },
+   "attn.long_range": null,
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.433,
+    "true": "masked_lm",
+    "hit": false
+   },
+   "geometry": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "rows": null
+   },
+   "geometry_top5": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": null
+   }
+  },
+  {
+   "key": "bert-small",
+   "family": "encoder_only",
+   "arch": "masked",
+   "width": 512,
+   "arch.family": {
+    "top": "encoder_only",
+    "conf": 0.377,
+    "true": "encoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.5,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "bf16",
+    "conf": 0.413,
+    "true": "fp32",
+    "hit": false
+   },
+   "attn.long_range": null,
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.433,
+    "true": "masked_lm",
+    "hit": false
+   },
+   "geometry": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "rows": null
+   },
+   "geometry_top5": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": null
+   }
+  },
+  {
+   "key": "bert-tiny",
+   "family": "encoder_only",
+   "arch": "masked",
+   "width": 128,
+   "arch.family": {
+    "top": "encoder_only",
+    "conf": 0.377,
+    "true": "encoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.5,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "bf16",
+    "conf": 0.413,
+    "true": "fp32",
+    "hit": false
+   },
+   "attn.long_range": null,
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.433,
+    "true": "masked_lm",
+    "hit": false
+   },
+   "geometry": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "rows": null
+   },
+   "geometry_top5": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": null
+   }
+  },
+  {
+   "key": "distilbert",
+   "family": "encoder_only",
+   "arch": "masked",
+   "width": 768,
+   "arch.family": {
+    "top": "encoder_only",
+    "conf": 0.377,
+    "true": "encoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.5,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "bf16",
+    "conf": 0.413,
+    "true": "fp32",
+    "hit": false
+   },
+   "attn.long_range": null,
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.433,
+    "true": "masked_lm",
+    "hit": false
+   },
+   "geometry": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "rows": null
+   },
+   "geometry_top5": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": null
+   }
+  },
+  {
+   "key": "distilgpt2",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.739,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 762,
+    "lower_bound": 762,
+    "rows": 768
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": 4,
+    "dense_columns": 5
+   }
+  },
+  {
+   "key": "gpt2-batch8",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.379,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 763,
+    "lower_bound": 763,
+    "rows": 768
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 7
+   }
+  },
+  {
+   "key": "gpt2-bf16",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "bf16",
+    "conf": 0.69,
+    "true": "bf16",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.379,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": 2557,
+    "rows": 2560
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 7
+   }
+  },
+  {
+   "key": "gpt2-int8",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "bf16",
+    "conf": 0.693,
+    "true": "fp32",
+    "hit": false
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.739,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 57,
+    "lower_bound": 57,
+    "rows": 384
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "gpt2-wirebf16",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "bf16",
+    "conf": 0.699,
+    "true": "bf16",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.342,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 2552,
+    "lower_bound": 2552,
+    "rows": 2560
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 7
+   }
+  },
+  {
+   "key": "gpt2",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.342,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 763,
+    "lower_bound": 763,
+    "rows": 768
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 7
+   }
+  },
+  {
+   "key": "mamba-130m",
+   "family": "ssm_or_linear",
+   "arch": "mamba-1 SSM",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.677,
+    "true": "ssm_or_linear",
+    "hit": false
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.551,
+    "true": "linear_recurrent",
+    "hit": false
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.837,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 768,
+    "lower_bound": 768,
+    "rows": 1536
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 7
+   }
+  },
+  {
+   "key": "mamba-370m",
+   "family": "ssm_or_linear",
+   "arch": "mamba-1 SSM",
+   "width": 1024,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.726,
+    "true": "ssm_or_linear",
+    "hit": false
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.551,
+    "true": "linear_recurrent",
+    "hit": false
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 1024,
+    "lower_bound": 1024,
+    "rows": 1536
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "olmoe-1b7b",
+   "family": "decoder_only",
+   "arch": "moe",
+   "width": 2048,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "moe",
+    "hit": false
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.379,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": {
+    "top": "gqa_or_mqa",
+    "conf": 0.6,
+    "true": "mha",
+    "hit": false
+   },
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 2048,
+    "lower_bound": 2048,
+    "rows": 2560
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "opt-125m",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.379,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 768,
+    "lower_bound": 768,
+    "rows": 1536
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "pythia-14m",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 128,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.739,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 128,
+    "lower_bound": 128,
+    "rows": 384
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "pythia-160m",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 768,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.342,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 748,
+    "lower_bound": 748,
+    "rows": 768
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "pythia-31m",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 256,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.739,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 256,
+    "lower_bound": 256,
+    "rows": 384
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "pythia-70m",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 512,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.858,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.342,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 511,
+    "lower_bound": 511,
+    "rows": 768
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "qwen25-05b",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 896,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.875,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": {
+    "top": "gqa_or_mqa",
+    "conf": 0.6,
+    "true": "gqa_or_mqa",
+    "hit": true
+   },
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 896,
+    "lower_bound": 896,
+    "rows": 1536
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 6
+   }
+  },
+  {
+   "key": "router-gpt2-pythia",
+   "family": "router_or_cascade",
+   "arch": "router",
+   "width": 768,
+   "arch.family": null,
+   "arch.sparsity": {
+    "top": "moe",
+    "conf": 0.531,
+    "true": "dense",
+    "hit": false
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "router_or_cascade",
+    "hit": false
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.342,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 1474,
+    "lower_bound": 1474,
+    "rows": 1536
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 8
+   }
+  },
+  {
+   "key": "smollm-135m",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 576,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.379,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": {
+    "top": "gqa_or_mqa",
+    "conf": 0.6,
+    "true": "gqa_or_mqa",
+    "hit": true
+   },
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 576,
+    "lower_bound": 576,
+    "rows": 768
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 7
+   }
+  },
+  {
+   "key": "t5-small",
+   "family": "encoder_decoder",
+   "arch": "seq2seq",
+   "width": 512,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "encoder_decoder",
+    "hit": false
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.739,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": null,
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "prefix_lm_or_span",
+    "hit": false
+   },
+   "geometry": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "rows": null
+   },
+   "geometry_top5": {
+    "status": null,
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": null
+   }
+  },
+  {
+   "key": "tiny-dsv3-mla",
+   "family": "decoder_only",
+   "arch": "mla",
+   "width": 256,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.725,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.526,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.739,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": {
+    "top": "gqa_or_mqa",
+    "conf": 0.6,
+    "true": "mla",
+    "hit": false
+   },
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.838,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 256,
+    "lower_bound": 256,
+    "rows": 384
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 0
+   }
+  },
+  {
+   "key": "tiny-mixtral-moe",
+   "family": "decoder_only",
+   "arch": "moe",
+   "width": 256,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "moe",
+    "hit": false
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.779,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": {
+    "top": "gqa_or_mqa",
+    "conf": 0.6,
+    "true": "gqa_or_mqa",
+    "hit": true
+   },
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 256,
+    "lower_bound": 256,
+    "rows": 384
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": 0,
+    "dense_columns": 1
+   }
+  },
+  {
+   "key": "tinyllama-1b",
+   "family": "decoder_only",
+   "arch": "dense",
+   "width": 2048,
+   "arch.family": {
+    "top": "decoder_only",
+    "conf": 0.848,
+    "true": "decoder_only",
+    "hit": true
+   },
+   "arch.sparsity": {
+    "top": "dense",
+    "conf": 0.575,
+    "true": "dense",
+    "hit": true
+   },
+   "system.topology": {
+    "top": "single_model",
+    "conf": 0.6,
+    "true": "single_model",
+    "hit": true
+   },
+   "out.logit_precision": {
+    "top": "fp32",
+    "conf": 0.862,
+    "true": "fp32",
+    "hit": true
+   },
+   "attn.long_range": {
+    "top": "full_quadratic",
+    "conf": 0.379,
+    "true": "full_quadratic",
+    "hit": true
+   },
+   "attn.kv_sharing": {
+    "top": "gqa_or_mqa",
+    "conf": 0.6,
+    "true": "gqa_or_mqa",
+    "hit": true
+   },
+   "train.objective": {
+    "top": "causal_lm",
+    "conf": 0.842,
+    "true": "causal_lm",
+    "hit": true
+   },
+   "geometry": {
+    "status": "estimated",
+    "rank": 2048,
+    "lower_bound": 2048,
+    "rows": 2560
+   },
+   "geometry_top5": {
+    "status": "unresolved",
+    "rank": null,
+    "lower_bound": null,
+    "dense_columns": 7
+   }
+  }
+ ]
+}

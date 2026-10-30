@@ -1,0 +1,134 @@
+\section{The forensic instrument}
+\label{sec:instrument}
+\subsection{From requests to architectures: the hypothesis graph}
+\label{sec:graph}
+The instrument works on one object, the \emph{architecture hypothesis graph} $G_A$.  It
+is built by a simple loop that anyone can audit:
+\begin{center}
+\textbf{request} $\rightarrow$ \textbf{observation} $\rightarrow$ \textbf{constraint}
+$\rightarrow$ \textbf{candidate architectures} $\rightarrow$ \textbf{next experiment}.
+\end{center}
+We send a controlled request.  It might be a pair of prompts that differ by one known
+string, so the token-count difference reveals how the tokenizer cuts text.  It might be
+a timed decode at a known context length.  It might be a request that deliberately asks
+for more output than the cap allows.  Each request returns an observation.  Each
+observation is then turned into a \emph{constraint} on the configuration.  When the
+observation model justifies it, the constraint is hard: a compatibility restriction
+$\mathcal K_i$ that rules candidates out entirely.  An exact count match or a sharp rank
+cliff are examples.  Otherwise the constraint is soft: a likelihood factor that ranks
+candidates without eliminating any, which is how a timing regime is treated.  Hard
+constraints shrink the candidate set, $\mathcal H_t^{\rm hard}=\mathcal
+H_0\cap\bigcap_{i\le t}\mathcal K_i$.  Soft evidence ranks whatever survives, $\hat
+A_t=\arg\max_{A\in\mathcal H_t^{\rm hard}}S(A\mid D_t)$.  In words: start from every
+architecture we know of, remove the ones the hard facts rule out, then score the rest.
+
+The nodes of the graph are the components of the system: tokenizer, core family,
+attention or state regime, KV sharing, position scheme, feed-forward topology, output
+head, numeric regime, and serving topology.  Each node holds the best-supported
+candidate, the full ranked list of candidates, the measured quantities, an evidence
+grade, provenance, and the \emph{next experiment} that would separate the survivors.
+The edges are functional dependencies, each tagged with the experiment that produced
+it.  The loop then spends the next request wherever the remaining ambiguity is largest
+(Sec.~\ref{sec:planner}).
+
+This graph is the unit of reconstruction.  It never collapses an endpoint into a single
+label, and it never disguises a prior as a measurement.  Where nothing can be measured,
+the node says so, lists the candidates, and names the experiment that would decide
+between them.
+
+\begin{figure}[t]
+\begin{quote}\small
+\textbf{Algorithm (the working progression, frozen per run).}
+\begin{enumerate}[nosep,leftmargin=1.6em]
+\item \textbf{Discover the contract}: send a minimal request; then controlled invalid
+      and over-limit variants; read the capabilities and error schema (P01/P05).
+\item \textbf{Exploit the cheap channels}: usage accounting (P02 tokenisation deltas),
+      wire numerics (P04), determinism (P10).
+\item \textbf{Test the generation contract}: continuation length, whether latency grows
+      with output length, streaming granularity.  A rejected cap is itself evidence of an
+      encoder (P19).
+\item \textbf{Probe structure}: output geometry within the access regime (P03);
+      decode-state slope (P23); needle retrieval and prefill scaling (P06/P07).
+\item \textbf{Follow only unresolved branches}: each U node names its next
+      discriminator; the planner prices it by expected information per request.
+\item \textbf{Stop at the boundary}: an L5 witness, a $\hat\kappa$-priced cost, or a
+      named experiment.  Never a made-up label.
+\end{enumerate}
+\end{quote}
+\caption{The operational progression.  Every step names its failure mode.  Nothing is
+asserted without a measurement that produced it.}
+\label{fig:algorithm}
+\end{figure}
+
+\subsection{Probes and their failure modes}
+Table~\ref{tab:probes} organises the probe library by channel.  Each probe declares an
+outcome model and returns three things: likelihood evidence, estimates with their
+assumptions spelled out, and a named falsifier (the observation that would prove it
+wrong).  The full library is in the artifact.  What matters for the claims in this paper
+is in the table, including each probe's failure mode as \emph{measured} on \benchname{}.
+
+\begin{table}[t]\centering\small
+\caption{Probe families and the architectural constraint each one carries.  The
+``remaining alternatives'' travel with the claim into the graph, so a reader always sees
+what the probe could not rule out.}
+\label{tab:probes}
+\begin{tabularx}{\textwidth}{@{}p{1.9cm} Y Y@{}}
+\toprule
+\textbf{Probe} & \textbf{Constraint produced} & \textbf{Known failure mode (measured)}\\
+\midrule
+P01/P05 & accepted-input boundary, output cap, error schema & a deployment cap is not the model's capability\\
+P02 tokenizer & count-family match set, template overhead & finite strings cannot separate variants that share merge tables (Prop.~\ref{prop:tok})\\
+P03 geometry & rank of the common-logit matrix $\Rightarrow$ bottleneck estimate or bound & top-5-only access caps the rank at the number of columns seen (Prop.~\ref{prop:rank})\\
+P04/P15 & wire-grid / sampler signatures & rounding in transport is not the compute dtype\\
+P06/P07 & retrieval range, prefill/decode scaling & prefill curvature is invisible below about 16k context (Fig.~\ref{fig:attncontrol})\\
+P23 & KV-growth vs constant-state slope (streaming per-token times or prefill-cancelling pairs) & drowned in noise on high-overhead production paths (reported U, not wrong)\\
+P08--P11 & drafting/cache/jitter/domain-regime signatures & domain timing is the weakest detector (\MoeAcc)\\
+P12--P14 & capability/cutoff/format signatures & behaviour is not parameter count\\
+P16--P22 & routing/invariance/branch semantics & an unchanged API can hide a model swap (Sec.~\ref{sec:blindfixtures})\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{The discipline of negative inference.}
+The instrument is built around what a channel does \emph{not} say, because that is where
+informal probing goes wrong.  Recall is not attention complexity: a wide sliding window
+and full attention both retrieve a needle.  Latency is not kernel complexity: queueing
+time is not compute time.  Behaviour is not a training recipe: post-training can rewrite
+behaviour without touching the architecture.  A candidate that comes only from the prior
+is not recovered structure.  And an unchanged API is not an unchanged model.  Every
+evidence record carries its alternatives, and every figure draws prior-only values in
+grey.
+
+\subsection{Evidence combination that respects dependence}
+\label{sec:grouped}
+Each piece of evidence is a likelihood factor.  For property $j$ and candidate value
+$v$, the support is
+$q_j(v\mid D)\propto q_{j,0}(v)\prod_e\max(\Lambda_e(v),\epsilon)^{s_e}$.
+Read it this way: start from the prior $q_{j,0}(v)$, then for each evidence unit $e$
+multiply by that unit's likelihood $\Lambda_e(v)$, raised to a strength $s_e$ that says
+how much we trust the unit.  The floor $\epsilon$ stops any single factor from driving a
+candidate to exactly zero.  Version 2 of this paper multiplied every factor
+independently.  That has a hidden flaw: a long series of similar probes gets counted
+again and again, and confidence inflates by repetition.  The benchmark let us measure
+the damage.  We now combine evidence \emph{group-aware}: factors that come from the same
+experiment group (one probe series, one randomised block) are averaged into a single
+update.  We report calibration for both schemes on ground truth
+(Table~\ref{tab:calibration}).  Scores are still \emph{support}, not probabilities, but
+the benchmark now tells us how far from a probability they are (expected calibration
+error \BenchECE{}) and where.
+
+Two views accompany every posterior in the paper.  The \emph{reference-prior} view uses
+priors that encode the 2024--2026 model landscape.  The \emph{evidence-only} view starts
+from a uniform prior.  Showing both separates what the data did from what the prior
+did.  The gap matters most exactly where a strong prior meets a single decisive channel
+(Sec.~\ref{sec:familysplit}).
+
+\subsection{The planner}
+\label{sec:planner}
+The planner chooses the next probe by expected information gain per predicted request.
+In plain terms: for each probe it could run, it estimates how much the uncertainty
+would shrink (weighted by how diagnostic the probe is), divides by how many requests
+the probe would cost, and picks the best ratio.  It is a heuristic scheduler, not an
+optimal Bayesian design.  Sec.~\ref{sec:plannerlive} evaluates it \emph{live} against
+the simulator (not from replayed logs) with request budgets.  That study found a real
+pathology, front-runner starvation, and the fix we adopted (the core-coverage floor).

@@ -1,0 +1,44 @@
+{
+  "gpt": {
+    "cards": 10,
+    "links": 6,
+    "min_text_gap_pt": 8.5,
+    "min_inner_padding_pt": 9.0,
+    "body_font_pt_at_full_text_width": 8.3,
+    "foot_font_pt_at_full_text_width": 7.3,
+    "connector_card_crossings": 0,
+    "floating_endpoints": 0,
+    "style": "v2 Excalidraw-inspired",
+    "font": "Segoe Print",
+    "figure_width_pt": 464.882,
+    "figure_height_pt": 548.724
+  },
+  "deepseek": {
+    "cards": 10,
+    "links": 6,
+    "min_text_gap_pt": 8.5,
+    "min_inner_padding_pt": 9.0,
+    "body_font_pt_at_full_text_width": 8.3,
+    "foot_font_pt_at_full_text_width": 7.3,
+    "connector_card_crossings": 0,
+    "floating_endpoints": 0,
+    "style": "v2 Excalidraw-inspired",
+    "font": "Segoe Print",
+    "figure_width_pt": 464.882,
+    "figure_height_pt": 537.03
+  },
+  "jev": {
+    "cards": 10,
+    "links": 6,
+    "min_text_gap_pt": 8.5,
+    "min_inner_padding_pt": 9.0,
+    "body_font_pt_at_full_text_width": 8.3,
+    "foot_font_pt_at_full_text_width": 7.3,
+    "connector_card_crossings": 0,
+    "floating_endpoints": 0,
+    "style": "v2 Excalidraw-inspired",
+    "font": "Segoe Print",
+    "figure_width_pt": 464.882,
+    "figure_height_pt": 573.247
+  }
+}

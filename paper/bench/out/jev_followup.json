@@ -1,0 +1,59 @@
+{
+ "n_secrets": 10,
+ "p_base": [
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01
+ ],
+ "p_state": [
+  0.99,
+  0.99,
+  0.99,
+  0.99,
+  0.99,
+  0.99,
+  0.99,
+  0.99,
+  0.99,
+  0.99
+ ],
+ "p_sibling": [
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01,
+  0.01
+ ],
+ "effect_state": 0.9800000000000001,
+ "effect_sibling": 0.0,
+ "perm_p_state_vs_sibling": 0.0001999600079984003,
+ "uses_threshold": 0.5,
+ "k_state": 10,
+ "k_sibling": 0,
+ "budget": {
+  "requests": 30,
+  "input_tokens": 9628,
+  "output_tokens": 760,
+  "est_cost_usd": 0.0,
+  "remaining": {
+   "requests": 190,
+   "input_tokens": 890372,
+   "output_tokens": 3240,
+   "cost_usd": null
+  }
+ },
+ "wall_s": 12.5,
+ "protocol": "n secrets x {base,state,sibling}, randomized order, permutation test on paired contrasts"
+}

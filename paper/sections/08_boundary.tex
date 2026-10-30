@@ -1,0 +1,45 @@
+\section{The identification boundary, consolidated}
+\label{sec:boundary}
+The stopping map (Table~\ref{tab:cannot}) is the paper's second product.  Each open
+component is labelled \textbf{I} (identified), \textbf{C} (cost-limited: a nominal
+request scale computed from $\hat\kappa$), \textbf{A} (access-limited: the channel is
+not exposed on this interface), or \textbf{N} (non-identifiable: a scoped witness).
+This replaces both overclaiming and vague caution with a boundary you can act on.
+Sec.~\ref{sec:observability} shows that the boundary moves when the provider changes
+its surface.  A partial identification is a positive result.  The identified components
+stay recovered.  The open ones carry their class and either a nominal cost or a named
+next experiment.  An instrument that reported everything as certain would tell you
+less, not more.
+
+\begin{table}[t]\centering\small
+\caption{The boundary ledger, consolidated.  \textbf{I} identified; \textbf{C}
+cost-limited (measured $\hat\kappa$; nominal cost scale); \textbf{A} access-limited
+(the channel is not exposed on this interface); \textbf{N} non-identifiable (scoped
+witness).}
+\label{tab:cannot}
+\begin{tabularx}{\textwidth}{@{}l l Y@{}}
+\toprule
+\textbf{Target} & \textbf{Class} & \textbf{Why / next}\\
+\midrule
+o200k variant (base vs harmony), plain text & N & Prop.~\ref{prop:tok}; enable the special-token domain\\
+Width beyond logit rank & N & Prop.~\ref{prop:rank}, demonstrated 768 vs 1024 with $\max|\Delta\ell|=0$; needs a full-rank unembedding assumption\\
+Depth under identity insertion, behaviour-only & N & toy witness (App.~A); a timing or channel change is required\\
+Production width via top-5 APIs & A & rank capped by the column set; needs rich access or a validated restricted estimator\\
+Streaming-decode state on buffered endpoints & A & DeepSeek's gateway buffers SSE; GPT-4o-mini exposes engine TBT\\
+Transformer vs SSM on high-overhead endpoints & C & $\hat\kappa$ small at $\le$12k context spans (Table~\ref{tab:kappa}); longer spans or co-located timing\\
+Production depth & C & a validated compute/queueing model with independent hardware controls; timing $\hat\kappa$ characterized\\
+Expert count / routing & A & a richer routing channel or vendor attestation\\
+Positional scheme & C & scheme-specific extrapolation probes\\
+Compute dtype (vs wire dtype) & C & a transport-aware model; the wire grid is already recovered at \DtypeAcc\\
+Exact vocabulary & A & ID-space sweep; reference gap quantified (DeepSeek: 465 entries)\\
+JEV physical readout implementation & A & controlled implementations or attestation; the functional readout is already L2\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{The boundary is mostly not where intuition says.}  The naive expectation is
+``tokenizers are visible, everything deeper is guesswork.''  It is wrong in both
+directions.  Output geometry can be recovered to the exact width with a modest query
+budget whenever the access regime allows it.  Meanwhile two production tokenizer
+variants are \emph{provably} inseparable over ordinary text.  The map, not the motto,
+is the contribution.

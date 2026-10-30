@@ -1,0 +1,66 @@
+\section{\benchname: a blind ground-truth benchmark}
+\label{sec:bench}
+The core weakness of version 2 was simple: its production claims rested on detectors
+that had never been checked against a known answer.  \benchname{} fixes that.  We
+serve \emph{known} models behind the same anonymous contract the scanner faces in
+production, freeze the protocol, run the scanner, and only then look at the labels.
+
+\subsection{Subjects and axes}
+We serve \BenchN{} subjects (Table~\ref{tab:subjects}).  The dense decoders run from
+128 to 2{,}048 in residual width: Pythia, OPT, GPT-2, DistilGPT-2, SmolLM, Qwen2.5-0.5B,
+and TinyLlama-1.1B.  There are two Mamba SSMs (130M and 370M), two MoE subjects (the
+trained OLMoE-1B-7B, and a random-init Mixtral mechanics subject), a random-init
+DeepSeek-V3-config MLA mechanics subject, four masked encoders from the BERT family, and
+one encoder-decoder (T5-small).  Around this core we vary the \emph{serving}, not the
+weights: the same checkpoint computed in fp32, bf16, and fp16; with its wire values
+rounded to bf16; with int8 dynamic quantisation; behind an 8-way batching condition;
+and a router fixture that alternates two checkpoints behind one model name.  The
+random-init subjects exercise real code paths (MoE routing, MLA attention) even though
+their weights are meaningless.  We label them mechanics subjects and disable the
+behavioural probes for them.
+
+\textbf{Effective sample size.}  The \BenchN{} subjects are \emph{not} \BenchN{}
+independent architectures.  They span \BenchArchs{} distinct base checkpoints.  The
+serving axis adds five GPT-2 variant configurations (four completed; fp16 omitted) plus a
+two-checkpoint router.  Those variants exist to measure serving confounds, not to
+inflate $n$.  All headline accuracies therefore carry cluster-bootstrapped intervals at
+the base-checkpoint level (Table~\ref{tab:accuracy}, \BenchClusters{} clusters), and we
+never quote the variant-inflated count as architectural coverage.  \BenchNScored{} of
+\BenchN{} subjects completed the frozen protocol.  The fp16-on-CPU variant ran out of
+time budget, because fp16 emulation on a CPU is several times slower than fp32 or bf16.
+We report it as omitted rather than quietly dropping it.
+
+\subsection{The anonymous contract}
+Every subject answers the same OpenAI-compatible \texttt{/v1/chat/completions} endpoint.
+It provides honest usage accounting, top-$k$ logprobs with $k\le20$, \texttt{logit\_bias},
+SSE streaming with server-reported per-token times (in the style of Azure's
+\texttt{latency\_checkpoint}), a stated context cap, and an explicit
+\texttt{measurement\_columns} diagnostic that is used \emph{only} in the rich-access
+regime.  Ground truth is recorded from the loaded config classes, never typed by hand.
+The scanner sees no headers, no model strings, and no config hints.
+
+\subsection{Blindness and freezing}
+Three mechanisms keep the benchmark honest.  (i) The battery protocol, meaning the probe
+set, the sample sizes, the spectral thresholds, and the decode-growth decision
+thresholds, is frozen in code and hashed (\texttt{protocol \ProtocolHash}) before any
+label is analysed.  (ii) The controlled-change study is run commit-reveal.  The harness
+draws each episode's label in secret, writes only a SHA-256 commitment to disk before
+scanning, and after the scan the reveal is verified against the commitment
+(Sec.~\ref{sec:blindfixtures}).  (iii) Detectors that failed during development are
+documented in the appendix together with their fixes.  One was a curvature gate that
+fired without any effect-size check; another was a units error in the decode-growth
+slope.  The benchmark reports the \emph{repaired} instrument, and the failure log is
+part of the record.
+
+\subsection{What the benchmark measures}
+For each property we report three things on the support scores actually shown in this
+paper: top-1 accuracy, the Brier score, and the expected calibration error (ECE).  Top-1
+accuracy asks whether the highest-ranked candidate is right.  The Brier score is the
+mean squared gap between the score and the truth, so lower is better and 0 is perfect.
+ECE asks whether a score of 0.8 is right about 80\% of the time.  All three are reported
+under two prior views (the reference prior and the evidence-only flat prior) and one
+sensitivity check (the legacy independent-factor combination).  For each numeric target
+we report rank-recovery coverage by width and the relative error on resolved estimates,
+separately for rich and for production-realistic access.  For each serving axis we
+report how the detectors respond to changes in dtype, batching, and routing.  The
+baselines (Sec.~\ref{sec:baselines}) run on the same recordings.

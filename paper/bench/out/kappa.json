@@ -1,0 +1,34 @@
+{
+ "delta": 0.05,
+ "bound_constant_nats": 2.6499950812497963,
+ "channels": {
+  "timing_decode_state": {
+   "pair": "decode ms/token at ctx=963: full-attention vs SSM",
+   "kappa_per_request": 2.022024096678053,
+   "ci": [
+    1.851132961324951,
+    103.40736654327
+   ],
+   "min_requests_delta_0.05": 1.3105655296608114
+  },
+  "wire_precision": {
+   "pair": "offset-from-bf16-grid per reported logprob: fp32 vs bf16 wire",
+   "kappa_per_request": 11123138.851083327,
+   "ci": [
+    10145215.913365465,
+    12410052.150425693
+   ],
+   "min_requests_delta_0.05": 2.3824166152449877e-07,
+   "bf16_values_exactly_on_grid": 1.0,
+   "note": "grid membership is near-deterministic, so the channel separates wire-rounded from plain in O(1) requests; the floored Gaussian kappa is the conservative continuous-noise view"
+  },
+  "tokenizer_counts": {
+   "cl100k_base vs o200k_base": {
+    "p_diff_per_request": 0.0175,
+    "kappa_per_request": 0.01765493523872071,
+    "min_requests_delta_0.05": 150.09939404579868,
+    "note": "random English-word prompts; inside the proved o200k_base/o200k_harmony witness domain kappa = 0 exactly"
+   }
+  }
+ }
+}

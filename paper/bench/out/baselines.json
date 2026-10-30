@@ -1,0 +1,365 @@
+{
+ "n_subjects": 25,
+ "n_fingerprints": 26,
+ "nightvision_lite": {
+  "width": {
+   "bert-mini": {
+    "true_width": 256,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "bert-small": {
+    "true_width": 512,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "bert-tiny": {
+    "true_width": 128,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "distilbert": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "distilgpt2": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": 4,
+    "resolved": false
+   },
+   "gpt2-batch8": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "gpt2-bf16": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "gpt2-int8": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "gpt2-wirebf16": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "gpt2": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "mamba-130m": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "mamba-370m": {
+    "true_width": 1024,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "olmoe-1b7b": {
+    "true_width": 2048,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "opt-125m": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "pythia-14m": {
+    "true_width": 128,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "pythia-160m": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "pythia-31m": {
+    "true_width": 256,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "pythia-70m": {
+    "true_width": 512,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "qwen25-05b": {
+    "true_width": 896,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "router-gpt2-pythia": {
+    "true_width": 768,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "smollm-135m": {
+    "true_width": 576,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "t5-small": {
+    "true_width": 512,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "tiny-dsv3-mla": {
+    "true_width": 256,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   },
+   "tiny-mixtral-moe": {
+    "true_width": 256,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": 0,
+    "resolved": false
+   },
+   "tinyllama-1b": {
+    "true_width": 2048,
+    "nv_width_estimate": null,
+    "nv_width_lower_bound": null,
+    "resolved": false
+   }
+  },
+  "depth": {
+   "mamba-130m": {
+    "true_layers": 24,
+    "nv_depth_estimate": 36.5,
+    "rel_error": 0.523
+   },
+   "mamba-370m": {
+    "true_layers": 48,
+    "nv_depth_estimate": 43.0,
+    "rel_error": 0.103
+   },
+   "qwen25-05b": {
+    "true_layers": 24,
+    "nv_depth_estimate": 16.7,
+    "rel_error": 0.304
+   }
+  }
+ },
+ "llmmap_lite": {
+  "n": 26,
+  "identification_top1": 0.7142857142857143,
+  "identification_evaluated": 7,
+  "family_centroid_top1": 0.34615384615384615,
+  "per_subject": {
+   "bert-mini": {
+    "nn": "bert-small",
+    "family_pred": "encoder_only",
+    "family_true": "encoder_only",
+    "family_hit": true,
+    "identity_hit": null
+   },
+   "bert-small": {
+    "nn": "bert-mini",
+    "family_pred": "encoder_only",
+    "family_true": "encoder_only",
+    "family_hit": true,
+    "identity_hit": null
+   },
+   "bert-tiny": {
+    "nn": "distilgpt2",
+    "family_pred": "encoder_only",
+    "family_true": "encoder_only",
+    "family_hit": true,
+    "identity_hit": null
+   },
+   "distilbert": {
+    "nn": "bert-small",
+    "family_pred": "encoder_only",
+    "family_true": "encoder_only",
+    "family_hit": true,
+    "identity_hit": null
+   },
+   "distilgpt2": {
+    "nn": "gpt2",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "gpt2": {
+    "nn": "gpt2-batch8",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": true
+   },
+   "gpt2-batch8": {
+    "nn": "gpt2",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": true
+   },
+   "gpt2-bf16": {
+    "nn": "gpt2-fp16",
+    "family_pred": "decoder_only",
+    "family_true": "decoder_only",
+    "family_hit": true,
+    "identity_hit": true
+   },
+   "gpt2-fp16": {
+    "nn": "gpt2-bf16",
+    "family_pred": "decoder_only",
+    "family_true": "decoder_only",
+    "family_hit": true,
+    "identity_hit": true
+   },
+   "gpt2-int8": {
+    "nn": "bert-tiny",
+    "family_pred": "encoder_only",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": false
+   },
+   "gpt2-wirebf16": {
+    "nn": "gpt2-batch8",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": true
+   },
+   "mamba-130m": {
+    "nn": "pythia-160m",
+    "family_pred": "ssm_or_linear",
+    "family_true": "ssm_or_linear",
+    "family_hit": true,
+    "identity_hit": null
+   },
+   "mamba-370m": {
+    "nn": "mamba-130m",
+    "family_pred": "ssm_or_linear",
+    "family_true": "ssm_or_linear",
+    "family_hit": true,
+    "identity_hit": null
+   },
+   "olmoe-1b7b": {
+    "nn": "tinyllama-1b",
+    "family_pred": "ssm_or_linear",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "opt-125m": {
+    "nn": "pythia-160m",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "pythia-14m": {
+    "nn": "pythia-70m",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "pythia-160m": {
+    "nn": "mamba-130m",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "pythia-31m": {
+    "nn": "pythia-70m",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "pythia-70m": {
+    "nn": "pythia-31m",
+    "family_pred": "router_or_cascade",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "qwen25-05b": {
+    "nn": "gpt2-wirebf16",
+    "family_pred": "decoder_only",
+    "family_true": "decoder_only",
+    "family_hit": true,
+    "identity_hit": null
+   },
+   "router-gpt2-pythia": {
+    "nn": "gpt2",
+    "family_pred": "decoder_only",
+    "family_true": "router_or_cascade",
+    "family_hit": false,
+    "identity_hit": false
+   },
+   "smollm-135m": {
+    "nn": "pythia-14m",
+    "family_pred": "ssm_or_linear",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "t5-small": {
+    "nn": "pythia-70m",
+    "family_pred": "router_or_cascade",
+    "family_true": "encoder_decoder",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "tiny-dsv3-mla": {
+    "nn": "tiny-mixtral-moe",
+    "family_pred": "encoder_only",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "tiny-mixtral-moe": {
+    "nn": "tiny-dsv3-mla",
+    "family_pred": "encoder_only",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   },
+   "tinyllama-1b": {
+    "nn": "mamba-370m",
+    "family_pred": "ssm_or_linear",
+    "family_true": "decoder_only",
+    "family_hit": false,
+    "identity_hit": null
+   }
+  }
+ }
+}
